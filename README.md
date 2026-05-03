@@ -1,42 +1,137 @@
-# pet-care
+# Pawmie Pet Care (Frontend Demo)
 
-This template should help get you started developing with Vue 3 in Vite.
+Pawmie is a pet-care web app demo built with Vue 3 + TypeScript + Vite.
+It shows a complete user flow for pet parents: sign in, book services, manage bookings, browse a marketplace, add items to cart, place demo orders, and manage marketplace items from an admin page.
 
-## Recommended IDE Setup
+This project is focused on frontend UI/UX and local demo data (no real backend database yet).
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## What I Built
 
-## Recommended Browser Setup
+- Authentication flow with login/signup UI
+- Route protection for private pages using router guards
+- Service booking flow with reusable booking form
+- "My Bookings" page grouped by category
+- Pet marketplace with:
+  - category filters
+  - search
+  - product detail page
+  - cart
+  - demo checkout
+  - orders history
+- Admin marketplace page to add/edit/delete demo products
+- About and Contact pages powered by JSON content files
+- Dark mode toggle with theme persistence
+- Responsive navbar with mobile menu and protected links
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## Important Demo Notes
 
-## Type Support for `.vue` Imports in TS
+- This is a **demo app**. Most data is saved in **browser localStorage**.
+- Bookings, cart, orders, and admin-added items are device/browser specific.
+- Login uses [DummyJSON auth API](https://dummyjson.com/auth/login) for demo authentication.
+- Signup is simulated locally and marks the user as authenticated in localStorage.
+- Admin panel uses a demo unlock code: `pawmie-admin`
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## Tech Stack
 
-## Customize configuration
+- Vue 3 (beta)
+- TypeScript
+- Vue Router
+- Vite
+- Tailwind CSS 4
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## Main Pages and Flows
 
-## Project Setup
+- `/` - Home landing page
+- `/login` and `/signup` - Authentication pages
+- `/services/*` - Service-specific booking pages:
+  - vet appointment
+  - emergency care
+  - grooming booking
+  - training services
+- `/booking` - Generic booking page (supports query params)
+- `/my-bookings` - Shows current user's bookings
+- `/marketplace` - Product listing, filter, and search
+- `/marketplace/:id` - Product detail page
+- `/marketplace/cart` - Cart and checkout
+- `/marketplace/orders` - Order history
+- `/admin/marketplace` - Demo admin product manager
+- `/about`, `/contact` - Content-driven informational pages
+
+## Project Structure (Key Files)
+
+- `src/router/index.ts` - routes + auth guard
+- `src/composables/useAuth.ts` - login/logout/auth helpers
+- `src/stores/bookingStore.ts` - booking data store and grouping logic
+- `src/components/bookings/BookingForm.vue` - reusable booking form UI
+- `src/views/services/` - service booking pages
+- `src/views/Marketplace.vue` - marketplace listing + filter/search/cart add
+- `src/views/ProductDetail.vue` - product detail + related items
+- `src/views/Cart.vue` - checkout simulation
+- `src/views/Orders.vue` - demo order history
+- `src/views/AdminMarketplace.vue` - admin CRUD for marketplace items
+- `src/stores/*.json` - static dummy content/data files
+
+## Local Setup
+
+### Requirements
+
+- Node.js `^20.19.0 || >=22.12.0`
+- npm or bun
+
+### Install
+
+```sh
+npm install
+```
+
+or
 
 ```sh
 bun install
 ```
 
-### Compile and Hot-Reload for Development
+### Run Development Server
+
+```sh
+npm run dev
+```
+
+or
 
 ```sh
 bun dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### Build for Production
+
+```sh
+npm run build
+```
+
+or
 
 ```sh
 bun run build
 ```
+
+### Preview Build
+
+```sh
+npm run preview
+```
+
+## Demo Login Credentials
+
+Use DummyJSON sample credentials:
+
+- Username: `emilys`
+- Password: `emilyspass`
+
+## Future Improvements
+
+- Replace localStorage with a real backend and database
+- Add proper auth/session handling with secure tokens
+- Add role-based access control for admin routes
+- Add form validation with better error UX
+- Add automated tests (unit + e2e)
+- Add CI checks and deployment pipeline
