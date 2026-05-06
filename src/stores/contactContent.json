@@ -1,8 +1,8 @@
 {
   "hero": {
-    "badge": "Pawmie Care Lounge",
-    "title": "Soft care for every little paw.",
-    "subtitle": "Have a question about grooming, bookings, clinic visits, or daily pet care? Our friendly Pawmie team is here to help every pet parent with love."
+    "badge": "Pawmie Care Desk",
+    "title": "We are here for every little paw.",
+    "subtitle": "Have questions about bookings, grooming, or pet care? Our friendly team is happy to help."
   },
   "channels": [
     {
@@ -21,7 +21,7 @@
     },
     {
       "id": "location",
-      "label": "Pawmie Cozy Home",
+      "label": "Pawmie Care Home",
       "value": "Colombo, Sri Lanka",
       "description": "Visit our cozy pet care space for grooming, checkups, and friendly support.",
       "icon": "map"
