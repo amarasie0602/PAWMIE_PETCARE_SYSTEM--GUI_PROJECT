@@ -1,56 +1,55 @@
 {
   "hero": {
-    "title": "We’re here for every little paw problem.",
-    "subtitle": "Reach out to the Pawmie team with questions about bookings, services, or ideas for new features.",
-    "badge": "Contact Pawmie"
+    "badge": "Pawmie Care Lounge",
+    "title": "Soft care for every little paw.",
+    "subtitle": "Have a question about grooming, bookings, clinic visits, or daily pet care? Our friendly Pawmie team is here to help every pet parent with love."
   },
   "channels": [
     {
-      "id": "channel-1",
-      "label": "Email support",
+      "id": "email",
+      "label": "Paw Mail Support",
       "value": "support@pawmie-demo.com",
-      "description": "Best for questions about how the demo works or for feedback.",
+      "description": "Send booking questions, grooming requests, or pet care concerns anytime.",
       "icon": "mail"
     },
     {
-      "id": "channel-2",
-      "label": "Demo helpline",
-      "value": "+91-98765-00000",
-      "description": "Use this in mockups to show a support phone number (no real calls).",
+      "id": "phone",
+      "label": "Friendly Pet Helpline",
+      "value": "+94 77 123 4567",
+      "description": "Call us for quick help about appointments, services, or care visits.",
       "icon": "phone"
     },
     {
-      "id": "channel-3",
-      "label": "Studio address",
-      "value": "Pawmie Studio, Paw Street, Demo City",
-      "description": "A fictional address used only for UI and layout purposes.",
+      "id": "location",
+      "label": "Pawmie Cozy Home",
+      "value": "Colombo, Sri Lanka",
+      "description": "Visit our cozy pet care space for grooming, checkups, and friendly support.",
       "icon": "map"
     }
   ],
   "officeHours": {
-    "title": "Demo office hours",
+    "title": "Pawmie Care Hours",
     "lines": [
-      "Monday – Friday: 9:00 AM – 7:00 PM",
-      "Saturday: 10:00 AM – 4:00 PM",
-      "Sunday & public holidays: Response times may be slower."
+      "Monday - Friday: 9.00 AM - 7.00 PM",
+      "Saturday: 10.00 AM - 4.00 PM",
+      "Sunday: Closed for paw rest"
     ]
   },
   "faq": [
     {
       "id": "faq-1",
-      "question": "Is this a real service?",
-      "answer": "This is a demo project for learning and UI exploration. You can connect it to real backends later."
+      "question": "Can I ask about my pet care booking?",
+      "answer": "Yes. Our team can help you with booking details, appointment changes, and service information."
     },
     {
       "id": "faq-2",
-      "question": "Where do my bookings go?",
-      "answer": "All bookings in this demo are stored locally in your browser using localStorage, not on a remote server."
+      "question": "Can I contact Pawmie about grooming?",
+      "answer": "Of course. You can ask about grooming packages, available time slots, and the best care option for your pet."
     },
     {
       "id": "faq-3",
-      "question": "Can I customise Pawmie for my clinic?",
-      "answer": "Yes. You can replace this dummy JSON with your own content, services, and branding as you build a real product."
+      "question": "Can I ask general pet care questions?",
+      "answer": "Yes. You can contact us for friendly guidance about pet care services, visits, and support."
     }
   ]
 }
-
