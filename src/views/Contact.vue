@@ -79,11 +79,14 @@ const carePromises = [
       <img
         :src="heroImage"
         alt="A happy dog holding a red telephone"
-        class="absolute inset-0 h-full w-full object-cover object-center"
+        class="absolute inset-0 h-full w-full object-cover object-center brightness-[0.78] saturate-[0.95]"
       />
 
+      <!-- Base dim (takes edge off photo brightness) -->
+      <div class="pointer-events-none absolute inset-0 bg-slate-900/10 dark:bg-black/30" />
+
       <!-- Overlay -->
-      <div class="absolute inset-0 bg-gradient-to-r from-white/60 via-white/25 to-transparent dark:from-[#0c0c1d]/75 dark:via-[#0c0c1d]/15 dark:to-transparent" />
+      <div class="absolute inset-0 bg-gradient-to-r from-white/65 via-white/28 to-transparent dark:from-[#0c0c1d]/82 dark:via-[#0c0c1d]/22 dark:to-transparent" />
 
       <!-- Bottom fade -->
       <div class="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#f8f5ff] to-transparent dark:from-[#0c0c1d] dark:to-transparent" />
