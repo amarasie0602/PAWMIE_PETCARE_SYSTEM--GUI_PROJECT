@@ -183,12 +183,30 @@ const carePromises = [
         <!-- LEFT PANEL -->
         <div class="flex flex-col gap-4">
 
-          <div class="overflow-hidden rounded-2xl shadow-sm">
-            <img
-              :src="heroImage"
-              alt="Pawmie pet care support"
-              class="h-52 w-full object-cover object-center transition-transform duration-500 hover:scale-105"
+          <!-- Location Card -->
+          <div class="overflow-hidden rounded-2xl border border-purple-100/80 bg-white shadow-sm dark:border-white/[0.08] dark:bg-[#18132e]">
+            <!-- Map embed -->
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63371.80385596814!2d79.8211607!3d6.9218374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae253d10f7a7003%3A0x320b2e4d32d3838d!2sColombo%2C%20Sri%20Lanka!5e0!3m2!1sen!2slk!4v1700000000000"
+              class="h-44 w-full border-0"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
             />
+            <!-- Address -->
+            <div class="p-4">
+              <p class="mb-0.5 text-[13px] font-bold text-slate-800 dark:text-white">📍 Pawmie Pet Care</p>
+              <p class="text-[12px] leading-5 text-slate-500 dark:text-slate-400">
+                123 Paw Street, Colombo 03<br />Western Province, Sri Lanka
+              </p>
+              <a
+                href="https://maps.google.com"
+                target="_blank"
+                class="mt-3 inline-flex items-center gap-1.5 text-[12px] font-bold text-purple-600 transition hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300"
+              >
+                Get Directions →
+              </a>
+            </div>
           </div>
 
           <!-- What we help with -->
