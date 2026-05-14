@@ -77,7 +77,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="detail-root">
+  <div class="detail-root -mt-20">
     <div class="detail-inner" v-if="product">
 
       <!-- Back button -->

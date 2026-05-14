@@ -71,7 +71,7 @@ const carePromises = [
 </script>
 
 <template>
-  <main class="min-h-screen bg-[#f8f5ff] text-slate-900 dark:bg-[#0c0c1d] dark:text-white">
+  <main class="min-h-screen -mt-20 bg-[#f8f5ff] text-slate-900 dark:bg-[#0c0c1d] dark:text-white">
 
     <!-- ─── HERO ─────────────────────────────────────────────────────── -->
     <section class="relative h-[90vh] overflow-hidden">

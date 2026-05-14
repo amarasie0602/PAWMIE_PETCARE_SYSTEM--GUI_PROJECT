@@ -53,6 +53,7 @@ let removeAfterEach: (() => void) | undefined
 onMounted(() => {
   isDarkMode.value = document.documentElement.classList.contains('dark')
   updateAuthState()
+  handleScroll()
 
   window.addEventListener('scroll', handleScroll)
   window.addEventListener('click', handleClickOutside)
@@ -80,7 +81,7 @@ onUnmounted(() => {
   <nav
     :class="['fixed top-0 left-0 w-full z-50 transition-all duration-300',
       isScrolled
-        ? 'bg-white/90 backdrop-blur-md shadow-md border-gray-200 dark:bg-gray-900/90 dark:border-white/10'
+        ? 'bg-white shadow-md border-b border-gray-200 dark:bg-gray-900 dark:border-gray-700'
         : 'bg-transparent border-none shadow-none'
     ]"
   >

@@ -21,7 +21,7 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <div class="auth-root">
+  <div class="auth-root -mt-20 pt-20">
 
     <AuthPanel
       subtitle="Your pet's happiest place.<br />Every wag, purr &amp; hop — sorted."

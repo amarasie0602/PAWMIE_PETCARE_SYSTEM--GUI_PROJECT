@@ -3,7 +3,7 @@ import BookingForm from '@/components/bookings/BookingForm.vue'
 </script>
 
 <template>
-  <div class="min-h-screen pt-24 pb-16 bg-gradient-to-br from-indigo-50 via-slate-50 to-blue-100 dark:from-slate-900 dark:via-slate-950 dark:to-indigo-950">
+  <div class="min-h-screen -mt-20 pt-24 pb-16 bg-gradient-to-br from-indigo-50 via-slate-50 to-blue-100 dark:from-slate-900 dark:via-slate-950 dark:to-indigo-950">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid gap-10 lg:grid-cols-[1.2fr,1fr] items-start">
       <!-- Left: Info / Hero -->
       <section class="space-y-6">

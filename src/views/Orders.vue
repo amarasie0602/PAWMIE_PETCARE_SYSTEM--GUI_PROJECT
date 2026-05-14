@@ -45,7 +45,7 @@ const orderedCount = computed(() =>
 </script>
 
 <template>
-  <div class="min-h-screen pt-24 pb-16 bg-gradient-to-br from-slate-50 via-amber-50 to-rose-50 dark:from-slate-950 dark:via-slate-900 dark:to-amber-950">
+  <div class="min-h-screen -mt-20 pt-24 pb-16 bg-gradient-to-br from-slate-50 via-amber-50 to-rose-50 dark:from-slate-950 dark:via-slate-900 dark:to-amber-950">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       <header class="mb-8 flex items-center justify-between gap-4">
         <div>

@@ -8,7 +8,7 @@ const categories = computed(() => Object.entries(myGroupedByCategory.value))
 </script>
 
 <template>
-  <div class="min-h-screen pt-24 pb-16 bg-slate-50 dark:bg-gray-900">
+  <div class="min-h-screen -mt-20 pt-24 pb-16 bg-slate-50 dark:bg-gray-900">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       <div class="mb-10 text-center">
         <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white">

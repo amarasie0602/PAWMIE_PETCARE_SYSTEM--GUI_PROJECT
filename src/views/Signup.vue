@@ -43,7 +43,7 @@ const handleGoogleSignup = () => {
 </script>
 
 <template>
-  <div class="auth-root">
+  <div class="auth-root -mt-20 pt-20">
 
     <AuthPanel
       title="Pawmie"

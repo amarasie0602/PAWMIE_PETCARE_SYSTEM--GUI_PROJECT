@@ -125,7 +125,7 @@ const categoryEmoji: Record<string, string> = {
 </script>
 
 <template>
-  <div class="market-root">
+  <div class="market-root -mt-20">
     <div class="market-inner">
 
       <!-- HEADER -->

@@ -40,7 +40,7 @@ const data = aboutContent as AboutData
 </script>
 
 <template>
-  <div class="min-h-screen pt-24 pb-20 bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-100 dark:from-slate-900 dark:via-slate-950 dark:to-indigo-950">
+  <div class="min-h-screen -mt-20 pt-24 pb-20 bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-100 dark:from-slate-900 dark:via-slate-950 dark:to-indigo-950">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Hero -->
       <section class="text-center mb-14">

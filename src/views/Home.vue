@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Navbar from '@/components/Navbar.vue'
 import Hero from '@/components/Hero.vue'
 import FeaturesSection from '@/components/FeatureSection.vue'
 import CustomerPetsSection from '@/components/CustomerPetsSection.vue'
@@ -9,8 +8,6 @@ import ReviewsSection from '@/components/ReviewsSection.vue'
 <template>
   <div class="min-h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100
               dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-
-    <Navbar />
 
     <Hero />
 
