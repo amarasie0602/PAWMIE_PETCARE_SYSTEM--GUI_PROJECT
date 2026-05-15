@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import BookingForm from '@/components/bookings/BookingForm.vue'
+import emergencyImage from '@/assets/emergency-care-hero.png'
 
 const trustSignals = [
   { icon: '🏥', label: 'Clinics notified', value: 'Instantly' },
@@ -15,32 +16,67 @@ const steps = [
 </script>
 
 <template>
-  <div class="min-h-screen -mt-20 pt-24 pb-16 bg-gradient-to-br from-rose-50 via-slate-50 to-red-100 dark:from-slate-950 dark:via-slate-900 dark:to-rose-950">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen bg-gradient-to-br from-rose-50 via-slate-50 to-red-100 dark:from-slate-950 dark:via-slate-900 dark:to-rose-950">
 
-      <!-- ─── MAIN GRID ─────────────────────────────────────────────── -->
-      <div class="grid gap-10 lg:grid-cols-[1.2fr,1fr] items-start">
+    <!-- ─── HERO ─────────────────────────────────────────────────── -->
+    <section class="relative -mt-20 h-[520px] overflow-hidden">
 
-        <!-- ── LEFT: Info / Hero ─────────────────────────────────── -->
-        <section class="space-y-7">
+      <img
+        :src="emergencyImage"
+        alt="Person providing emergency care to a dog"
+        class="absolute inset-0 h-full w-full object-cover object-[center_60%]"
+      />
 
-          <!-- Badge -->
-          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase bg-rose-100 dark:bg-rose-900/60 text-rose-700 dark:text-rose-300 ring-1 ring-rose-200 dark:ring-rose-800">
-            <span class="flex h-1.5 w-1.5 rounded-full bg-rose-500 animate-pulse" />
-            🚑 Emergency Care
-          </span>
+      <!-- Overlay -->
+      <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-transparent" />
 
-          <!-- Heading -->
-          <div>
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white leading-[1.1] tracking-tight">
-              24/7 <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-red-500">emergency care</span><br class="hidden sm:block" /> for urgent pet needs
-            </h1>
-            <p class="mt-4 text-[15px] sm:text-base leading-7 text-slate-600 dark:text-slate-300 max-w-md">
-              When something feels wrong, every second matters. Log your emergency visit so nearby clinics can prepare before you arrive.
-            </p>
-          </div>
+      <!-- Bottom fade -->
+      <div class="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-rose-50 to-transparent dark:from-slate-950 dark:to-transparent" />
 
-          <!-- 🔴 Hotline card -->
+      <!-- Hero content -->
+      <div class="absolute left-6 top-[52%] z-10 max-w-lg -translate-y-1/2 lg:left-14 xl:left-20">
+
+        <span class="mb-3 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-white ring-1 ring-white/20 backdrop-blur-sm">
+          <span class="flex h-1.5 w-1.5 animate-pulse rounded-full bg-rose-400" />
+          🚑 Emergency Care
+        </span>
+
+        <h1 class="hero-heading mb-3 text-[2.4rem] font-black leading-[1.08] tracking-tight text-white drop-shadow-lg sm:text-5xl lg:text-[3rem]">
+          24/7 emergency<br />
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-red-300">care for your pet.</span>
+        </h1>
+
+        <p class="mb-6 max-w-sm text-[14px] leading-6 text-white/80">
+          When something feels wrong, every second matters. Log your emergency visit so nearby clinics can prepare before you arrive.
+        </p>
+
+        <div class="flex flex-wrap gap-3">
+          <a
+            href="#emergency-form"
+            class="inline-flex items-center gap-2 rounded-full bg-rose-600 px-6 py-2.5 text-[13px] font-bold text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-rose-700 hover:shadow-xl active:translate-y-0"
+          >
+            Log Emergency Visit 🚑
+          </a>
+          <a
+            href="tel:+94112345678"
+            class="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-6 py-2.5 text-[13px] font-bold text-white backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/25 active:translate-y-0"
+          >
+            📞 Call Hotline
+          </a>
+        </div>
+      </div>
+    </section>
+    <!-- ─── END HERO ──────────────────────────────────────────────── -->
+
+
+    <!-- ─── MAIN CONTENT ─────────────────────────────────────────── -->
+    <div class="mx-auto max-w-6xl px-4 pb-20 sm:px-6 lg:px-8">
+      <div id="emergency-form" class="grid gap-10 lg:grid-cols-[1.2fr,1fr] items-start pt-4">
+
+        <!-- ── LEFT: Info ──────────────────────────────────────── -->
+        <section class="space-y-6">
+
+          <!-- Hotline card -->
           <div class="flex items-center gap-4 rounded-2xl border border-rose-200 bg-white px-5 py-4 shadow-sm dark:border-rose-800/60 dark:bg-rose-950/40">
             <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-rose-100 text-xl dark:bg-rose-900/50">
               📞
@@ -123,3 +159,11 @@ const steps = [
     </div>
   </div>
 </template>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap');
+
+.hero-heading {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+</style>
