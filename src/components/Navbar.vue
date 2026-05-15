@@ -62,7 +62,6 @@ onMounted(() => {
   window.addEventListener('storage', updateAuthState)
   window.addEventListener('resize', handleResize)
 
-  // Single afterEach handles all post-navigation cleanup
   removeAfterEach = router.afterEach(() => {
     updateAuthState()
     mobileMenuOpen.value = false
@@ -90,21 +89,19 @@ onUnmounted(() => {
     ]"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <!-- Grid keeps nav optically centered at full width (equal space left/right of links) -->
       <div
         class="grid h-20 w-full grid-cols-[1fr_auto] items-center gap-3 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:gap-4"
       >
 
         <!-- LEFT: Logo -->
-        <router-link to="/" class="relative z-10 col-start-1 row-start-1 flex min-w-0 items-center justify-self-start">
-          <img :src="logo" alt="Pawmie Logo" class="h-30 w-auto" />
+        <router-link to="/" class="relative z-10 col-start-1 row-start-1 flex min-w-0 items-center justify-self-start self-center">
+          <img :src="logo" alt="Pawmie Logo" class="h-25 w-auto" />
         </router-link>
 
         <!-- CENTER: Navigation Links -->
         <div
-          class="relative z-10 hidden items-center gap-6 md:col-start-2 md:row-start-1 md:flex lg:gap-8"
+          class="relative z-10 hidden items-center gap-6 self-center md:col-start-2 md:row-start-1 md:flex lg:gap-8"
         >
-
           <router-link to="/" class="text-gray-600 dark:text-gray-400 hover:text-indigo-500 font-medium transition-colors whitespace-nowrap">
             Home
           </router-link>
@@ -185,9 +182,8 @@ onUnmounted(() => {
 
         <!-- RIGHT: Auth + Dark Toggle + Mobile Menu -->
         <div
-          class="relative z-10 col-start-2 row-start-1 flex items-center justify-self-end gap-3 sm:gap-4 md:col-start-3 mobile-menu-area"
+          class="relative z-10 col-start-2 row-start-1 flex self-center items-center justify-self-end gap-3 sm:gap-4 md:col-start-3 mobile-menu-area"
         >
-
           <!-- Mobile menu button -->
           <button
             @click.stop="mobileMenuOpen = !mobileMenuOpen"
@@ -241,7 +237,6 @@ onUnmounted(() => {
             <span v-if="isDarkMode">🌙</span>
             <span v-else>☀️</span>
           </button>
-
         </div>
       </div>
     </div>
