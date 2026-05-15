@@ -85,62 +85,62 @@ function handleSubmit() {
 <template>
   <main class="min-h-screen bg-[#f8f5ff] text-slate-900 dark:bg-[#0c0c1d] dark:text-white">
 
-    <!-- ─── HERO ─────────────────────────────────────────────────────── -->
-    <section class="relative h-[90vh] overflow-hidden">
+<!-- ─── HERO ─────────────────────────────────────────────────────── -->
+<section class="relative -mt-20 h-[100vh] max-h-[800px] overflow-hidden">
 
-      <img
-        :src="heroImage"
-        alt="A happy dog holding a red telephone"
-        class="absolute inset-0 h-full w-full object-cover object-center"
-      />
+  <img
+    :src="heroImage"
+    alt="A happy dog holding a red telephone"
+    class="absolute inset-0 h-full w-full object-cover object-center"
+  />
 
-      <!-- Stronger overlay for readability -->
-      <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent dark:from-black/80 dark:via-black/30 dark:to-transparent" />
+  <!-- Soft left overlay only — no full-cover darkness -->
+  <div class="absolute inset-0 bg-gradient-to-r from-[#0c0c1d]/80 via-[#0c0c1d]/40 to-transparent" />
 
-      <!-- Bottom fade -->
-      <div class="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#f8f5ff] to-transparent dark:from-[#0c0c1d] dark:to-transparent" />
+  <!-- Very subtle bottom fade — just enough to blend -->
+  <div class="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#f8f5ff]/40 to-transparent dark:from-[#0c0c1d]/40 dark:to-transparent" />
 
-      <!-- Content -->
-      <div class="absolute left-6 top-1/2 z-10 max-w-lg -translate-y-[55%] lg:left-14 xl:left-20">
+  <!-- Content -->
+  <div class="absolute left-6 top-1/2 z-10 max-w-lg -translate-y-[55%] lg:left-14 xl:left-20">
 
-        <span class="mb-5 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-white shadow-sm backdrop-blur-sm ring-1 ring-white/20">
-          🐾 Pet Parent Support
-        </span>
+    <span class="mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-white shadow-sm backdrop-blur-sm ring-1 ring-white/20">
+      🐾 Pet Parent Support
+    </span>
 
-        <h1 class="hero-heading mb-4 text-[2.8rem] font-black leading-[1.08] tracking-tight text-white drop-shadow-lg sm:text-5xl lg:text-[3.6rem]">
-          We're here for<br />every little paw.
-        </h1>
+    <h1 class="hero-heading mb-4 text-[2.8rem] font-black leading-[1.08] tracking-tight text-white drop-shadow-lg sm:text-5xl lg:text-[3.6rem]">
+      We're here for<br />every little paw.
+    </h1>
 
-        <p class="mb-7 max-w-sm text-[15px] leading-7 text-white/80">
-          Questions about bookings, grooming, or pet care? Our friendly team is always happy to help.
-        </p>
+    <p class="mb-7 max-w-sm text-[15px] leading-7 text-white/80">
+      Questions about bookings, grooming, or pet care? Our friendly team is always happy to help.
+    </p>
 
-        <div class="mb-7 flex flex-wrap gap-2">
-          <span
-            v-for="tag in ['🐶 Dog Care', '🐱 Cat Care', '🛁 Grooming', '💜 Pet Support']"
-            :key="tag"
-            class="rounded-full bg-white/15 px-3.5 py-1.5 text-[12px] font-semibold text-white ring-1 ring-white/20 backdrop-blur-sm"
-          >
-            {{ tag }}
-          </span>
-        </div>
+    <div class="mb-7 flex flex-wrap gap-2">
+      <span
+        v-for="tag in ['🐶 Dog Care', '🐱 Cat Care', '🛁 Grooming', '💜 Pet Support']"
+        :key="tag"
+        class="rounded-full bg-white/10 px-3.5 py-1.5 text-[12px] font-semibold text-white ring-1 ring-white/15 backdrop-blur-sm"
+      >
+        {{ tag }}
+      </span>
+    </div>
 
-        <div class="flex flex-wrap gap-3">
-          <a
-            href="#contact-form"
-            class="inline-flex items-center gap-2 rounded-full bg-purple-600 px-7 py-3 text-[13px] font-bold text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-purple-700 hover:shadow-xl active:translate-y-0"
-          >
-            Send a Paw Note 🐾
-          </a>
-          <a
-            href="#faq"
-            class="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-7 py-3 text-[13px] font-bold text-white backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/25 active:translate-y-0"
-          >
-            View FAQs
-          </a>
-        </div>
-      </div>
-    </section>
+    <div class="flex flex-wrap gap-3">
+      
+       <a href="#contact-form"
+        class="inline-flex items-center gap-2 rounded-full bg-purple-600 px-7 py-3 text-[13px] font-bold text-white shadow-lg shadow-purple-900/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-purple-700 hover:shadow-xl active:translate-y-0"
+      >
+        Send a Paw Note 🐾
+      </a>
+      
+      <a   href="#faq"
+        class="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-7 py-3 text-[13px] font-bold text-white backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/20 active:translate-y-0"
+      >
+        View FAQs
+      </a>
+    </div>
+  </div>
+</section>
     <!-- ─── END HERO ──────────────────────────────────────────────────── -->
 
 
