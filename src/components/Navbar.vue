@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import logo from '@/assets/pawmie-logo.png'
 import { useRouter } from 'vue-router'
 
@@ -14,8 +14,10 @@ const updateAuthState = () => {
   isAuthenticated.value = localStorage.getItem('isAuthenticated') === 'true'
 }
 
+const SCROLL_SOLID_THRESHOLD = 48
+
 const handleScroll = () => {
-  isScrolled.value = window.scrollY > 50
+  isScrolled.value = window.scrollY > SCROLL_SOLID_THRESHOLD
 }
 
 const handleLogout = () => {
@@ -55,7 +57,7 @@ onMounted(() => {
   updateAuthState()
   handleScroll()
 
-  window.addEventListener('scroll', handleScroll)
+  window.addEventListener('scroll', handleScroll, { passive: true })
   window.addEventListener('click', handleClickOutside)
   window.addEventListener('storage', updateAuthState)
   window.addEventListener('resize', handleResize)
@@ -65,6 +67,7 @@ onMounted(() => {
     updateAuthState()
     mobileMenuOpen.value = false
     showDropdown.value = false
+    void nextTick(() => handleScroll())
   })
 })
 
@@ -79,10 +82,11 @@ onUnmounted(() => {
 
 <template>
   <nav
-    :class="['fixed top-0 left-0 w-full z-50 transition-all duration-300',
+    :class="[
+      'fixed top-0 left-0 z-50 w-full border-b transition-[background-color,border-color,box-shadow] duration-300 ease-out',
       isScrolled
-        ? 'bg-white shadow-md border-b border-gray-200 dark:bg-gray-900 dark:border-gray-700'
-        : 'bg-transparent border-none shadow-none'
+        ? 'border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-900'
+        : 'border-transparent bg-transparent shadow-none',
     ]"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
