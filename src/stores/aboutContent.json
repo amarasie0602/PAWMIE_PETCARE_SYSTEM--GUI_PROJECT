@@ -1,60 +1,68 @@
 {
   "hero": {
-    "title": "We built Pawmie so pets get the same care as family.",
-    "subtitle": "Pawmie is a friendly pet‑care companion that helps busy pet parents book vet visits, grooming, and training in just a few taps.",
-    "badge": "About Pawmie"
+    "badge": "Our Story",
+    "title": "Built by pet lovers, for pet lovers",
+    "subtitle": "Pawmie started with a simple idea: every pet deserves attentive, stress-free care — and every pet parent deserves total peace of mind when handing over their furry family member."
   },
   "stats": [
-    {
-      "label": "Happy pet families (demo)",
-      "value": "1,200+"
-    },
-    {
-      "label": "Bookings created in this demo",
-      "value": "3,500+"
-    },
-    {
-      "label": "Average rating from pet parents",
-      "value": "4.9/5"
-    }
+    { "label": "Happy Pets Served", "value": "12,400+" },
+    { "label": "Trusted Sitters", "value": "340+" },
+    { "label": "Cities & Growing", "value": "18" }
   ],
   "values": [
     {
-      "id": "value-1",
-      "title": "Pet‑first design",
-      "description": "Every screen, flow, and reminder is designed to reduce stress for pets and humans."
+      "id": "trust",
+      "title": "🐾 Trust above everything",
+      "description": "Every sitter on Pawmie goes through a thorough vetting process — background checks, reference calls, and a trial visit — so you never have to wonder if your pet is in good hands."
     },
     {
-      "id": "value-2",
-      "title": "Simple for busy humans",
-      "description": "From quick booking to clear reminders, we focus on what you actually need day‑to‑day."
+      "id": "transparency",
+      "title": "📸 Radical transparency",
+      "description": "Real-time photo updates, GPS check-ins, and live chat mean you're never out of the loop. Your pet's day should feel as visible to you as it does to us."
     },
     {
-      "id": "value-3",
-      "title": "Built for growth",
-      "description": "This demo is ready to plug into real vet partners, groomers, and trainers as your project grows."
+      "id": "simplicity",
+      "title": "✨ Effortless booking",
+      "description": "We obsess over removing friction. From finding a sitter to checkout, every screen is designed to feel fast, calm, and clear — even at 11 pm when you've just remembered you need cover."
+    },
+    {
+      "id": "care",
+      "title": "💛 Genuine animal care",
+      "description": "We partner only with sitters who treat pets like their own. Our community guidelines, training resources, and regular check-ins ensure the standard never slips."
     }
   ],
   "story": {
-    "heading": "The story behind Pawmie",
+    "heading": "How Pawmie came to life",
     "paragraphs": [
-      "Pawmie started as a simple idea: pet care should feel as friendly and organised as caring for any other member of the family. Many pet parents juggle work, family, and health appointments — we wanted to make at least one part of that easier.",
-      "This demo project focuses on the core journey: discovering services, booking appointments, and keeping track of upcoming visits. The goal is to give you a clean, modern foundation that you can easily connect to real APIs, databases, or admin dashboards later.",
-      "Everything you see here — from bookings to marketplace items — is powered by structured dummy data. That makes it safe to experiment with UI, layouts, and new ideas without worrying about real user information."
+      "It started with Milo — a three-year-old golden retriever who absolutely hated kennels. His owner, Maya, spent weeks calling sitters, getting ghosted, and eventually leaving Milo with a neighbour she barely knew. The anxiety never went away.",
+      "Maya and her co-founder Ravi — a software engineer with two cats and a mild obsession with UX — decided there had to be a better way. They spent six months interviewing pet parents, sitters, and vets before writing a single line of code.",
+      "The result was Pawmie: a platform designed not just to connect pets and sitters, but to make the entire experience feel warm, reliable, and genuinely human. Today, thousands of pets across 18 cities come home happy every week — and Milo finally loves his sitter visits."
     ]
   },
   "team": [
     {
-      "id": "team-1",
-      "name": "Paws & Pixels Studio",
-      "role": "Design & Product (Demo)",
-      "bio": "Imaginary product team focused on making pet care tools delightful and easy to use."
+      "id": "maya",
+      "name": "Maya Chen",
+      "role": "Co-founder & CEO",
+      "bio": "Former product lead at a pet-health startup, dog mum to Milo, and the person most likely to be found at 7 am testing the booking flow on her phone. Maya drives Pawmie's vision and obsesses over the owner experience."
     },
     {
-      "id": "team-2",
-      "name": "Happy Tails Lab",
-      "role": "Research (Demo)",
-      "bio": "Helps validate flows and features with real pet parents before they reach production."
+      "id": "ravi",
+      "name": "Ravi Menon",
+      "role": "Co-founder & CTO",
+      "bio": "Full-stack engineer turned startup builder. Ravi architected Pawmie's real-time update system and believes that great technology should feel invisible. Cat dad ×2, coffee snob ×1."
+    },
+    {
+      "id": "priya",
+      "name": "Priya Osei",
+      "role": "Head of Community & Trust",
+      "bio": "Priya runs sitter onboarding, quality standards, and the support team. With a background in veterinary care and community operations, she's the reason Pawmie's sitter network is consistently rated 4.9 ★."
+    },
+    {
+      "id": "leon",
+      "name": "Leon Park",
+      "role": "Lead Designer",
+      "bio": "Leon crafts every screen of the Pawmie experience — from the booking calendar to the live update cards. He believes delightful design is 10% aesthetics and 90% empathy for the person holding the phone at midnight."
     }
   ]
 }
