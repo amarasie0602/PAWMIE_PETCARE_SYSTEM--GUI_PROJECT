@@ -19,28 +19,30 @@ const steps = [
   <div class="min-h-screen bg-gradient-to-br from-rose-50 via-slate-50 to-red-100 dark:from-slate-950 dark:via-slate-900 dark:to-rose-950">
 
     <!-- ─── HERO ─────────────────────────────────────────────────── -->
-    <section class="relative -mt-20 h-[520px] overflow-hidden">
+    <section class="relative -mt-20 h-[750px] overflow-hidden">
       <img
         :src="emergencyImage"
         alt="Person providing emergency care to a dog"
-        class="absolute inset-0 h-full w-full object-cover object-[center_60%]"
+        class="absolute inset-0 h-full w-full object-cover object-[center_42%]"
       />
 
       <!-- dark overlay -->
       <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20" />
 
       <!-- bottom fade into page bg -->
-      <div class="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-slate-950 to-transparent" />
+      <div class="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-rose-50 to-transparent dark:from-slate-950 dark:to-transparent" />
 
       <!-- Hero content -->
-      <div class="absolute left-6 top-[52%] z-10 max-w-lg -translate-y-1/2 lg:left-14 xl:left-20">
+      <div class="absolute left-6 top-[52%] z-10 max-w-lg -translate-y-1/2 sm:max-w-xl lg:left-14 lg:max-w-2xl xl:left-20">
         <span class="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-white ring-1 ring-white/20 backdrop-blur-sm">
           <span class="flex h-1.5 w-1.5 animate-pulse rounded-full bg-rose-400" />
           🚑 Emergency Care
         </span>
 
-        <h1 class="hero-heading mb-3 text-[2.6rem] font-black leading-[1.06] tracking-tight text-white drop-shadow-lg sm:text-5xl lg:text-[3.2rem]">
-          24/7 emergency<br />
+        <h1
+          class="hero-heading mb-3 text-[2.6rem] font-black leading-[1.08] tracking-tight text-balance text-white drop-shadow-lg sm:text-5xl lg:text-[3.2rem]"
+        >
+          <span class="text-white">24/7 emergency </span>
           <span class="bg-gradient-to-r from-rose-400 to-red-300 bg-clip-text text-transparent">
             care for your pet.
           </span>
@@ -53,9 +55,10 @@ const steps = [
         <div class="flex flex-wrap gap-3">
           <a
             href="#emergency-form"
-            class="inline-flex items-center gap-2 rounded-full bg-rose-600 px-6 py-2.5 text-[13px] font-bold text-white shadow-lg shadow-rose-900/40 transition-all duration-200 hover:-translate-y-0.5 hover:bg-rose-700 hover:shadow-xl active:translate-y-0"
+            class="inline-flex items-center gap-2.5 rounded-full bg-rose-600 px-7 py-2.5 text-[13px] font-bold text-white shadow-lg shadow-rose-900/40 transition-all duration-200 hover:-translate-y-0.5 hover:bg-rose-700 hover:shadow-xl active:translate-y-0"
           >
-            Log Emergency Visit 🚑
+            <span>Log Emergency Visit</span>
+            <span class="text-base leading-none" aria-hidden="true">🚑</span>
           </a>
           <a
             href="tel:+94112345678"
@@ -80,17 +83,23 @@ const steps = [
         <section class="space-y-6">
 
           <!-- Hotline card -->
-          <div class="flex items-center gap-4 rounded-2xl border border-rose-900/40 bg-slate-900/70 px-5 py-4 shadow-sm backdrop-blur-sm">
-            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-rose-500/10 text-xl ring-1 ring-rose-500/20">
-              📞
-            </div>
-            <div>
-              <p class="text-[11px] font-bold uppercase tracking-widest text-rose-400">Emergency Hotline</p>
-              <p class="mt-0.5 text-[18px] font-black tracking-tight text-white">+94 11 234 5678</p>
+          <div
+            class="flex items-center justify-between gap-4 rounded-2xl border border-rose-900/40 bg-slate-900/70 px-5 py-4 shadow-sm backdrop-blur-sm sm:gap-5 sm:px-6 sm:py-4"
+          >
+            <div class="flex min-w-0 flex-1 items-center gap-4 sm:gap-5">
+              <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-rose-500/10 text-xl ring-1 ring-rose-500/20">
+                📞
+              </div>
+              <div class="min-w-0">
+                <p class="text-[11px] font-bold uppercase tracking-widest text-rose-400">Emergency Hotline</p>
+                <p class="mt-0.5 text-[18px] font-black tracking-tight text-white tabular-nums">
+                  +94 11 234 5678
+                </p>
+              </div>
             </div>
             <a
               href="tel:+94112345678"
-              class="ml-auto inline-flex items-center gap-1.5 rounded-xl bg-rose-600 px-4 py-2 text-[12px] font-bold text-white shadow-sm transition hover:bg-rose-700 active:scale-95"
+              class="inline-flex shrink-0 items-center justify-center rounded-xl bg-rose-600 px-4 py-2.5 text-[12px] font-bold text-white shadow-sm transition hover:bg-rose-700 active:scale-95 sm:px-5"
             >
               Call Now
             </a>

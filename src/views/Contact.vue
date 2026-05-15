@@ -206,6 +206,7 @@ function handleSubmit() {
           <!-- Location Card -->
           <div class="overflow-hidden rounded-2xl border border-purple-100/80 bg-white shadow-sm dark:border-white/[0.08] dark:bg-[#18132e]">
             <iframe
+              title="Map showing Pawmie Pet Care in Colombo"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63371.80385596814!2d79.8211607!3d6.9218374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae253d10f7a7003%3A0x320b2e4d32d3838d!2sColombo%2C%20Sri%20Lanka!5e0!3m2!1sen!2slk!4v1700000000000"
               class="h-44 w-full border-0"
               allowfullscreen
@@ -220,6 +221,7 @@ function handleSubmit() {
               <a
                 href="https://maps.google.com"
                 target="_blank"
+                rel="noopener noreferrer"
                 class="mt-3 inline-flex items-center gap-1.5 text-[12px] font-bold text-purple-600 transition hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300"
               >
                 Get Directions →
@@ -297,8 +299,9 @@ function handleSubmit() {
             <div class="flex flex-1 flex-col gap-4">
 
               <div>
-                <label class="mb-1.5 block text-xs font-bold text-slate-600 dark:text-slate-300">Full Name</label>
+                <label for="contact-full-name" class="mb-1.5 block text-xs font-bold text-slate-600 dark:text-slate-300">Full Name</label>
                 <input
+                  id="contact-full-name"
                   type="text"
                   placeholder="Your name"
                   class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5
@@ -310,8 +313,9 @@ function handleSubmit() {
               </div>
 
               <div>
-                <label class="mb-1.5 block text-xs font-bold text-slate-600 dark:text-slate-300">Email</label>
+                <label for="contact-email" class="mb-1.5 block text-xs font-bold text-slate-600 dark:text-slate-300">Email</label>
                 <input
+                  id="contact-email"
                   type="email"
                   placeholder="you@example.com"
                   class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5
@@ -323,8 +327,9 @@ function handleSubmit() {
               </div>
 
               <div>
-                <label class="mb-1.5 block text-xs font-bold text-slate-600 dark:text-slate-300">Pet Type</label>
+                <label for="contact-pet-type" class="mb-1.5 block text-xs font-bold text-slate-600 dark:text-slate-300">Pet Type</label>
                 <select
+                  id="contact-pet-type"
                   class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5
                   text-sm text-slate-900 outline-none transition
                   focus:border-purple-400 focus:ring-2 focus:ring-purple-200/50
@@ -336,8 +341,9 @@ function handleSubmit() {
               </div>
 
               <div>
-                <label class="mb-1.5 block text-xs font-bold text-slate-600 dark:text-slate-300">Help Needed</label>
+                <label for="contact-help-type" class="mb-1.5 block text-xs font-bold text-slate-600 dark:text-slate-300">Help Needed</label>
                 <select
+                  id="contact-help-type"
                   class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5
                   text-sm text-slate-900 outline-none transition
                   focus:border-purple-400 focus:ring-2 focus:ring-purple-200/50
@@ -349,8 +355,9 @@ function handleSubmit() {
               </div>
 
               <div class="flex flex-1 flex-col">
-                <label class="mb-1.5 block text-xs font-bold text-slate-600 dark:text-slate-300">Message</label>
+                <label for="contact-message" class="mb-1.5 block text-xs font-bold text-slate-600 dark:text-slate-300">Message</label>
                 <textarea
+                  id="contact-message"
                   placeholder="Tell us how we can help your little paw friend..."
                   class="w-full flex-1 resize-none rounded-xl border border-slate-200
                   bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition
