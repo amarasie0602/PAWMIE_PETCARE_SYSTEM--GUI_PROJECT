@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import BookingForm from '@/components/bookings/BookingForm.vue'
-
-// Replace with your own asset when ready:
-// import vetImage from '@/assets/vet-hero.jpg'
-const vetImage = 'https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=1400&q=80'
+import vetImage from '@/assets/vet-hero.jpg'
 
 const trustSignals = [
   { icon: '🩺', label: 'Vets available',   value: '30+'      },
@@ -35,7 +32,7 @@ const visitTypes = [
         alt="A vet gently examining a dog during a clinic visit"
         class="absolute inset-0 h-full w-full object-cover object-[center_35%]"
       />
-      <div class="absolute inset-0 bg-gradient-to-r from-black/78 via-black/45 to-black/10" />
+      <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/25" />
       <div class="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-indigo-50 to-transparent dark:from-slate-950 dark:to-transparent" />
 
       <div class="absolute left-6 top-[52%] z-10 max-w-lg -translate-y-1/2 sm:max-w-xl lg:left-14 lg:max-w-2xl xl:left-20">
@@ -194,7 +191,7 @@ const visitTypes = [
             category="Medical Care"
             heading="Book Vet Appointment"
             notesPlaceholder="Describe symptoms or the reason for your visit (e.g. limping, yearly vaccine, skin issue)"
-          
+            theme="vet"
           />
         </section>
 
