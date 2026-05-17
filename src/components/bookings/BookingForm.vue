@@ -8,7 +8,7 @@ const props = defineProps<{
   category?: string
   heading?: string
   notesPlaceholder?: string
-  theme?: 'default' | 'emergency' | 'grooming'
+  theme?: 'default' | 'emergency' | 'grooming' | 'vet'
 }>()
 
 const router = useRouter()
@@ -16,7 +16,8 @@ const { addBooking } = useBookingStore()
 
 const isEmergency = computed(() => props.theme === 'emergency')
 const isGrooming   = computed(() => props.theme === 'grooming')
-const isStyled     = computed(() => isEmergency.value || isGrooming.value)
+const isVet        = computed(() => props.theme === 'vet')
+const isStyled     = computed(() => isEmergency.value || isGrooming.value || isVet.value)
 
 const form = reactive({
   petName: '',
@@ -33,6 +34,8 @@ const inputClass = computed(() => {
     return 'w-full p-3 border rounded-lg bg-slate-800/60 border-slate-700 text-white placeholder:text-slate-500 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500 transition'
   if (isGrooming.value)
     return 'w-full p-3 border rounded-lg bg-white/10 border-pink-300/40 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400 transition'
+  if (isVet.value)
+    return 'w-full p-3 border rounded-lg bg-white/10 border-indigo-300/40 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 transition'
   return 'w-full p-3 border rounded-lg bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 transition'
 })
 
@@ -145,7 +148,7 @@ const handleSubmit = () => {
 <template>
   <!-- ── DEFAULT THEME ──────────────────────────────────────────── -->
   <div
-    v-if="!isEmergency && !isGrooming"
+    v-if="!isEmergency && !isGrooming && !isVet"
     class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-lg"
   >
     <h2 class="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">
@@ -188,6 +191,62 @@ const handleSubmit = () => {
       <button type="submit"
         class="w-full py-3 rounded-lg font-bold text-white bg-gradient-to-r from-indigo-500 to-purple-500 hover:opacity-90 transition">
         Confirm Booking
+      </button>
+    </form>
+  </div>
+
+  <!-- ── VET THEME ─────────────────────────────────────────────── -->
+  <div
+    v-if="isVet"
+    class="w-full max-w-lg rounded-2xl border border-indigo-200/60 bg-white/80 p-7 shadow-xl backdrop-blur-sm dark:border-indigo-900/30 dark:bg-slate-900/80 ring-1 ring-indigo-100/40 dark:ring-white/5"
+  >
+    <!-- Header -->
+    <div class="mb-6 text-center">
+      <span class="mb-3 inline-flex items-center gap-1.5 rounded-full bg-indigo-50 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-indigo-500 ring-1 ring-indigo-200 dark:bg-indigo-900/30 dark:ring-indigo-500/20">
+        <span class="h-1.5 w-1.5 rounded-full bg-indigo-400 inline-block" />
+        🩺 Vet Appointment
+      </span>
+      <h2 class="mt-2 text-2xl font-black text-slate-900 dark:text-white">{{ heading || 'Book Vet Appointment' }}</h2>
+      <p class="mt-1 text-[12px] text-slate-400">Pick a slot — your vet will have all details ready before you arrive.</p>
+    </div>
+
+    <form @submit.prevent="handleSubmit" class="space-y-4">
+      <div>
+        <label class="block text-sm font-semibold mb-1 text-slate-600 dark:text-slate-300">Pet Name *</label>
+        <input v-model="form.petName" type="text" :class="inputClass" placeholder="Enter your pet's name" />
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1 text-slate-600 dark:text-slate-300">Owner Name *</label>
+        <input v-model="form.ownerName" type="text" :class="inputClass" placeholder="Enter your name" />
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-sm font-semibold mb-1 text-slate-600 dark:text-slate-300">Service *</label>
+          <input v-model="form.service" type="text" :class="inputClass" />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold mb-1 text-slate-600 dark:text-slate-300">Category *</label>
+          <input v-model="form.category" type="text" :class="inputClass" />
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-sm font-semibold mb-1 text-slate-600 dark:text-slate-300">Date *</label>
+          <input v-model="form.date" type="date" :class="inputClass" />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold mb-1 text-slate-600 dark:text-slate-300">Time *</label>
+          <input v-model="form.time" type="time" :class="inputClass" />
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1 text-slate-600 dark:text-slate-300">Symptoms / Notes</label>
+        <textarea v-model="form.notes" rows="3" :class="inputClass + ' resize-none'"
+          :placeholder="notesPlaceholder ?? 'Describe symptoms or the reason for your visit'" />
+      </div>
+      <button type="submit"
+        class="w-full py-3.5 rounded-xl font-black text-white text-[15px] bg-gradient-to-r from-indigo-600 to-sky-500 hover:from-indigo-700 hover:to-sky-600 shadow-lg shadow-indigo-200/60 dark:shadow-indigo-900/40 transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98]">
+        🩺 Confirm Appointment
       </button>
     </form>
   </div>
