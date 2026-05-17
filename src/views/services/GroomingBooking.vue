@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import BookingForm from '@/components/bookings/BookingForm.vue'
-
-// Replace this with your own asset once you have one:
-// import groomingImage from '@/assets/grooming-hero.png'
-const groomingImage = 'https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=1400&q=80'
+import groomingImage from '@/assets/grooming-hero.jpg'
 
 const trustSignals = [
   { icon: '✂️', label: 'Services offered', value: '12+'      },
@@ -35,7 +32,7 @@ const packages = [
         class="absolute inset-0 h-full w-full object-cover object-[center_40%]"
       />
       <!-- Gradient overlay: pink-tinted on the left, fades right -->
-      <div class="absolute inset-0 bg-gradient-to-r from-fuchsia-950/85 via-pink-900/55 to-black/15" />
+      <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-black/10" />
       <!-- Bottom fade into page background -->
       <div class="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-pink-50 to-transparent dark:from-slate-950 dark:to-transparent" />
 
