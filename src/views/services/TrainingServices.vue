@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import BookingForm from '@/components/bookings/BookingForm.vue'
 import trainingImage from '@/assets/training-hero.png'
 
@@ -20,6 +21,85 @@ const programs = [
   { name: 'Behaviour Correction', desc: 'Address aggression, anxiety & bad habits',    icon: '🧠', tag: 'Specialist'      },
   { name: 'Advanced Tricks',      desc: 'Fun complex skills for engaged, active pets', icon: '🏆', tag: 'Level up'        },
 ]
+
+// ── Videos ──────────────────────────────────────────────────────────
+// Replace the youtubeId values with your real YouTube video IDs.
+// The thumbnail is auto-fetched from YouTube's CDN — no extra work needed.
+type VideoCategory = 'Highlights' | 'Trainer' | 'Program'
+interface Video {
+  id: string
+  youtubeId: string
+  title: string
+  subtitle: string
+  category: VideoCategory
+  duration: string
+}
+
+const videos: Video[] = [
+  {
+    id:        'v1',
+    youtubeId: 'tLXbPMo9fcY',
+    title:     'Puppy Survival Guide — First Hours at Home',
+    subtitle:  'Zak George · Sit, recall, leash & potty basics',
+    category:  'Program',
+    duration:  '14:32',
+  },
+  {
+    id:        'v2',
+    youtubeId: '6MZCJvBcRgA',
+    title:     'Your 10-Minute Morning Puppy Training Plan',
+    subtitle:  'McCann Dogs · 5 quick wins before work',
+    category:  'Highlights',
+    duration:  '9:48',
+  },
+  {
+    id:        'v3',
+    youtubeId: '7YHaHn37YrA',
+    title:     'How to Train Your Dog to Listen Off Leash',
+    subtitle:  'Zak George · Recall & off-leash reliability',
+    category:  'Highlights',
+    duration:  '11:17',
+  },
+]
+
+const categoryIcons: Record<VideoCategory, string> = {
+  Highlights: '🎬',
+  Trainer:    '👨‍🏫',
+  Program:    '📋',
+}
+
+const activeFilter = ref<VideoCategory | 'All'>('All')
+const filteredVideos = ref(videos)
+
+function setFilter(cat: VideoCategory | 'All') {
+  activeFilter.value = cat
+  filteredVideos.value = cat === 'All' ? videos : videos.filter(v => v.category === cat)
+}
+
+// ── Lightbox ────────────────────────────────────────────────────────
+const activeVideo = ref<Video | null>(null)
+
+function openVideo(video: Video) {
+  activeVideo.value = video
+  document.body.style.overflow = 'hidden'
+}
+
+function closeVideo() {
+  activeVideo.value = null
+  document.body.style.overflow = ''
+}
+
+function onBackdropClick(e: MouseEvent) {
+  if ((e.target as HTMLElement).dataset.backdrop) closeVideo()
+}
+
+function thumbUrl(youtubeId: string) {
+  return `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`
+}
+
+function embedUrl(youtubeId: string) {
+  return `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`
+}
 </script>
 
 <template>
@@ -53,9 +133,9 @@ const programs = [
             <span>Book a Session</span>
             <span aria-hidden="true">🎓</span>
           </a>
-          <a href="#programs"
+          <a href="#videos"
             class="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-6 py-2.5 text-[13px] font-bold text-white backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/20 active:translate-y-0">
-            🐾 View Programs
+            ▶ Watch Videos
           </a>
         </div>
       </div>
@@ -96,6 +176,73 @@ const programs = [
           <p class="mt-0.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">{{ signal.label }}</p>
         </div>
       </div>
+
+      <!-- ─── VIDEO GALLERY ──────────────────────────────────────── -->
+      <section id="videos" class="mb-12">
+        <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p class="text-[10px] font-black uppercase tracking-[0.25em] text-emerald-600">See it in action</p>
+            <h2 class="mt-1 text-[1.4rem] font-black text-slate-900 dark:text-white">Training videos</h2>
+          </div>
+          <!-- Filter pills -->
+          <div class="flex flex-wrap gap-2">
+            <button
+              v-for="cat in (['All', 'Highlights', 'Program'] as const)"
+              :key="cat"
+              @click="setFilter(cat)"
+              class="rounded-full px-3.5 py-1.5 text-[11px] font-black uppercase tracking-wide transition-all duration-200"
+              :class="activeFilter === cat
+                ? 'bg-emerald-600 text-white shadow-sm'
+                : 'bg-white/80 text-slate-500 hover:bg-emerald-50 hover:text-emerald-700 dark:bg-slate-800/70 dark:text-slate-400 dark:hover:text-emerald-400'"
+            >
+              {{ cat === 'All' ? '✦ All' : `${categoryIcons[cat as VideoCategory]} ${cat}` }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Grid -->
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <button
+            v-for="video in filteredVideos"
+            :key="video.id"
+            @click="openVideo(video)"
+            class="group relative overflow-hidden rounded-2xl border border-white/60 bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/[0.07] dark:bg-slate-900/70 text-left"
+          >
+            <!-- Thumbnail -->
+            <div class="relative h-44 overflow-hidden bg-slate-200 dark:bg-slate-800">
+              <img
+                :src="thumbUrl(video.youtubeId)"
+                :alt="video.title"
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <!-- Dark overlay -->
+              <div class="absolute inset-0 bg-black/20 transition-colors duration-300 group-hover:bg-black/30" />
+              <!-- Play button -->
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:bg-white">
+                  <svg class="ml-0.5 h-5 w-5 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
+              </div>
+              <!-- Duration badge -->
+              <span class="absolute bottom-2 right-2 rounded-md bg-black/70 px-1.5 py-0.5 text-[11px] font-bold tabular-nums text-white">
+                {{ video.duration }}
+              </span>
+              <!-- Category badge -->
+              <span class="absolute left-2 top-2 rounded-full bg-emerald-600/90 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wide text-white backdrop-blur-sm">
+                {{ categoryIcons[video.category] }} {{ video.category }}
+              </span>
+            </div>
+            <!-- Text -->
+            <div class="p-4">
+              <p class="text-[14px] font-bold leading-snug text-slate-800 dark:text-white">{{ video.title }}</p>
+              <p class="mt-1 text-[12px] text-slate-500 dark:text-slate-400">{{ video.subtitle }}</p>
+            </div>
+          </button>
+        </div>
+      </section>
+      <!-- ─── END VIDEO GALLERY ──────────────────────────────────── -->
 
       <!-- Two-column grid -->
       <div
@@ -191,6 +338,7 @@ const programs = [
             category="Grooming & Training"
             heading="Book Training Session"
             notesPlaceholder="Describe your pet's behaviour or what you'd like to work on (e.g. pulling on lead, barking, recall)"
+            theme="training"
           />
         </section>
 
@@ -198,9 +346,67 @@ const programs = [
     </div>
 
   </div>
+
+  <!-- ─── LIGHTBOX MODAL ─────────────────────────────────────────── -->
+  <Teleport to="body">
+    <Transition name="modal">
+      <div
+        v-if="activeVideo"
+        data-backdrop="true"
+        @click="onBackdropClick"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+      >
+        <div class="relative w-full max-w-3xl">
+          <!-- Close button -->
+          <button
+            @click="closeVideo"
+            class="absolute -top-10 right-0 flex items-center gap-1.5 text-[12px] font-bold text-white/70 transition hover:text-white"
+          >
+            <span>Close</span>
+            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/10 text-sm">✕</span>
+          </button>
+
+          <!-- Video card -->
+          <div class="overflow-hidden rounded-2xl bg-slate-900 shadow-2xl ring-1 ring-white/10">
+            <!-- 16:9 iframe -->
+            <div class="relative aspect-video w-full">
+              <iframe
+                :src="embedUrl(activeVideo.youtubeId)"
+                :title="activeVideo.title"
+                class="absolute inset-0 h-full w-full"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              />
+            </div>
+            <!-- Info bar -->
+            <div class="flex items-center justify-between gap-4 px-5 py-4">
+              <div>
+                <p class="text-[14px] font-bold text-white">{{ activeVideo.title }}</p>
+                <p class="mt-0.5 text-[12px] text-slate-400">{{ activeVideo.subtitle }}</p>
+              </div>
+              <span class="shrink-0 rounded-full bg-emerald-600/20 px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-emerald-400 ring-1 ring-emerald-500/20">
+                {{ categoryIcons[activeVideo.category] }} {{ activeVideo.category }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap');
 .hero-heading { font-family: 'Playfair Display', Georgia, serif; }
+
+.modal-enter-active,
+.modal-leave-active {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+  transform: scale(0.96);
+}
 </style>
