@@ -8,7 +8,7 @@ const props = defineProps<{
   category?: string
   heading?: string
   notesPlaceholder?: string
-  theme?: 'default' | 'emergency' | 'grooming' | 'vet'
+  theme?: 'default' | 'emergency' | 'grooming' | 'vet' | 'training'
 }>()
 
 const router = useRouter()
@@ -17,6 +17,7 @@ const { addBooking } = useBookingStore()
 const isEmergency = computed(() => props.theme === 'emergency')
 const isGrooming  = computed(() => props.theme === 'grooming')
 const isVet       = computed(() => props.theme === 'vet')
+const isTraining  = computed(() => props.theme === 'training')
 
 const form = reactive({
   petName:   '',
@@ -38,6 +39,8 @@ const wrapperClass = computed(() => {
     return 'w-full max-w-lg rounded-2xl border border-pink-200/60 bg-white/80 p-7 shadow-xl backdrop-blur-sm dark:border-pink-900/30 dark:bg-slate-900/80 ring-1 ring-pink-100/40 dark:ring-white/5'
   if (isVet.value)
     return 'w-full max-w-lg rounded-2xl border border-indigo-200/60 bg-white/80 p-7 shadow-xl backdrop-blur-sm dark:border-indigo-900/30 dark:bg-slate-900/80 ring-1 ring-indigo-100/40 dark:ring-white/5'
+  if (isTraining.value)
+    return 'w-full max-w-lg rounded-2xl border border-emerald-200/60 bg-white/80 p-7 shadow-xl backdrop-blur-sm dark:border-emerald-900/30 dark:bg-slate-900/80 ring-1 ring-emerald-100/40 dark:ring-white/5'
   return 'bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-lg'
 })
 
@@ -45,6 +48,7 @@ const badgeClass = computed(() => {
   if (isEmergency.value) return 'inline-flex items-center gap-1.5 rounded-full bg-rose-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-rose-400 ring-1 ring-rose-500/20'
   if (isGrooming.value)  return 'inline-flex items-center gap-1.5 rounded-full bg-pink-50 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-pink-500 ring-1 ring-pink-200 dark:bg-pink-900/30 dark:ring-pink-500/20'
   if (isVet.value)       return 'inline-flex items-center gap-1.5 rounded-full bg-indigo-50 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-indigo-500 ring-1 ring-indigo-200 dark:bg-indigo-900/30 dark:ring-indigo-500/20'
+  if (isTraining.value)  return 'inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-emerald-700 ring-1 ring-emerald-200 dark:bg-emerald-900/30 dark:ring-emerald-500/20'
   return ''
 })
 
@@ -52,6 +56,7 @@ const dotClass = computed(() => {
   if (isEmergency.value) return 'h-1.5 w-1.5 animate-pulse rounded-full bg-rose-400 inline-block'
   if (isGrooming.value)  return 'h-1.5 w-1.5 rounded-full bg-pink-400 inline-block'
   if (isVet.value)       return 'h-1.5 w-1.5 rounded-full bg-indigo-400 inline-block'
+  if (isTraining.value)  return 'h-1.5 w-1.5 rounded-full bg-emerald-500 inline-block'
   return ''
 })
 
@@ -59,6 +64,7 @@ const badgeLabel = computed(() => {
   if (isEmergency.value) return 'Live Emergency Form'
   if (isGrooming.value)  return '✂️ Grooming Session'
   if (isVet.value)       return '🩺 Vet Appointment'
+  if (isTraining.value)  return '🎓 Training Session'
   return ''
 })
 
@@ -66,6 +72,7 @@ const subheading = computed(() => {
   if (isEmergency.value) return 'Fill in quickly — nearby clinics will be notified immediately.'
   if (isGrooming.value)  return 'Pick a time that works — your groomer will be ready.'
   if (isVet.value)       return 'Pick a slot — your vet will have all details ready before you arrive.'
+  if (isTraining.value)  return 'Tell us your goals — your trainer will be prepared before you arrive.'
   return ''
 })
 
@@ -88,6 +95,8 @@ const inputClass = computed(() => {
     return 'w-full p-3 border rounded-lg bg-white/10 border-pink-300/40 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400 transition'
   if (isVet.value)
     return 'w-full p-3 border rounded-lg bg-white/10 border-indigo-300/40 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 transition'
+  if (isTraining.value)
+    return 'w-full p-3 border rounded-lg bg-white/10 border-emerald-300/40 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition'
   return 'w-full p-3 border rounded-lg bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 transition'
 })
 
@@ -98,6 +107,8 @@ const buttonClass = computed(() => {
     return 'w-full py-3.5 rounded-xl font-black text-white text-[15px] bg-gradient-to-r from-pink-500 to-fuchsia-500 hover:from-pink-600 hover:to-fuchsia-600 shadow-lg shadow-pink-200/60 dark:shadow-pink-900/40 transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98]'
   if (isVet.value)
     return 'w-full py-3.5 rounded-xl font-black text-white text-[15px] bg-gradient-to-r from-indigo-600 to-sky-500 hover:from-indigo-700 hover:to-sky-600 shadow-lg shadow-indigo-200/60 dark:shadow-indigo-900/40 transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98]'
+  if (isTraining.value)
+    return 'w-full py-3.5 rounded-xl font-black text-white text-[15px] bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-700 hover:to-teal-600 shadow-lg shadow-emerald-200/60 dark:shadow-emerald-900/40 transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98]'
   return 'w-full py-3 rounded-lg font-bold text-white bg-gradient-to-r from-indigo-500 to-purple-500 hover:opacity-90 transition'
 })
 
@@ -105,6 +116,7 @@ const buttonLabel = computed(() => {
   if (isEmergency.value) return '🚑 Confirm Emergency Visit'
   if (isGrooming.value)  return '🐾 Confirm Grooming Session'
   if (isVet.value)       return '🩺 Confirm Appointment'
+  if (isTraining.value)  return '🎓 Confirm Training Session'
   return 'Confirm Booking'
 })
 
@@ -116,6 +128,7 @@ const notesDefault = computed(() => {
   if (isEmergency.value) return "Describe your pet's symptoms (e.g. difficulty breathing, seizure, bleeding)"
   if (isGrooming.value)  return 'Any coat type, skin sensitivities or special requests?'
   if (isVet.value)       return 'Describe symptoms or the reason for your visit (e.g. limping, yearly vaccine, skin issue)'
+  if (isTraining.value)  return "Describe your pet's behaviour or what you'd like to work on (e.g. pulling on lead, barking, recall)"
   return 'Any special instructions for your pet'
 })
 
@@ -293,7 +306,7 @@ const handleSubmit = () => {
     <div v-if="!tracking" :class="wrapperClass">
 
       <!-- Themed header (emergency / grooming / vet) -->
-      <div v-if="isEmergency || isGrooming || isVet" class="mb-6 text-center">
+      <div v-if="isEmergency || isGrooming || isVet || isTraining" class="mb-6 text-center">
         <span :class="badgeClass">
           <span :class="dotClass" />
           {{ badgeLabel }}
