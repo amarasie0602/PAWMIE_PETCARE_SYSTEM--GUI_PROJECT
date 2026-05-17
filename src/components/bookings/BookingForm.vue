@@ -46,7 +46,6 @@ const CLINIC_NAMES = [
   'Animal Medical Centre',
 ]
 
-// Stages are computed so assignedClinic reactivity flows through
 const stages = computed(() => [
   { label: 'Visit Logged',      icon: '✅', detail: 'Your request has been received.'                         },
   { label: 'Notifying Clinics', icon: '📡', detail: 'Searching for nearby available vets...'                  },
@@ -63,16 +62,14 @@ function clearTimers() {
   stageTimeouts.length = 0
 }
 
+// ── FIX: closing brace was misplaced, body was outside the function ─
 function startTracker(petName: string) {
-
   submittedPetName.value = petName
   assignedClinic.value   = CLINIC_NAMES[Math.floor(Math.random() * CLINIC_NAMES.length)] ?? 'Nearby Clinic'
-}
   tracking.value         = true
   currentStage.value     = 0
   etaSeconds.value       = 8 * 60
 
-  // Countdown
   countdownTimer = setInterval(() => {
     if (etaSeconds.value > 0) {
       etaSeconds.value--
@@ -81,14 +78,31 @@ function startTracker(petName: string) {
     }
   }, 1000)
 
-  // Auto-advance stages: 0 → 1 → 2 → 3
   const delays = [2000, 5000, 9000]
   delays.forEach((delay, i) => {
     stageTimeouts.push(
       setTimeout(() => { currentStage.value = i + 1 }, delay)
     )
   })
+}
 
+// ── Cancel: stop timers, hide tracker, reset form ─────────────────
+function cancelTracking() {
+  clearTimers()
+  tracking.value = false
+  submittedPetName.value = ''
+  assignedClinic.value   = ''
+  currentStage.value     = 0
+  etaSeconds.value       = 0
+  // Reset form back to initial values so the user can re-submit
+  form.petName   = ''
+  form.ownerName = ''
+  form.service   = props.service ?? ''
+  form.category  = props.category ?? ''
+  form.date      = ''
+  form.time      = ''
+  form.notes     = ''
+}
 
 function formatETA(secs: number): string {
   const m = Math.floor(secs / 60).toString().padStart(2, '0')
@@ -228,7 +242,6 @@ const handleSubmit = () => {
             :key="stage.label"
             class="flex items-start gap-4"
           >
-            <!-- Node + connector -->
             <div class="flex flex-col items-center">
               <div
                 class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 text-base transition-all duration-500"
@@ -248,7 +261,6 @@ const handleSubmit = () => {
                 :class="i < currentStage ? 'bg-emerald-500/40' : 'bg-slate-700/40'"
               />
             </div>
-            <!-- Text -->
             <div class="pb-4 pt-1">
               <p
                 class="text-[13px] font-bold transition-colors duration-300"
@@ -273,12 +285,21 @@ const handleSubmit = () => {
         </div>
 
         <!-- Hotline strip -->
-        <div class="flex items-center justify-between rounded-xl border border-slate-700/50 bg-slate-800/40 px-4 py-3">
+        <div class="flex items-center justify-between rounded-xl border border-slate-700/50 bg-slate-800/40 px-4 py-3 mb-4">
           <p class="text-[12px] text-slate-400">Need to speak to someone?</p>
           <a href="tel:+94112345678" class="text-[12px] font-black text-rose-400 transition hover:text-rose-300">
             📞 Call Hotline
           </a>
         </div>
+
+        <!-- Cancel / back to form button -->
+        <button
+          type="button"
+          @click="cancelTracking"
+          class="w-full py-2.5 rounded-xl border border-slate-700/60 bg-slate-800/60 text-[12px] font-bold text-slate-400 transition hover:bg-slate-700/60 hover:text-white active:scale-[0.98]"
+        >
+          ← Cancel &amp; Log a New Emergency
+        </button>
       </div>
     </Transition>
 
