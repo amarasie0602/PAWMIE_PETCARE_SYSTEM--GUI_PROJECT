@@ -127,7 +127,7 @@
     </section>
 
     <!-- ══════════════════════════════════════════════════════
-         TEAM — DummyJSON /users (8 people, 4-col grid)
+         TEAM — randomuser.me (4 people, real portrait photos)
     ══════════════════════════════════════════════════════ -->
     <section class="pa-section">
       <div class="pa-section-inner">
@@ -138,8 +138,8 @@
         </div>
 
         <div v-if="usersLoading" class="pa-team-grid">
-          <div class="pa-member" v-for="n in 8" :key="n" style="pointer-events:none;">
-            <div class="sk" style="height:220px;border-radius:18px 18px 0 0;" />
+          <div class="pa-member" v-for="n in 4" :key="n" style="pointer-events:none;">
+            <div class="sk" style="height:260px;border-radius:18px 18px 0 0;" />
             <div style="padding:16px 18px 20px;display:flex;flex-direction:column;gap:8px;">
               <div class="sk sk-line" style="width:60%;height:14px;" />
               <div class="sk sk-line" style="width:40%;height:11px;" />
@@ -150,21 +150,21 @@
         <p v-else-if="usersError" class="pa-error">{{ usersError }}</p>
 
         <div v-else class="pa-team-grid">
-          <div class="pa-member" v-for="u in users" :key="u.id">
+          <div class="pa-member" v-for="u in users" :key="u.login.uuid">
             <div class="pa-member-img-wrap">
               <img
-                :src="u.image"
-                :alt="`${u.firstName} ${u.lastName}`"
+                :src="u.picture.large"
+                :alt="`${u.name.first} ${u.name.last}`"
                 class="pa-member-img"
                 loading="lazy"
               />
               <div class="pa-member-overlay">
-                <p>{{ u.company?.department }} · {{ u.company?.name }}</p>
+                <p>{{ u.location.city }}, {{ u.location.country }}</p>
               </div>
             </div>
             <div class="pa-member-body">
-              <h3 class="pa-member-name">{{ u.firstName }} {{ u.lastName }}</h3>
-              <span class="pa-member-role">{{ u.company?.title }}</span>
+              <h3 class="pa-member-name">{{ u.name.first }} {{ u.name.last }}</h3>
+              <span class="pa-member-role">{{ u.jobTitle }}</span>
             </div>
           </div>
         </div>
@@ -279,19 +279,29 @@ const faqs = [
   },
 ]
 
-// ── DummyJSON: 8 users for the team grid ─────────────────
+// ── randomuser.me: 4 real portrait photos ────────────────
 const users = ref<any[]>([])
 const usersLoading = ref(true)
 const usersError = ref<string | null>(null)
 
+const jobTitles = [
+  'Co-founder & CEO',
+  'Head of Veterinary Partnerships',
+  'Lead Product Designer',
+  'Head of Sitter Operations',
+]
+
 onMounted(async () => {
   try {
     const res = await fetch(
-      'https://dummyjson.com/users?limit=8&select=id,firstName,lastName,image,company'
+      'https://randomuser.me/api/?results=4&inc=name,picture,location,login&nat=us,gb,au,ca'
     )
     if (!res.ok) throw new Error(`${res.status}`)
     const d = await res.json()
-    users.value = d.users
+    users.value = d.results.map((u: any, i: number) => ({
+      ...u,
+      jobTitle: jobTitles[i],
+    }))
   } catch {
     usersError.value = 'Could not load team members. Please try again later.'
   } finally {
@@ -530,7 +540,7 @@ onMounted(async () => {
 .pa-member { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; transition: border-color .28s, box-shadow .28s, transform .28s; }
 .pa-member:hover { border-color: var(--accent-2); box-shadow: var(--card-shadow); transform: translateY(-6px); }
 
-.pa-member-img-wrap { position: relative; height: 220px; overflow: hidden; }
+.pa-member-img-wrap { position: relative; height: 260px; overflow: hidden; }
 .pa-member-img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; filter: saturate(0.85); transition: transform .7s cubic-bezier(0.22,0.61,0.36,1), filter .4s; }
 .pa-member:hover .pa-member-img { transform: scale(1.07); filter: saturate(1); }
 
