@@ -1,603 +1,320 @@
-<template>
-  <div :class="['pa-root', isDark ? 'dark' : 'light']">
-
-    <!-- ══════════════════════════════════════════════════════
-         HERO
-    ══════════════════════════════════════════════════════ -->
-    <section class="pa-hero">
-      <div class="pa-hero-bg">
-        <img
-          src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1400&q=85"
-          alt="Happy dog with owner"
-          class="pa-hero-img"
-          loading="eager"
-        />
-        <div class="pa-hero-overlay" />
-      </div>
-
-      <div class="pa-hero-content">
-        <div class="pa-chip">
-          <span class="pa-chip-dot" />
-          Our Story
-        </div>
-        <h1 class="pa-hero-h1">
-          Built by pet lovers,<br/>
-          <em>for pet lovers.</em>
-        </h1>
-        <p class="pa-hero-sub">
-          Pawmie started with one simple belief — every pet deserves
-          stress-free care, and every pet parent deserves complete peace of mind.
-        </p>
-        <div class="pa-hero-tags">
-          <span class="pa-tag">🐶 Dog Care</span>
-          <span class="pa-tag">🐱 Cat Care</span>
-          <span class="pa-tag">✂️ Grooming</span>
-          <span class="pa-tag">🐾 Pet Support</span>
-        </div>
-      </div>
-
-      <div class="pa-scroll-hint" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" width="20" height="20">
-          <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-    </section>
-
-    <!-- ══════════════════════════════════════════════════════
-         STATS STRIP
-    ══════════════════════════════════════════════════════ -->
-    <div class="pa-stats-strip">
-      <div class="pa-stats-inner">
-        <div class="pa-stat" v-for="s in stats" :key="s.label">
-          <span class="pa-stat-val">{{ s.val }}</span>
-          <span class="pa-stat-lbl">{{ s.label }}</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════════════════
-         STORY
-    ══════════════════════════════════════════════════════ -->
-    <section class="pa-section">
-      <div class="pa-section-inner">
-        <div class="pa-section-label-row">
-          <span class="pa-eyebrow">The Origin</span>
-          <h2 class="pa-section-h2">How Pawmie came to life</h2>
-          <p class="pa-section-sub">
-            It started with Milo — a golden retriever who absolutely hated kennels.
-            His owner Maya spent weeks calling sitters, getting ghosted, and leaving
-            Milo with a neighbour she barely knew. Maya and co-founder Ravi spent six
-            months interviewing pet parents, sitters, and vets before writing a single
-            line of code. Today, thousands of pets across 18 cities come home happy
-            every week — and Milo finally loves his sitter visits.
-          </p>
-        </div>
-
-        <div class="pa-story-grid">
-          <div class="pa-story-img-wrap">
-            <img
-              src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=700&q=85"
-              alt="Pet owner with dog at home"
-              class="pa-story-img"
-              loading="lazy"
-            />
-            <div class="pa-story-badge">
-              <span class="pa-badge-year">2021</span>
-              <span class="pa-badge-lbl">San Francisco</span>
-            </div>
-          </div>
-
-          <div class="pa-story-cards">
-            <div class="pa-info-card" v-for="fact in facts" :key="fact.title">
-              <span class="pa-info-icon">{{ fact.icon }}</span>
-              <div>
-                <h4 class="pa-info-title">{{ fact.title }}</h4>
-                <p class="pa-info-body">{{ fact.body }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══════════════════════════════════════════════════════
-         PRINCIPLES
-    ══════════════════════════════════════════════════════ -->
-    <section class="pa-section pa-section--alt">
-      <div class="pa-section-inner">
-        <div class="pa-section-label-row">
-          <span class="pa-eyebrow">Our Principles</span>
-          <h2 class="pa-section-h2">What guides every Pawmie screen</h2>
-        </div>
-
-        <div class="pa-cards-grid">
-          <div class="pa-card" v-for="(p, i) in principles" :key="p.title">
-            <div class="pa-card-thumb-wrap">
-              <img :src="p.img" :alt="p.title" class="pa-card-thumb" loading="lazy" />
-              <span class="pa-card-num">0{{ i + 1 }}</span>
-            </div>
-            <div class="pa-card-body-wrap">
-              <span class="pa-card-icon">{{ p.icon }}</span>
-              <h3 class="pa-card-title">{{ p.title }}</h3>
-              <p class="pa-card-body">{{ p.body }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══════════════════════════════════════════════════════
-         TEAM — randomuser.me (4 people, real portrait photos)
-    ══════════════════════════════════════════════════════ -->
-    <section class="pa-section">
-      <div class="pa-section-inner">
-        <div class="pa-section-label-row">
-          <span class="pa-eyebrow">The People</span>
-          <h2 class="pa-section-h2">The team behind Pawmie</h2>
-          <p class="pa-section-sub">Small team. Big love for animals.</p>
-        </div>
-
-        <div v-if="usersLoading" class="pa-team-grid">
-          <div class="pa-member" v-for="n in 4" :key="n" style="pointer-events:none;">
-            <div class="sk" style="height:260px;border-radius:18px 18px 0 0;" />
-            <div style="padding:16px 18px 20px;display:flex;flex-direction:column;gap:8px;">
-              <div class="sk sk-line" style="width:60%;height:14px;" />
-              <div class="sk sk-line" style="width:40%;height:11px;" />
-            </div>
-          </div>
-        </div>
-
-        <p v-else-if="usersError" class="pa-error">{{ usersError }}</p>
-
-        <div v-else class="pa-team-grid">
-          <div class="pa-member" v-for="u in users" :key="u.login.uuid">
-            <div class="pa-member-img-wrap">
-              <img
-                :src="u.picture.large"
-                :alt="`${u.name.first} ${u.name.last}`"
-                class="pa-member-img"
-                loading="lazy"
-              />
-              <div class="pa-member-overlay">
-                <p>{{ u.location.city }}, {{ u.location.country }}</p>
-              </div>
-            </div>
-            <div class="pa-member-body">
-              <h3 class="pa-member-name">{{ u.name.first }} {{ u.name.last }}</h3>
-              <span class="pa-member-role">{{ u.jobTitle }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══════════════════════════════════════════════════════
-         FAQ
-    ══════════════════════════════════════════════════════ -->
-    <section class="pa-section pa-section--alt">
-      <div class="pa-section-inner">
-        <div class="pa-section-label-row">
-          <span class="pa-eyebrow">Common Questions</span>
-          <h2 class="pa-section-h2">Things pet parents often ask</h2>
-        </div>
-        <div class="pa-faq-grid">
-          <div class="pa-faq" v-for="faq in faqs" :key="faq.q">
-            <span class="pa-faq-icon" aria-hidden="true">
-              <svg viewBox="0 0 20 20" fill="none" width="18" height="18">
-                <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.4"/>
-                <path d="M10 6v5M10 13.5v.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-              </svg>
-            </span>
-            <div>
-              <h4 class="pa-faq-q">{{ faq.q }}</h4>
-              <p class="pa-faq-a">{{ faq.a }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </div>
-</template>
-
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted } from 'vue'
+import heroImage  from '@/assets/about-hero.jpeg'
+import storyImage from '@/assets/about-story.jpg'
 
-// ── Dark mode: watches the class the Navbar toggles on <html> ──
-const isDark = ref(document.documentElement.classList.contains('dark'))
-const observer = new MutationObserver(() => {
-  isDark.value = document.documentElement.classList.contains('dark')
-})
-onMounted(() => observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] }))
-onBeforeUnmount(() => observer.disconnect())
-
-// ── Static data ───────────────────────────────────────────
+// ── Static data ───────────────────────────────────────────────────
 const stats = [
-  { val: '12,400+', label: 'Happy pets served' },
-  { val: '340+',    label: 'Trusted sitters' },
-  { val: '18',      label: 'Cities & growing' },
-  { val: '4.9★',    label: 'Average rating' },
+  { val: '12,400+', label: 'Happy pets served', icon: '🐾' },
+  { val: '340+',    label: 'Trusted sitters',   icon: '🏅' },
+  { val: '18',      label: 'Cities & growing',  icon: '📍' },
+  { val: '4.9★',    label: 'Average rating',    icon: '⭐' },
 ]
 
-const facts = [
+type PrincipleColour = 'indigo' | 'emerald' | 'pink' | 'rose'
+
+const principles: { icon: string; colour: PrincipleColour; title: string; body: string }[] = [
   {
-    icon: '🐾',
-    title: 'Pet-first, always',
-    body: 'Every decision we make starts with one question: is this good for the animals?',
+    icon:    '🛡️',
+    colour:  'indigo',
+    title:   'Trust above everything',
+    body:    'Every sitter passes background checks, reference calls, and a supervised trial visit before they ever meet your pet.',
   },
   {
-    icon: '🔍',
-    title: 'Rigorous vetting',
-    body: 'Background checks, reference calls, and a trial visit before any sitter meets your pet.',
+    icon:    '📸',
+    colour:  'emerald',
+    title:   'Radical transparency',
+    body:    'Real-time photo updates and GPS check-ins keep you in the loop — wherever you are, whatever you\'re doing.',
   },
   {
-    icon: '📍',
-    title: 'Real-time visibility',
-    body: "Live GPS check-ins and photo updates so you're never in the dark.",
+    icon:    '⚡',
+    colour:  'pink',
+    title:   'Effortless booking',
+    body:    'Every screen is designed to feel calm and clear — even when you\'re booking at 11 pm in a mild panic.',
+  },
+  {
+    icon:    '💛',
+    colour:  'rose',
+    title:   'Genuine animal care',
+    body:    'We only work with sitters who treat pets exactly as their own. Because yours deserves nothing less.',
   },
 ]
 
-const principles = [
-  {
-    icon: '🛡️',
-    title: 'Trust above everything',
-    body: 'Every sitter passes background checks, reference calls, and a supervised trial visit before they ever meet your pet.',
-    img: 'https://images.unsplash.com/photo-1560807707-8cc77767d783?w=600&q=80',
-  },
-  {
-    icon: '📸',
-    title: 'Radical transparency',
-    body: "Real-time photo updates and GPS check-ins keep you in the loop — wherever you are, whatever you're doing.",
-    img: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600&q=80',
-  },
-  {
-    icon: '⚡',
-    title: 'Effortless booking',
-    body: "Every screen is designed to feel calm and clear — even when you're booking at 11 pm in a mild panic.",
-    img: 'https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=600&q=80',
-  },
-  {
-    icon: '💛',
-    title: 'Genuine animal care',
-    body: 'We only work with sitters who treat pets exactly as their own. Because yours deserves nothing less.',
-    img: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&q=80',
-  },
-]
+const principleColours: Record<PrincipleColour, { badge: string; ring: string; dot: string }> = {
+  indigo:  { badge: 'bg-indigo-50 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-300',  ring: 'ring-indigo-200 dark:ring-indigo-500/20',  dot: 'bg-indigo-400' },
+  emerald: { badge: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300', ring: 'ring-emerald-200 dark:ring-emerald-500/20', dot: 'bg-emerald-400' },
+  pink:    { badge: 'bg-pink-50 text-pink-600 dark:bg-pink-900/30 dark:text-pink-300',   ring: 'ring-pink-200 dark:ring-pink-500/20',   dot: 'bg-pink-400' },
+  rose:    { badge: 'bg-rose-50 text-rose-600 dark:bg-rose-900/30 dark:text-rose-300',   ring: 'ring-rose-200 dark:ring-rose-500/20',   dot: 'bg-rose-400' },
+}
 
 const faqs = [
-  {
-    q: 'How do I ask about my pet care booking?',
-    a: 'Our team can help with booking details, appointment changes, and service information anytime.',
-  },
-  {
-    q: 'Can I contact Pawmie about grooming?',
-    a: 'Absolutely. You can ask about grooming packages, available time slots, and the best care option for your pet.',
-  },
-  {
-    q: 'Can I ask general pet care questions?',
-    a: 'Yes. You can contact us for friendly guidance about pet care services, visits, and support.',
-  },
+  { q: 'How do I ask about my booking?',        a: 'Our team can help with booking details, appointment changes, and service information anytime through the app or hotline.' },
+  { q: 'Can I ask about grooming services?',    a: 'Absolutely — ask us about packages, available time slots, and the best care option for your pet\'s coat type.' },
+  { q: 'Is Pawmie available for emergencies?',  a: 'Yes. Our 24/7 emergency line connects you to nearby clinics instantly — no form needed, just call.' },
+  { q: 'How are sitters verified?',             a: 'Every sitter goes through identity checks, reference calls, and a supervised trial visit before joining the network.' },
+  { q: 'What pets does Pawmie support?',        a: 'Primarily dogs and cats, with select sitters experienced in rabbits, birds, and small animals.' },
+  { q: 'Can I track past appointments?',        a: 'Yes — all your bookings live in My Bookings, grouped by category with dates and notes.' },
 ]
 
-// ── randomuser.me: 4 real portrait photos ────────────────
-const users = ref<any[]>([])
-const usersLoading = ref(true)
-const usersError = ref<string | null>(null)
+// ── Team via randomuser.me ────────────────────────────────────────
+interface TeamMember { name: string; role: string; location: string; photo: string }
+const team = ref<TeamMember[]>([])
+const teamLoading = ref(true)
+const teamError   = ref<string | null>(null)
 
-const jobTitles = [
-  'Co-founder & CEO',
-  'Head of Veterinary Partnerships',
-  'Lead Product Designer',
-  'Head of Sitter Operations',
-]
+const roles = ['Co-founder & CEO', 'Head of Vet Partnerships', 'Lead Product Designer', 'Head of Sitter Operations']
 
 onMounted(async () => {
   try {
-    const res = await fetch(
-      'https://randomuser.me/api/?results=4&inc=name,picture,location,login&nat=us,gb,au,ca'
-    )
+    const res = await fetch('https://randomuser.me/api/?results=4&inc=name,picture,location,login&nat=us,gb,au,ca')
     if (!res.ok) throw new Error(`${res.status}`)
     const d = await res.json()
-    users.value = d.results.map((u: any, i: number) => ({
-      ...u,
-      jobTitle: jobTitles[i],
+    team.value = d.results.map((u: any, i: number) => ({
+      name:     `${u.name.first} ${u.name.last}`,
+      role:     roles[i] ?? 'Team Member',
+      location: `${u.location.city}, ${u.location.country}`,
+      photo:    u.picture.large,
     }))
   } catch {
-    usersError.value = 'Could not load team members. Please try again later.'
+    teamError.value = 'Could not load team members. Please try again later.'
   } finally {
-    usersLoading.value = false
+    teamLoading.value = false
   }
 })
 </script>
 
+<template>
+  <div class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+
+    <!-- ─── HERO ─────────────────────────────────────────────────── -->
+    <section class="relative -mt-20 h-[750px] overflow-hidden">
+      <img
+        :src="heroImage"
+        alt="Happy cat and dog together"
+        class="absolute inset-0 h-full w-full object-cover object-center"
+      />
+      <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/30" />
+      <div class="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-slate-50 to-transparent dark:from-slate-950" />
+
+      <div class="absolute left-6 top-[52%] z-10 max-w-lg -translate-y-1/2 sm:max-w-xl lg:left-14 lg:max-w-2xl xl:left-20">
+        <span class="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-white ring-1 ring-white/20 backdrop-blur-sm">
+          <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-300" />
+          Our Story
+        </span>
+        <h1 class="hero-heading mb-4 text-[2.6rem] font-black leading-[1.08] tracking-tight text-white drop-shadow-lg sm:text-5xl lg:text-[3.4rem]">
+          Built by pet lovers,<br/>
+          <span class="bg-gradient-to-r from-amber-300 to-orange-200 bg-clip-text text-transparent italic">for pet lovers.</span>
+        </h1>
+        <p class="mb-7 max-w-md text-[14px] leading-7 text-white/75">
+          Pawmie started with one simple belief — every pet deserves stress-free care, and every pet parent deserves complete peace of mind.
+        </p>
+        <div class="flex flex-wrap gap-2.5">
+          <span v-for="tag in ['🐶 Dog Care', '🐱 Cat Care', '✂️ Grooming', '🐾 Pet Support']" :key="tag"
+            class="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-[12px] font-semibold text-white backdrop-blur-sm">
+            {{ tag }}
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── CONTENT WRAPPER ──────────────────────────────────────── -->
+    <div class="mx-auto max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
+
+      <!-- ── STATS STRIP ─────────────────────────────────────────── -->
+      <div class="relative -mt-6 mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+        <div
+          v-for="stat in stats" :key="stat.label"
+          class="rounded-2xl border border-white/60 bg-white/80 p-5 text-center shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70"
+        >
+          <p class="text-2xl">{{ stat.icon }}</p>
+          <p class="mt-2 font-mono text-[1.45rem] font-black tabular-nums text-slate-900 dark:text-white">{{ stat.val }}</p>
+          <p class="mt-0.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">{{ stat.label }}</p>
+        </div>
+      </div>
+
+      <!-- ── OUR STORY ───────────────────────────────────────────── -->
+      <section class="mb-10">
+        <div class="mb-6 text-center">
+          <p class="text-[10px] font-black uppercase tracking-[0.28em] text-amber-500">The Origin</p>
+          <h2 class="mt-2 text-[2rem] font-black tracking-tight text-slate-900 dark:text-white hero-heading">How Pawmie came to life</h2>
+        </div>
+
+        <div class="grid gap-4 lg:grid-cols-[1fr_400px] lg:items-stretch">
+          <!-- Story image — stretches to match right column height -->
+          <div class="relative overflow-hidden rounded-2xl border border-white/60 bg-white/80 shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70 min-h-[280px]">
+            <img
+              :src="storyImage"
+              alt="Woman cuddling a golden retriever puppy outdoors"
+              class="absolute inset-0 h-full w-full object-cover object-[center_20%]"
+            />
+            <!-- Floating year badge -->
+            <div class="absolute bottom-5 left-5 rounded-2xl border border-white/20 bg-black/60 px-5 py-3 backdrop-blur-sm">
+              <p class="hero-heading text-[2rem] font-black italic leading-none text-white">2021</p>
+              <p class="mt-0.5 text-[10px] font-bold uppercase tracking-widest text-white/60">San Francisco</p>
+            </div>
+          </div>
+
+          <!-- Story cards -->
+          <div class="flex flex-col gap-4">
+            <!-- Narrative -->
+            <div class="rounded-2xl border border-white/60 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70">
+              <p class="text-[10px] font-black uppercase tracking-[0.25em] text-amber-500 mb-3">The spark</p>
+              <p class="text-[14px] leading-7 text-slate-700 dark:text-slate-300">
+                It started with <span class="font-bold text-slate-900 dark:text-white">Milo</span> — a golden retriever who absolutely hated kennels. His owner Maya spent weeks calling sitters, getting ghosted, and leaving Milo with a neighbour she barely knew. Maya and co-founder Ravi spent six months interviewing pet parents, sitters, and vets before writing a single line of code. Today, thousands of pets across 18 cities come home happy every week.
+              </p>
+            </div>
+
+            <!-- Fact cards -->
+            <div
+              v-for="fact in [
+                { icon: '🐾', title: 'Pet-first, always',    body: 'Every decision we make starts with one question: is this good for the animals?' },
+                { icon: '🔍', title: 'Rigorous vetting',     body: 'Background checks, reference calls, and a trial visit before any sitter meets your pet.' },
+                { icon: '📍', title: 'Real-time visibility', body: 'Live GPS check-ins and photo updates so you\'re never in the dark.' },
+              ]"
+              :key="fact.title"
+              class="flex items-start gap-4 rounded-2xl border border-white/60 bg-white/80 px-5 py-4 shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70"
+            >
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-50 text-lg dark:bg-slate-800">{{ fact.icon }}</span>
+              <div>
+                <p class="text-[13px] font-bold text-slate-800 dark:text-white">{{ fact.title }}</p>
+                <p class="mt-0.5 text-[12px] leading-5 text-slate-500 dark:text-slate-400">{{ fact.body }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── PRINCIPLES ──────────────────────────────────────────── -->
+      <section class="mb-10">
+        <div class="mb-6 text-center">
+          <p class="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500">Our Principles</p>
+          <h2 class="mt-2 text-[2rem] font-black tracking-tight text-slate-900 dark:text-white hero-heading">What guides every Pawmie screen</h2>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div
+            v-for="p in principles" :key="p.title"
+            class="group flex flex-col gap-4 rounded-2xl border border-white/60 bg-white/80 p-6 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-white/[0.07] dark:bg-slate-900/70"
+          >
+            <!-- Icon badge -->
+            <span
+              class="flex h-11 w-11 items-center justify-center rounded-xl text-xl ring-1"
+              :class="[principleColours[p.colour].badge, principleColours[p.colour].ring]"
+            >
+              {{ p.icon }}
+            </span>
+            <!-- Accent dot -->
+            <span class="h-1 w-8 rounded-full transition-all duration-300 group-hover:w-14" :class="principleColours[p.colour].dot" />
+            <div>
+              <p class="text-[14px] font-black text-slate-800 dark:text-white">{{ p.title }}</p>
+              <p class="mt-1.5 text-[12px] leading-5 text-slate-500 dark:text-slate-400">{{ p.body }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── TEAM ────────────────────────────────────────────────── -->
+      <section class="mb-10">
+        <div class="mb-6 text-center">
+          <p class="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500">The People</p>
+          <h2 class="mt-2 text-[2rem] font-black tracking-tight text-slate-900 dark:text-white hero-heading">The team behind Pawmie</h2>
+          <p class="mt-2 text-[13px] text-slate-500 dark:text-slate-400">Small team. Big love for animals.</p>
+        </div>
+
+        <!-- Skeleton -->
+        <div v-if="teamLoading" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div v-for="n in 4" :key="n" class="overflow-hidden rounded-2xl border border-white/60 bg-white/80 dark:border-white/[0.07] dark:bg-slate-900/70">
+            <div class="skeleton h-64 w-full" />
+            <div class="space-y-2 p-5">
+              <div class="skeleton h-3.5 w-3/5 rounded-lg" />
+              <div class="skeleton h-2.5 w-2/5 rounded-lg" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Error -->
+        <p v-else-if="teamError" class="text-center text-[13px] text-rose-500">{{ teamError }}</p>
+
+        <!-- Team grid -->
+        <div v-else class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div
+            v-for="(member, i) in team" :key="member.name"
+            class="group overflow-hidden rounded-2xl border border-white/60 bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/[0.07] dark:bg-slate-900/70"
+          >
+            <!-- Photo -->
+            <div class="relative h-64 overflow-hidden">
+              <img
+                :src="member.photo"
+                :alt="member.name"
+                class="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+              />
+              <!-- Bottom gradient + location -->
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 py-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <p class="text-[11px] font-semibold text-white/80">📍 {{ member.location }}</p>
+              </div>
+              <!-- Service colour strip at top matching index → service colours -->
+              <div class="absolute inset-x-0 top-0 h-1"
+                :class="[['bg-indigo-500','bg-pink-500','bg-emerald-500','bg-rose-500'][i] ?? 'bg-slate-400']"
+              />
+            </div>
+            <!-- Info -->
+            <div class="px-5 py-4">
+              <p class="text-[14px] font-black text-slate-900 dark:text-white">{{ member.name }}</p>
+              <p class="mt-0.5 text-[10px] font-bold uppercase tracking-widest"
+                :class="[['text-indigo-500','text-pink-500','text-emerald-600','text-rose-500'][i] ?? 'text-slate-400']">
+                {{ member.role }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── FAQ ─────────────────────────────────────────────────── -->
+      <section>
+        <div class="mb-6 text-center">
+          <p class="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500">Common Questions</p>
+          <h2 class="mt-2 text-[2rem] font-black tracking-tight text-slate-900 dark:text-white hero-heading">Things pet parents often ask</h2>
+        </div>
+
+        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div
+            v-for="(faq, i) in faqs" :key="faq.q"
+            class="group rounded-2xl border border-white/60 bg-white/80 p-5 shadow-sm backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-white/[0.07] dark:bg-slate-900/70"
+          >
+            <!-- Coloured question number -->
+            <p class="mb-3 text-[10px] font-black uppercase tracking-[0.2em]"
+              :class="[['text-indigo-500','text-pink-500','text-emerald-600','text-rose-500','text-amber-500','text-sky-500'][i] ?? 'text-slate-400']">
+              Q{{ String(i + 1).padStart(2, '0') }}
+            </p>
+            <p class="text-[13px] font-bold leading-snug text-slate-800 dark:text-white">{{ faq.q }}</p>
+            <p class="mt-2 text-[12px] leading-5 text-slate-500 dark:text-slate-400">{{ faq.a }}</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</template>
+
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,600;1,700&family=Outfit:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap');
+.hero-heading { font-family: 'Playfair Display', Georgia, serif; }
 
-/* ══════════════════════════════════════════════════════════
-   TOKENS — LIGHT
-   Canvas: warm cream (unchanged — About is a "calm" page).
-   Every green token replaced with brand purple.
-   Purple appears at accent moments only: eyebrows, badges,
-   role labels, hover borders, FAQ icons, stats strip bg.
-   The cream canvas stays quiet — purple is the thread, not the wall.
-══════════════════════════════════════════════════════════ */
-.pa-root.light {
-  --bg:           #F7F4EE;
-  --bg-alt:       #EEEADE;
-  --surface:      #FFFFFF;
-
-  --border:       rgba(109, 40, 217, 0.08);
-  --border-mid:   rgba(109, 40, 217, 0.20);
-
-  /* Ink: near-black with subtle purple undertone */
-  --ink:          #1C1826;
-  --ink-2:        #52496B;
-  --ink-3:        #9B93B5;
-
-  /* Brand purple — the only accent colour on this page */
-  --accent:       #7C3AED;
-  --accent-2:     #A78BFA;
-  --accent-btn:   #7C3AED;
-  --accent-glow:  rgba(124, 58, 237, 0.14);
-
-  /* Amber kept for hero chip dot only — organic warmth */
-  --warm:         #C47C3A;
-
-  /* Hero overlay: deep purple-black */
-  --hero-overlay: linear-gradient(100deg,rgba(14,8,30,0.86) 0%,rgba(14,8,30,0.44) 58%,transparent 100%);
-
-  /* Stats strip: deep purple — structural brand anchor */
-  --stat-bg:      #2D1B69;
-  --stat-ink:     #EDE9FE;
-  --stat-lbl:     rgba(237,233,254,0.55);
-  --stat-div:     rgba(237,233,254,0.12);
-
-  --skel-a:       rgba(109, 40, 217, 0.05);
-  --skel-b:       rgba(109, 40, 217, 0.12);
-
-  --card-shadow:  0 12px 40px rgba(124,58,237,0.09), 0 2px 8px rgba(0,0,0,0.05);
-}
-
-/* ══════════════════════════════════════════════════════════
-   TOKENS — DARK
-   Deep purple-black canvas. Same purple accent logic.
-══════════════════════════════════════════════════════════ */
-.pa-root.dark {
-  --bg:           #0D0B14;
-  --bg-alt:       #120F1E;
-  --surface:      #1A1628;
-
-  --border:       rgba(167,139,250,0.10);
-  --border-mid:   rgba(167,139,250,0.26);
-
-  --ink:          #EDE9FE;
-  --ink-2:        #A78BFA;
-  --ink-3:        #6D5FA8;
-
-  --accent:       #A78BFA;
-  --accent-2:     #C4B5FD;
-  --accent-btn:   #7C3AED;
-  --accent-glow:  rgba(167,139,250,0.20);
-
-  --warm:         #D4924E;
-
-  --hero-overlay: linear-gradient(100deg,rgba(4,2,12,0.93) 0%,rgba(4,2,12,0.54) 58%,transparent 100%);
-
-  --stat-bg:      #120F1E;
-  --stat-ink:     #EDE9FE;
-  --stat-lbl:     rgba(237,233,254,0.45);
-  --stat-div:     rgba(237,233,254,0.08);
-
-  --skel-a:       rgba(167,139,250,0.07);
-  --skel-b:       rgba(167,139,250,0.15);
-
-  --card-shadow:  0 12px 40px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.30);
-}
-
-/* ══════════════════════════════════════════════════════════
-   BASE
-══════════════════════════════════════════════════════════ */
-.pa-root {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: 'Outfit', system-ui, sans-serif;
-  min-height: 100vh;
-  transition: background 0.35s ease, color 0.35s ease;
-}
-
-/* ══════════════════════════════════════════════════════════
-   HERO
-══════════════════════════════════════════════════════════ */
-.pa-hero {
-  position: relative;
-  height: 88vh; min-height: 520px; max-height: 760px;
-  display: flex; align-items: center; overflow: hidden;
-}
-.pa-hero-bg { position: absolute; inset: 0; }
-.pa-hero-img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; }
-.pa-hero-overlay { position: absolute; inset: 0; background: var(--hero-overlay); }
-
-.pa-hero-content { position: relative; z-index: 2; padding: 0 80px; max-width: 640px; }
-
-.pa-chip {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.22);
-  border-radius: 40px; padding: 8px 16px;
-  font-size: 11.5px; font-weight: 600;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: #fff; margin-bottom: 22px;
-}
-
-/* Chip dot: soft purple — first brand moment in the hero */
-.pa-chip-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: #C4B5FD;
-  flex-shrink: 0;
-  animation: blink 2.2s ease-in-out infinite;
-}
-@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.35;} }
-
-.pa-hero-h1 {
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: clamp(36px, 5vw, 66px);
-  font-weight: 700; line-height: 1.07;
-  letter-spacing: -0.02em; color: #fff; margin: 0 0 20px;
-}
-/* em: soft purple — was green */
-.pa-hero-h1 em { font-style: italic; color: #C4B5FD; }
-
-.pa-hero-sub { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.78); line-height: 1.8; margin: 0 0 34px; }
-
-.pa-hero-tags { display: flex; flex-wrap: wrap; gap: 10px; }
-.pa-tag {
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-  border: 1px solid rgba(255,255,255,0.20);
-  border-radius: 40px; padding: 8px 18px;
-  font-size: 13px; font-weight: 500; color: #fff; white-space: nowrap;
-}
-
-.pa-scroll-hint {
-  position: absolute; bottom: 26px; left: 50%;
-  transform: translateX(-50%); z-index: 3;
-  color: rgba(255,255,255,0.48);
-  animation: bounce 2s ease-in-out infinite;
-}
-@keyframes bounce {
-  0%,100%{ transform: translateX(-50%) translateY(0); }
-  50%    { transform: translateX(-50%) translateY(6px); }
-}
-
-/* ══════════════════════════════════════════════════════════
-   STATS STRIP — deep purple surface
-══════════════════════════════════════════════════════════ */
-.pa-stats-strip { background: var(--stat-bg); border-bottom: 1px solid var(--border); transition: background 0.35s ease; }
-.pa-stats-inner { max-width: 1100px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: repeat(4, 1fr); }
-.pa-stat { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 30px 20px; border-right: 1px solid var(--stat-div); }
-.pa-stat:last-child { border-right: none; }
-.pa-stat-val { font-family: 'Fraunces', Georgia, serif; font-size: 28px; font-weight: 700; font-style: italic; color: var(--stat-ink); line-height: 1; }
-.pa-stat-lbl { font-size: 11px; font-weight: 400; letter-spacing: 0.10em; text-transform: uppercase; color: var(--stat-lbl); }
-
-/* ══════════════════════════════════════════════════════════
-   SECTIONS
-══════════════════════════════════════════════════════════ */
-.pa-section { padding: 80px 0; background: var(--bg); transition: background 0.35s ease; }
-.pa-section--alt { background: var(--bg-alt); }
-.pa-section-inner { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
-.pa-section-label-row { text-align: center; margin-bottom: 52px; }
-
-/* Eyebrow: purple accent */
-.pa-eyebrow { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
-.pa-section-h2 { font-family: 'Fraunces', Georgia, serif; font-size: clamp(24px, 3vw, 40px); font-weight: 700; line-height: 1.12; letter-spacing: -0.015em; color: var(--ink); margin: 0 0 14px; }
-.pa-section-sub { font-size: 15px; font-weight: 300; color: var(--ink-2); line-height: 1.85; max-width: 640px; margin: 0 auto; }
-
-/* ══════════════════════════════════════════════════════════
-   STORY
-══════════════════════════════════════════════════════════ */
-.pa-story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
-.pa-story-img-wrap { position: relative; border-radius: 20px; overflow: hidden; aspect-ratio: 4/5; box-shadow: 0 0 0 1px var(--border), 0 20px 60px rgba(0,0,0,0.10); }
-.pa-story-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.8s cubic-bezier(0.22,0.61,0.36,1); }
-.pa-story-img-wrap:hover .pa-story-img { transform: scale(1.04); }
-
-/* Story badge: purple */
-.pa-story-badge { position: absolute; bottom: 20px; right: 20px; background: var(--accent-btn); border-radius: 14px; padding: 18px 24px; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 8px 32px var(--accent-glow); }
-.pa-badge-year { font-family: 'Fraunces', Georgia, serif; font-size: 32px; font-style: italic; font-weight: 700; color: #fff; line-height: 1; }
-.pa-badge-lbl { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.65); }
-
-.pa-story-cards { display: flex; flex-direction: column; gap: 14px; padding-top: 8px; }
-.pa-info-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px 20px; display: flex; align-items: flex-start; gap: 16px; transition: border-color .22s, box-shadow .22s, transform .22s; }
-.pa-info-card:hover { border-color: var(--border-mid); box-shadow: var(--card-shadow); transform: translateY(-2px); }
-.pa-info-icon { font-size: 24px; line-height: 1; flex-shrink: 0; margin-top: 2px; }
-.pa-info-title { font-size: 15px; font-weight: 600; color: var(--ink); margin: 0 0 6px; line-height: 1.25; }
-.pa-info-body  { font-size: 13.5px; font-weight: 300; color: var(--ink-2); margin: 0; line-height: 1.75; }
-
-/* ══════════════════════════════════════════════════════════
-   PRINCIPLES CARDS
-══════════════════════════════════════════════════════════ */
-.pa-cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-.pa-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; transition: border-color .25s, box-shadow .25s, transform .25s; cursor: default; }
-.pa-card:hover { border-color: var(--accent-2); box-shadow: var(--card-shadow); transform: translateY(-4px); }
-
-.pa-card-thumb-wrap { position: relative; height: 160px; overflow: hidden; background: var(--bg-alt); }
-.pa-card-thumb { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.7s cubic-bezier(0.22,0.61,0.36,1); }
-.pa-card:hover .pa-card-thumb { transform: scale(1.06); }
-
-/* Number chip: purple */
-.pa-card-num { position: absolute; top: 12px; left: 12px; background: var(--accent-btn); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 20px; }
-
-.pa-card-body-wrap { padding: 16px 18px 22px; }
-.pa-card-icon { font-size: 22px; line-height: 1; display: block; margin-bottom: 10px; }
-.pa-card-title { font-family: 'Fraunces', Georgia, serif; font-size: 16px; font-weight: 600; font-style: italic; color: var(--ink); margin: 0 0 8px; line-height: 1.3; }
-.pa-card-body  { font-size: 13px; font-weight: 300; color: var(--ink-2); margin: 0; line-height: 1.78; }
-
-/* ══════════════════════════════════════════════════════════
-   TEAM — 8 members, 4-col grid, wraps to 2 rows
-══════════════════════════════════════════════════════════ */
-.pa-team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
-
-.pa-member { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; transition: border-color .28s, box-shadow .28s, transform .28s; }
-.pa-member:hover { border-color: var(--accent-2); box-shadow: var(--card-shadow); transform: translateY(-6px); }
-
-.pa-member-img-wrap { position: relative; height: 260px; overflow: hidden; }
-.pa-member-img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; filter: saturate(0.85); transition: transform .7s cubic-bezier(0.22,0.61,0.36,1), filter .4s; }
-.pa-member:hover .pa-member-img { transform: scale(1.07); filter: saturate(1); }
-
-/* Overlay: purple-black gradient instead of green-black */
-.pa-member-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(18,8,40,0.92) 0%, transparent 52%); display: flex; align-items: flex-end; padding: 18px; opacity: 0; transition: opacity .3s; }
-.pa-member:hover .pa-member-overlay { opacity: 1; }
-/* Overlay text: purple-tinted white */
-.pa-member-overlay p { font-size: 12px; font-weight: 300; color: rgba(220,210,255,0.90); line-height: 1.6; margin: 0; }
-
-.pa-member-body { padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 5px; }
-.pa-member-name { font-family: 'Fraunces', Georgia, serif; font-size: 16px; font-style: italic; font-weight: 600; color: var(--ink); margin: 0; line-height: 1.2; }
-/* Role: purple accent */
-.pa-member-role { font-size: 10.5px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
-
-/* ══════════════════════════════════════════════════════════
-   FAQ
-══════════════════════════════════════════════════════════ */
-.pa-faq-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.pa-faq { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px 22px; display: flex; align-items: flex-start; gap: 16px; transition: border-color .22s, box-shadow .22s, transform .22s; }
-.pa-faq:hover { border-color: var(--accent-2); box-shadow: var(--card-shadow); transform: translateY(-3px); }
-/* FAQ icon: purple */
-.pa-faq-icon { color: var(--accent); flex-shrink: 0; margin-top: 2px; }
-.pa-faq-q { font-size: 14px; font-weight: 600; color: var(--ink); margin: 0 0 8px; line-height: 1.35; }
-.pa-faq-a { font-size: 13px; font-weight: 300; color: var(--ink-2); margin: 0; line-height: 1.75; }
-
-/* ══════════════════════════════════════════════════════════
-   SKELETONS
-══════════════════════════════════════════════════════════ */
+/* Skeleton shimmer */
 @keyframes shimmer {
   0%   { background-position: -600px 0; }
   100% { background-position:  600px 0; }
 }
-.sk { background: linear-gradient(90deg, var(--skel-a) 25%, var(--skel-b) 50%, var(--skel-a) 75%); background-size: 1200px 100%; animation: shimmer 1.6s linear infinite; border-radius: 6px; display: block; }
-.sk-line { height: 12px; }
-.pa-error { color: #e05050; font-size: 14px; padding: 16px 0; }
-
-/* ══════════════════════════════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════════════════════════════ */
-@media (max-width: 1024px) {
-  .pa-cards-grid { grid-template-columns: repeat(2, 1fr); }
-  .pa-team-grid  { grid-template-columns: repeat(2, 1fr); }
-  .pa-faq-grid   { grid-template-columns: repeat(2, 1fr); }
+.skeleton {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 1200px 100%;
+  animation: shimmer 1.6s linear infinite;
+  border-radius: 8px;
+  display: block;
 }
-@media (max-width: 768px) {
-  .pa-hero-content { padding: 0 32px; }
-  .pa-story-grid   { grid-template-columns: 1fr; }
-  .pa-stats-inner  { grid-template-columns: repeat(2, 1fr); }
-  .pa-stat { border-right: none; border-bottom: 1px solid var(--stat-div); }
-  .pa-stat:nth-child(odd)       { border-right: 1px solid var(--stat-div); }
-  .pa-stat:nth-last-child(-n+2) { border-bottom: none; }
-}
-@media (max-width: 580px) {
-  .pa-section-inner { padding: 0 20px; }
-  .pa-hero-content  { padding: 0 24px; }
-  .pa-cards-grid    { grid-template-columns: 1fr; }
-  .pa-team-grid     { grid-template-columns: 1fr; }
-  .pa-faq-grid      { grid-template-columns: 1fr; }
+:global(.dark) .skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.10) 50%, rgba(255,255,255,0.05) 75%);
+  background-size: 1200px 100%;
+  animation: shimmer 1.6s linear infinite;
 }
 </style>
