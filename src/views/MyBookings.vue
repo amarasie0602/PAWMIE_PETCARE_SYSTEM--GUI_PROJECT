@@ -5,73 +5,181 @@ import { useBookingStore } from '@/stores/bookingStore'
 const { myGroupedByCategory } = useBookingStore()
 
 const categories = computed(() => Object.entries(myGroupedByCategory.value))
+
+const totalBookings = computed(() =>
+  categories.value.reduce((sum, [, bookings]) => sum + bookings.length, 0)
+)
+
+// Per-category colour + icon config — matches the service page themes
+const categoryConfig: Record<string, { icon: string; accent: string; badge: string; dot: string }> = {
+  'Medical Care': {
+    icon:   '🩺',
+    accent: 'text-indigo-600 dark:text-indigo-400',
+    badge:  'bg-indigo-50 text-indigo-600 ring-1 ring-indigo-200 dark:bg-indigo-900/30 dark:text-indigo-300 dark:ring-indigo-500/20',
+    dot:    'bg-indigo-400',
+  },
+  'Grooming & Training': {
+    icon:   '✂️',
+    accent: 'text-pink-600 dark:text-pink-400',
+    badge:  'bg-pink-50 text-pink-600 ring-1 ring-pink-200 dark:bg-pink-900/30 dark:text-pink-300 dark:ring-pink-500/20',
+    dot:    'bg-pink-400',
+  },
+  'Emergency Care': {
+    icon:   '🚑',
+    accent: 'text-rose-600 dark:text-rose-400',
+    badge:  'bg-rose-50 text-rose-600 ring-1 ring-rose-200 dark:bg-rose-900/30 dark:text-rose-300 dark:ring-rose-500/20',
+    dot:    'bg-rose-400',
+  },
+}
+
+const fallbackConfig = {
+  icon:   '📋',
+  accent: 'text-slate-600 dark:text-slate-400',
+  badge:  'bg-slate-100 text-slate-600 ring-1 ring-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:ring-slate-600',
+  dot:    'bg-slate-400',
+}
+
+function getCfg(category: string) {
+  return categoryConfig[category] ?? fallbackConfig
+}
+
+function formatDate(dateStr: string): string {
+  if (!dateStr) return '—'
+  const d = new Date(dateStr)
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+}
+
+function formatTime(timeStr: string): string {
+  if (!timeStr) return '—'
+  const [h, m] = timeStr.split(':').map(Number)
+  const ampm = h >= 12 ? 'PM' : 'AM'
+  const hour = h % 12 || 12
+  return `${hour}:${m.toString().padStart(2, '0')} ${ampm}`
+}
 </script>
 
 <template>
-  <div class="min-h-screen -mt-20 pt-24 pb-16 bg-slate-50 dark:bg-gray-900">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      <div class="mb-10 text-center">
-        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white">
-          My Bookings
-        </h1>
-        <p class="mt-2 text-gray-500 dark:text-gray-400">
-          Dummy bookings grouped by service category.
+  <div class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+
+    <!-- ─── PAGE HEADER ─────────────────────────────────────────── -->
+    <div class="border-b border-slate-200/70 bg-white/70 backdrop-blur-sm dark:border-white/[0.06] dark:bg-slate-900/70">
+      <div class="mx-auto max-w-5xl px-4 pb-6 pt-28 sm:px-6">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p class="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500">Pawmie</p>
+            <h1 class="mt-1 text-3xl font-black tracking-tight text-slate-900 dark:text-white sm:text-4xl">My Bookings</h1>
+            <p class="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">All your upcoming and past appointments in one place.</p>
+          </div>
+          <!-- Summary pill -->
+          <div
+            v-if="totalBookings > 0"
+            class="flex items-center gap-2 rounded-2xl border border-white/60 bg-white/80 px-4 py-2.5 shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-800/70"
+          >
+            <span class="text-lg">📅</span>
+            <div>
+              <p class="text-[18px] font-black tabular-nums leading-none text-slate-900 dark:text-white">{{ totalBookings }}</p>
+              <p class="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Total bookings</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── CONTENT ────────────────────────────────────────────── -->
+    <div class="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+
+      <!-- ── EMPTY STATE ──────────────────────────────────────── -->
+      <div
+        v-if="categories.length === 0"
+        class="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white/60 px-8 py-20 text-center backdrop-blur-sm dark:border-slate-700 dark:bg-slate-900/40"
+      >
+        <div class="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-100 text-3xl dark:bg-slate-800">
+          📭
+        </div>
+        <h2 class="text-[18px] font-black text-slate-800 dark:text-white">No bookings yet</h2>
+        <p class="mt-2 max-w-xs text-[13px] leading-6 text-slate-500 dark:text-slate-400">
+          Head to any service page and hit <span class="font-bold text-slate-700 dark:text-slate-200">Book Now</span> to create your first appointment.
         </p>
+        <div class="mt-6 flex flex-wrap justify-center gap-2">
+          <a v-for="link in [
+              { label: '🩺 Vet Appointment', href: '/vet' },
+              { label: '✂️ Grooming', href: '/grooming' },
+              { label: '🎓 Training', href: '/training' },
+              { label: '🚑 Emergency', href: '/emergency' },
+            ]"
+            :key="link.href"
+            :href="link.href"
+            class="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[12px] font-semibold text-slate-600 shadow-sm transition hover:border-slate-300 hover:shadow dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+          >
+            {{ link.label }}
+          </a>
+        </div>
       </div>
 
-      <div v-if="categories.length === 0" class="text-center text-gray-500 dark:text-gray-400">
-        No bookings yet. Go to a service and click
-        <span class="font-semibold">Book Now</span>
-        to create your first booking.
-      </div>
-
-      <div v-else class="space-y-8">
+      <!-- ── BOOKING GROUPS ───────────────────────────────────── -->
+      <div v-else class="space-y-6">
         <section
           v-for="[categoryName, bookings] in categories"
           :key="categoryName"
-          class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-6"
+          class="overflow-hidden rounded-2xl border border-white/60 bg-white/80 shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70"
         >
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">
-              {{ categoryName }}
-            </h2>
-            <span class="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300">
-              {{ bookings.length }} bookings
-            </span>
-          </div>
-
-          <div class="space-y-4">
-            <article
-              v-for="booking in bookings"
-              :key="booking.id"
-              class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200/70 dark:border-gray-700/70"
-            >
+          <!-- Section header -->
+          <div class="flex items-center justify-between border-b border-slate-100 px-6 py-4 dark:border-white/[0.06]">
+            <div class="flex items-center gap-3">
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-50 text-lg dark:bg-slate-800">
+                {{ getCfg(categoryName).icon }}
+              </span>
               <div>
-                <div class="flex items-center gap-2 mb-1">
-                  <h3 class="font-semibold text-gray-900 dark:text-white">
-                    {{ booking.service }}
-                  </h3>
-                  <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300">
-                    {{ booking.petName }}
-                  </span>
-                </div>
-                <p class="text-sm text-gray-500 dark:text-gray-400">
-                  For <span class="font-medium">{{ booking.ownerName }}</span>
-                  <span v-if="booking.notes"> • {{ booking.notes }}</span>
+                <p class="text-[10px] font-black uppercase tracking-[0.2em]" :class="getCfg(categoryName).accent">
+                  {{ categoryName }}
+                </p>
+                <p class="text-[14px] font-black text-slate-800 dark:text-white">
+                  {{ bookings.length }} {{ bookings.length === 1 ? 'booking' : 'bookings' }}
                 </p>
               </div>
+            </div>
+          </div>
 
-              <div class="text-sm text-right text-gray-600 dark:text-gray-300">
-                <div class="font-medium">
-                  {{ booking.date }} • {{ booking.time }}
+          <!-- Booking rows -->
+          <ul class="divide-y divide-slate-100 dark:divide-white/[0.05]">
+            <li
+              v-for="booking in bookings"
+              :key="booking.id"
+              class="flex flex-col gap-3 px-6 py-4 transition-colors hover:bg-slate-50/80 dark:hover:bg-white/[0.02] sm:flex-row sm:items-center sm:justify-between"
+            >
+              <!-- Left: service + pet + notes -->
+              <div class="flex items-start gap-3.5">
+                <!-- Coloured dot -->
+                <span class="mt-1.5 h-2 w-2 shrink-0 rounded-full" :class="getCfg(categoryName).dot" />
+                <div>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <p class="text-[14px] font-bold text-slate-800 dark:text-white">{{ booking.service }}</p>
+                    <span class="rounded-full px-2 py-0.5 text-[10px] font-black uppercase tracking-wide" :class="getCfg(categoryName).badge">
+                      🐾 {{ booking.petName }}
+                    </span>
+                  </div>
+                  <p class="mt-0.5 text-[12px] text-slate-500 dark:text-slate-400">
+                    Owner: <span class="font-semibold text-slate-700 dark:text-slate-300">{{ booking.ownerName }}</span>
+                    <template v-if="booking.notes">
+                      <span class="mx-1.5 text-slate-300 dark:text-slate-600">·</span>
+                      <span class="italic">{{ booking.notes }}</span>
+                    </template>
+                  </p>
                 </div>
               </div>
-            </article>
-          </div>
+
+              <!-- Right: date + time -->
+              <div class="ml-5 flex shrink-0 items-center gap-2 sm:ml-0">
+                <div class="rounded-xl border border-slate-200/70 bg-slate-50 px-3.5 py-2 text-right dark:border-white/[0.07] dark:bg-slate-800/60">
+                  <p class="text-[13px] font-bold tabular-nums text-slate-800 dark:text-white">{{ formatDate(booking.date) }}</p>
+                  <p class="text-[11px] font-semibold tabular-nums text-slate-400 dark:text-slate-500">{{ formatTime(booking.time) }}</p>
+                </div>
+              </div>
+            </li>
+          </ul>
         </section>
       </div>
+
     </div>
   </div>
 </template>
-
-<style scoped>  </style>
