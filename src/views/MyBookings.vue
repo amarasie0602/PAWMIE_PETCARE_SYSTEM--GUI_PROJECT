@@ -51,7 +51,9 @@ function formatDate(dateStr: string): string {
 
 function formatTime(timeStr: string): string {
   if (!timeStr) return '—'
-  const [h, m] = timeStr.split(':').map(Number)
+  const parts = timeStr.split(':')
+  const h = parseInt(parts[0] ?? '0', 10)
+  const m = parseInt(parts[1] ?? '0', 10)
   const ampm = h >= 12 ? 'PM' : 'AM'
   const hour = h % 12 || 12
   return `${hour}:${m.toString().padStart(2, '0')} ${ampm}`
