@@ -2,12 +2,14 @@
 import BookingForm from '@/components/bookings/BookingForm.vue'
 import emergencyImage from '@/assets/emergency-care-hero.png'
 
+// Demo data for trust signals and process steps. In a real app, these might come from props or an API.
 const trustSignals = [
   { icon: '🏥', label: 'Clinics notified', value: 'Instantly' },
   { icon: '⚡', label: 'Avg. response',    value: '< 5 min'  },
   { icon: '🕐', label: 'Available',         value: '24 / 7'  },
 ]
 
+// Steps for the "What happens next" section. In a real app, these could be dynamic based on the service or user flow.
 const steps = [
   { icon: '📋', title: 'Log your visit',     text: 'Fill in your pet\'s symptoms and location quickly.'  },
   { icon: '📡', title: 'Clinics are alerted', text: 'Nearby vets receive your request and prepare.'      },
