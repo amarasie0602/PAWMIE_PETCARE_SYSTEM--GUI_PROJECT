@@ -68,6 +68,7 @@ const badgeLabel = computed(() => {
   return ''
 })
 
+// (emergency/vet only) Change subheading to prompt for symptoms and reassure quick response; for grooming, prompt to specify coat type or special requests; for training, prompt to specify behaviour issues or training goals
 const subheading = computed(() => {
   if (isEmergency.value) return 'Fill in quickly — nearby clinics will be notified immediately.'
   if (isGrooming.value)  return 'Pick a time that works — your groomer will be ready.'
@@ -76,7 +77,8 @@ const subheading = computed(() => {
   return ''
 })
 
-const headingClass = computed(() =>
+// (emergency/vet only) Change "Notes" label and placeholder to "Symptoms / Notes" with relevant prompt
+const headingClass = computed(() =>   
   isEmergency.value
     ? 'mt-2 text-2xl font-black text-white'
     : 'mt-2 text-2xl font-black text-slate-900 dark:text-white'
@@ -162,24 +164,28 @@ function clearTimers() {
   stageTimeouts.length = 0
 }
 
-function startTracker(petName: string) {
+// Simulate live tracking updates with timers and random clinic assignment. In a real app, this would be driven by backend events via WebSocket or similar.
+function startTracker(petName: string) {      
   submittedPetName.value = petName
   assignedClinic.value   = CLINIC_NAMES[Math.floor(Math.random() * CLINIC_NAMES.length)] ?? 'Nearby Clinic'
   tracking.value         = true
   currentStage.value     = 0
-  etaSeconds.value       = 8 * 60
+  etaSeconds.value       = 15 * 60
 
+  // Countdown timer for ETA (starts at 15 minutes for demo purposes)
   countdownTimer = setInterval(() => {
     if (etaSeconds.value > 0) etaSeconds.value--
     else clearInterval(countdownTimer!)
   }, 1000)
 
+  // Stage progression timers (for demo, stages progress every few seconds). In a real app, these would be triggered by backend events.
   const delays = [2000, 5000, 9000]
   delays.forEach((delay, i) => {
     stageTimeouts.push(setTimeout(() => { currentStage.value = i + 1 }, delay))
   })
 }
 
+// Cancel tracking and reset all related state to allow logging a new emergency visit
 function cancelTracking() {
   clearTimers()
   tracking.value         = false
@@ -196,13 +202,14 @@ function cancelTracking() {
   form.notes     = ''
 }
 
+// Utility to format ETA seconds into MM:SS format
 function formatETA(secs: number): string {
   const m = Math.floor(secs / 60).toString().padStart(2, '0')
   const s = (secs % 60).toString().padStart(2, '0')
   return `${m}:${s}`
 }
 
-onUnmounted(clearTimers)
+onUnmounted(clearTimers)   // Ensure timers are cleared if user navigates away during tracking
 
 // ── Submit ────────────────────────────────────────────────────────────
 const handleSubmit = () => {
@@ -211,6 +218,7 @@ const handleSubmit = () => {
     return
   }
 
+  // In a real app, this would involve API calls to create the booking and handle errors. Here we just simulate success and start the tracker for emergencies.
   addBooking({
     petName:   form.petName,
     ownerName: form.ownerName,
@@ -221,6 +229,7 @@ const handleSubmit = () => {
     notes:     form.notes || undefined,
   })
 
+  // For emergencies, start the live tracker instead of navigating away. For other services, show a confirmation and navigate to "My Bookings".
   if (isEmergency.value) {
     startTracker(form.petName)
   } else {
@@ -247,6 +256,7 @@ const handleSubmit = () => {
           <p class="mt-1 text-[13px] text-slate-400">Stay calm — we've got you covered.</p>
         </div>
 
+        <!--<p class="text-center text-[13px] text-slate-400">Your pet's location is being tracked in real-time.</p>-->
         <div class="mb-6 flex flex-col items-center justify-center rounded-xl border border-rose-900/30 bg-rose-950/30 py-5">
           <p class="text-[10px] font-black uppercase tracking-[0.25em] text-rose-400/70">Estimated Arrival</p>
           <p class="mt-1 font-mono text-[3rem] font-black tabular-nums tracking-tight text-white leading-none">{{ formatETA(etaSeconds) }}</p>
@@ -267,6 +277,7 @@ const handleSubmit = () => {
           </span>
         </div>
 
+        <!--<p class="text-center text-[13px] text-slate-400">Your pet's location is being tracked in real-time.</p>-->
         <div class="mb-6">
           <div v-for="(stage, i) in stages" :key="stage.label" class="flex items-start gap-4">
             <div class="flex flex-col items-center">
