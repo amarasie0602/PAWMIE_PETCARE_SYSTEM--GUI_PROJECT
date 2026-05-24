@@ -30,6 +30,7 @@ const steps = [
       <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20" />
       <div class="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-rose-50 to-transparent dark:from-slate-950 dark:to-transparent" />
 
+      <!--<p class="text-center text-[13px] text-slate-400">Your pet's location is being tracked in real-time.</p>-->
       <div class="absolute left-6 top-[52%] z-10 max-w-lg -translate-y-1/2 sm:max-w-xl lg:left-14 lg:max-w-2xl xl:left-20">
         <span class="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-white ring-1 ring-white/20 backdrop-blur-sm">
           <span class="flex h-1.5 w-1.5 animate-pulse rounded-full bg-rose-400" />
@@ -170,6 +171,6 @@ const steps = [
 </template>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap');   
 .hero-heading { font-family: 'Playfair Display', Georgia, serif; }
 </style>
