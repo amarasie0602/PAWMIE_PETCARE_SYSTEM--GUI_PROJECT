@@ -18,15 +18,14 @@ const doubled = [...pets, ...pets, ...pets]
 
 interface SpeciesConfig {
   emoji: string
-  topBorder: string
-  quoteBar: string
+  accent: string
 }
 
 const speciesConfig: Record<string, SpeciesConfig> = {
-  Dog:    { emoji: '🐶', topBorder: '#6366f1', quoteBar: '#6366f1' },
-  Cat:    { emoji: '🐱', topBorder: '#ec4899', quoteBar: '#ec4899' },
-  Bird:   { emoji: '🦜', topBorder: '#10b981', quoteBar: '#10b981' },
-  Rabbit: { emoji: '🐰', topBorder: '#f59e0b', quoteBar: '#f59e0b' },
+  Dog:    { emoji: '🐶', accent: '#6366f1' },
+  Cat:    { emoji: '🐱', accent: '#ec4899' },
+  Bird:   { emoji: '🦜', accent: '#10b981' },
+  Rabbit: { emoji: '🐰', accent: '#f59e0b' },
 }
 
 const getConfig = (species: string): SpeciesConfig =>
@@ -49,102 +48,92 @@ const ownerQuotes: Record<string, string> = {
 </script>
 
 <template>
-  <section class="relative py-12 overflow-hidden bg-[#f3eaf8] dark:bg-[#1f2937]">
+  <section class="relative overflow-hidden py-14">
 
-    <!-- Header -->
-    <div class="max-w-7xl mx-auto px-6 lg:px-12">
-      <div class="text-center mb-12">
-        <span class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-300 mb-4">
-          Our Family
-        </span>
-        <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 dark:text-white leading-tight tracking-tight">
-          Meet the
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-pink-500">Pawmie Family</span>
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="mb-8 text-center">
+        <p class="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500">Community</p>
+        <h2 class="hero-heading mt-2 text-[2rem] font-black tracking-tight text-slate-900 dark:text-white">
+          Pets already on Pawmie
         </h2>
-        <p class="mt-4 text-base text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
-          Real pets, real owners, real love — hover to pause.
+        <p class="mx-auto mt-2 max-w-md text-[13px] text-slate-500 dark:text-slate-400">
+          Real families, real bookings — hover the ribbon to pause.
         </p>
       </div>
     </div>
 
-    <!-- Ribbon -->
-    <div class="relative overflow-hidden py-3">
+    <div class="relative overflow-hidden py-2">
+      <div
+        class="pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-24 sm:w-36 bg-gradient-to-r from-slate-50 to-transparent dark:from-slate-950 dark:to-transparent"
+      />
+      <div
+        class="pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-24 sm:w-36 bg-gradient-to-l from-slate-50 to-transparent dark:from-slate-950 dark:to-transparent"
+      />
 
-      <!-- Fade LEFT — light uses #f3eaf8, dark uses #030712 -->
-      <div class="pointer-events-none absolute left-0 top-0 bottom-0 w-36 z-10
-                  bg-gradient-to-r from-[#f3eaf8] to-transparent
-                  dark:from-[#030712] dark:to-transparent" />
-      <!-- Fade RIGHT -->
-      <div class="pointer-events-none absolute right-0 top-0 bottom-0 w-36 z-10
-                  bg-gradient-to-l from-[#f3eaf8] to-transparent
-                  dark:from-[#030712] dark:to-transparent" />
-
-      <!-- Scrolling track -->
-      <div class="ribbon-track px-6">
+      <div class="ribbon-track px-4 sm:px-6">
         <article
           v-for="(pet, idx) in doubled"
           :key="`${pet.id}-${idx}`"
-          class="ribbon-card group flex-shrink-0 w-[270px] rounded-[1.1rem] overflow-hidden border-t-4
-                 bg-white dark:bg-[#0d1117]
-                 border border-gray-200 dark:border-[#1e293b]
-                 shadow-md dark:shadow-black/40"
-          :style="{ borderTopColor: getConfig(pet.species).topBorder }"
+          class="ribbon-card group w-[260px] shrink-0 overflow-hidden rounded-2xl border border-white/60 bg-white/80 shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70 sm:w-[270px]"
         >
-          <!-- Image -->
-          <div class="relative h-44 overflow-hidden">
+          <div class="relative h-40 overflow-hidden sm:h-44">
             <img
               :src="pet.imageUrl"
               :alt="pet.name"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-            <span class="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-sm
-                         bg-white/90 dark:bg-[#030712]/90 shadow ring-1 ring-white/20">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
+            <span
+              class="absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-sm shadow ring-1 ring-white/30 dark:bg-slate-900/90"
+            >
               {{ getConfig(pet.species).emoji }}
             </span>
-            <p class="absolute bottom-3 left-3 text-white font-bold text-sm drop-shadow">{{ pet.name }}</p>
+            <p class="absolute bottom-3 left-3 text-sm font-bold text-white drop-shadow">{{ pet.name }}</p>
+            <div
+              class="absolute inset-x-0 top-0 h-1"
+              :style="{ backgroundColor: getConfig(pet.species).accent }"
+            />
           </div>
 
-          <!-- Body -->
-          <div class="p-4 flex flex-col gap-2.5 bg-white dark:bg-[#0d1117]">
-
+          <div class="flex flex-col gap-2 p-4">
             <div class="flex items-center justify-between gap-2">
-              <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{ pet.name }}</h3>
+              <h3 class="text-[13px] font-bold text-slate-800 dark:text-white">{{ pet.name }}</h3>
               <span
-                class="text-xs font-bold px-2.5 py-0.5 rounded-full shrink-0"
+                class="shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold"
                 :style="{
-                  background: getConfig(pet.species).topBorder + '22',
-                  color: getConfig(pet.species).topBorder,
-                  border: `1px solid ${getConfig(pet.species).topBorder}55`
+                  background: getConfig(pet.species).accent + '18',
+                  color: getConfig(pet.species).accent,
                 }"
-              >{{ pet.species }}</span>
+              >
+                {{ pet.species }}
+              </span>
             </div>
 
-            <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">
+            <p class="text-[11px] font-medium text-slate-500 dark:text-slate-400">
               {{ pet.breed }} · {{ pet.age }} yr<span v-if="pet.age !== 1">s</span>
             </p>
 
             <p
-              class="text-xs text-gray-600 dark:text-gray-300 italic leading-relaxed border-l-2 pl-2.5"
-              :style="{ borderColor: getConfig(pet.species).quoteBar }"
+              class="border-l-2 pl-2.5 text-[11px] italic leading-relaxed text-slate-600 dark:text-slate-300"
+              :style="{ borderColor: getConfig(pet.species).accent }"
             >
               "{{ ownerQuotes[pet.id] ?? `${pet.ownerName} loves Pawmie!` }}"
             </p>
 
-            <p class="text-xs text-gray-400 dark:text-gray-500">
-              <span class="font-semibold text-gray-700 dark:text-gray-300">{{ pet.ownerName }}</span>
+            <p class="text-[11px] text-slate-400 dark:text-slate-500">
+              <span class="font-semibold text-slate-600 dark:text-slate-300">{{ pet.ownerName }}</span>
               · {{ pet.city }}
             </p>
 
-            <div
-              class="inline-flex items-center gap-1 self-start text-xs font-semibold px-2.5 py-1 rounded-full mt-0.5"
+            <span
+              class="mt-0.5 inline-flex self-start items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold"
               :style="{
-                background: getConfig(pet.species).topBorder + '18',
-                color: getConfig(pet.species).topBorder,
-                border: `1px solid ${getConfig(pet.species).topBorder}44`
+                background: getConfig(pet.species).accent + '14',
+                color: getConfig(pet.species).accent,
               }"
-            >❤️ {{ pet.favoriteService }}</div>
-
+            >
+              {{ pet.favoriteService }}
+            </span>
           </div>
         </article>
       </div>
@@ -154,21 +143,24 @@ const ownerQuotes: Record<string, string> = {
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap');
+.hero-heading { font-family: 'Playfair Display', Georgia, serif; }
+
 .ribbon-track {
   display: flex;
-  gap: 1.1rem;
+  gap: 1rem;
   width: max-content;
-  animation: scroll-left 30s linear infinite;
+  animation: scroll-left 32s linear infinite;
 }
 .ribbon-track:hover {
   animation-play-state: paused;
 }
 .ribbon-card {
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
-  cursor: default;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .ribbon-card:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px -8px rgb(15 23 42 / 0.15);
 }
 @keyframes scroll-left {
   0%   { transform: translateX(0); }
