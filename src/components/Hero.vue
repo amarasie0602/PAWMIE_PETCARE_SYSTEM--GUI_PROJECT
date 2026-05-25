@@ -14,7 +14,7 @@ import heroBg from '@/assets/heropet.png'
     <!-- Overlays -->
     <div class="absolute inset-0 bg-white/35 dark:bg-black/45"></div>
     <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-transparent"></div>
-    <div class="absolute inset-0 bg-gradient-to-r from-white/20 via-white/10 to-transparent dark:from-black/60 dark:via-black/30 dark:to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-white/5 via-white/0 to-transparent dark:from-black/60 dark:via-black/30 dark:to-transparent"></div>
 
     <!-- Content -->
     <div class="relative z-10 min-h-screen flex items-center">
