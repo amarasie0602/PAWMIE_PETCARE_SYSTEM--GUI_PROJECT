@@ -40,9 +40,7 @@ function persist() {
   if (typeof window === 'undefined') return
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings.value))
-  } catch {
-    // ignore storage errors for now
-  }
+  } catch {}
 }
 
 export function useBookingStore() {
@@ -57,14 +55,16 @@ export function useBookingStore() {
     persist()
   }
 
+  const removeBooking = (id: string): void => {
+    bookings.value = bookings.value.filter(b => b.id !== id)
+    persist()
+  }
+
   const groupedByCategory = computed(() => {
     const groups: Record<string, Booking[]> = {}
     for (const booking of bookings.value) {
       let list = groups[booking.category]
-      if (!list) {
-        list = []
-        groups[booking.category] = list
-      }
+      if (!list) { list = []; groups[booking.category] = list }
       list.push(booking)
     }
     return groups
@@ -77,10 +77,7 @@ export function useBookingStore() {
     for (const booking of bookings.value) {
       if (booking.userEmail !== email) continue
       let list = groups[booking.category]
-      if (!list) {
-        list = []
-        groups[booking.category] = list
-      }
+      if (!list) { list = []; groups[booking.category] = list }
       list.push(booking)
     }
     return groups
@@ -89,8 +86,8 @@ export function useBookingStore() {
   return {
     bookings,
     addBooking,
+    removeBooking,
     groupedByCategory,
     myGroupedByCategory,
   }
 }
-
