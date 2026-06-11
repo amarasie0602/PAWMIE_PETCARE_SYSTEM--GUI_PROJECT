@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { reactive, computed, ref, onUnmounted } from 'vue'
+import { reactive, computed, ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuth } from '@/composables/useAuth'
 import { useBookingStore } from '@/stores/bookingStore'
 
 const props = defineProps<{
@@ -13,6 +14,9 @@ const props = defineProps<{
 
 const router = useRouter()
 const { addBooking } = useBookingStore()
+const { getUser } = useAuth()
+const bookingSubmitted = ref(false)
+const today = new Date().toISOString().split('T')[0]
 
 const isEmergency = computed(() => props.theme === 'emergency')
 const isGrooming  = computed(() => props.theme === 'grooming')
@@ -27,6 +31,14 @@ const form = reactive({
   date:      '',
   time:      '',
   notes:     '',
+})
+
+onMounted(() => {
+  const user = getUser()
+  if (user) {
+    const fullName = [user.firstName, user.lastName].filter(Boolean).join(' ')
+    if (fullName) form.ownerName = fullName
+  }
 })
 
 // ── Theme tokens ─────────────────────────────────────────────────────
@@ -233,8 +245,7 @@ const handleSubmit = () => {
   if (isEmergency.value) {
     startTracker(form.petName)
   } else {
-    alert('Booking saved (dummy data).')
-    router.push('/my-bookings')
+    bookingSubmitted.value = true
   }
 }
 </script>
@@ -316,8 +327,34 @@ const handleSubmit = () => {
   <Transition name="slide-up">
     <div v-if="!tracking" :class="wrapperClass">
 
+      <!-- ── SUCCESS STATE (non-emergency) ── -->
+      <div v-if="bookingSubmitted" class="flex flex-col items-center justify-center py-8 text-center">
+        <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 text-3xl dark:bg-emerald-900/30">
+          🐾
+        </div>
+        <h3 class="text-[1.2rem] font-black text-slate-900 dark:text-white">Booking confirmed!</h3>
+        <p class="mx-auto mt-2 max-w-xs text-[13px] leading-6 text-slate-500 dark:text-slate-400">
+          Your appointment has been saved. You can view it anytime under My Bookings.
+        </p>
+        <div class="mt-5 flex gap-3">
+          <button
+            type="button"
+            class="rounded-xl border border-slate-200 px-5 py-2.5 text-[13px] font-bold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+            @click="bookingSubmitted = false"
+          >
+            Book another
+          </button>
+          <router-link
+            to="/my-bookings"
+            class="rounded-xl bg-emerald-600 px-5 py-2.5 text-[13px] font-bold text-white transition hover:bg-emerald-700"
+          >
+            View my bookings →
+          </router-link>
+        </div>
+      </div>
+
       <!-- Themed header (emergency / grooming / vet) -->
-      <div v-if="isEmergency || isGrooming || isVet || isTraining" class="mb-6 text-center">
+      <div v-if="!bookingSubmitted && (isEmergency || isGrooming || isVet || isTraining)" class="mb-6 text-center">
         <span :class="badgeClass">
           <span :class="dotClass" />
           {{ badgeLabel }}
@@ -327,12 +364,12 @@ const handleSubmit = () => {
       </div>
 
       <!-- Default header -->
-      <h2 v-else class="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">
+      <h2 v-else-if="!bookingSubmitted" class="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">
         {{ heading || 'Book Service' }}
       </h2>
 
       <!-- ── THE ONE FORM ── -->
-      <form @submit.prevent="handleSubmit" class="space-y-4">
+      <form v-if="!bookingSubmitted" @submit.prevent="handleSubmit" class="space-y-4">
         <div>
           <label :class="labelClass">Pet Name *</label>
           <input v-model="form.petName" type="text" :class="inputClass" placeholder="Enter your pet's name" />
@@ -354,7 +391,7 @@ const handleSubmit = () => {
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label :class="labelClass">Date *</label>
-            <input v-model="form.date" type="date" :class="inputClass" />
+            <input v-model="form.date" type="date" :class="inputClass" :min="today" />
           </div>
           <div>
             <label :class="labelClass">Time *</label>
