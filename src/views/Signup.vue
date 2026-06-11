@@ -26,8 +26,21 @@ const handleSignup = () => {
   }
   loading.value = true
   setTimeout(() => {
+    const nameParts = name.value.trim().split(' ')
+    const mockUser = {
+      id: 0,
+      username: email.value.split('@')[0],
+      email: email.value,
+      firstName: nameParts[0] ?? '',
+      lastName: nameParts.slice(1).join(' ') ?? '',
+      gender: '',
+      image: '',
+      accessToken: 'local',
+      refreshToken: 'local',
+    }
     localStorage.setItem('isAuthenticated', 'true')
     localStorage.setItem('userEmail', email.value)
+    localStorage.setItem('authUser', JSON.stringify(mockUser))
     router.push('/')
   }, 600)
 }
@@ -35,8 +48,20 @@ const handleSignup = () => {
 const handleGoogleSignup = () => {
   loading.value = true
   setTimeout(() => {
+    const mockUser = {
+      id: 0,
+      username: 'google-user',
+      email: 'google-user@pawmie.com',
+      firstName: 'Google',
+      lastName: 'User',
+      gender: '',
+      image: '',
+      accessToken: 'local',
+      refreshToken: 'local',
+    }
     localStorage.setItem('isAuthenticated', 'true')
     localStorage.setItem('userEmail', 'google-user@pawmie.com')
+    localStorage.setItem('authUser', JSON.stringify(mockUser))
     router.push('/')
   }, 600)
 }
