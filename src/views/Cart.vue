@@ -77,6 +77,33 @@ const totalItems = computed(() =>
   cart.value.reduce((sum, item) => sum + item.quantity, 0)
 )
 
+const orderTotal = computed(() => {
+  let sum = 0
+  for (const item of cart.value) {
+    const num = parseFloat(item.price.replace(/[^0-9.]/g, ''))
+    if (!isNaN(num)) sum += num * item.quantity
+  }
+  const symbol = cart.value[0]?.price.match(/^[^\d]+/)?.[0] ?? ''
+  return symbol + sum.toFixed(2)
+})
+
+const increment = (id: string) => {
+  const item = cart.value.find(i => i.id === id)
+  if (item) { item.quantity += 1; persistCart() }
+}
+
+const decrement = (id: string) => {
+  const item = cart.value.find(i => i.id === id)
+  if (!item) return
+  if (item.quantity > 1) { item.quantity -= 1; persistCart() }
+  else removeItem(id)
+}
+
+const removeItem = (id: string) => {
+  cart.value = cart.value.filter(i => i.id !== id)
+  persistCart()
+}
+
 const handleCheckout = () => {
   if (!cart.value.length) {
     message.value = 'Your cart is empty.'
@@ -158,7 +185,12 @@ const handleCheckout = () => {
           </article>
         </div>
 
-        <div class="mt-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div v-if="cart.length" class="mt-4 flex items-center justify-between border-t border-slate-100 pt-4 dark:border-white/[0.06]">
+          <p class="text-xs font-semibold text-slate-500 dark:text-slate-400">Order total</p>
+          <p class="text-base font-black text-slate-900 dark:text-white">{{ orderTotal }}</p>
+        </div>
+
+        <div class="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <p v-if="message" class="text-xs sm:text-sm text-emerald-600 dark:text-emerald-300">
             {{ message }}
           </p>
