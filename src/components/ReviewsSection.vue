@@ -1,4 +1,23 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
+
+// ── DummyJSON user interface ──────────────────────────────────────────
+interface DummyUser {
+  id: number
+  firstName: string
+  lastName: string
+  image: string
+  address: { city: string; state: string }
+}
+
+interface DummyUsersResponse {
+  users: DummyUser[]
+  total: number
+  skip: number
+  limit: number
+}
+
+// ── Local review interface ────────────────────────────────────────────
 interface Review {
   id: string
   name: string
@@ -11,74 +30,42 @@ interface Review {
   avatar: string
 }
 
-const reviews: Review[] = [
-  {
-    id: 'r-1',
-    name: 'Sarah Mitchell',
-    petName: 'Biscuit',
-    petType: 'Golden Retriever',
-    location: 'New York, NY',
-    rating: 5,
-    service: 'Vet Appointment',
-    review: 'Booked a same-day check-up for Biscuit. The vet already had his notes — first visit where he didn\'t hide under the chair.',
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face',
-  },
-  {
-    id: 'r-2',
-    name: 'James Okonkwo',
-    petName: 'Luna',
-    petType: 'Persian Cat',
-    location: 'Chicago, IL',
-    rating: 5,
-    service: 'Grooming Booking',
-    review: 'Luna\'s coat mats easily. The groomer Pawmie matched us with actually read her file and went slow — huge difference.',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face',
-  },
-  {
-    id: 'r-4',
-    name: 'Tom Harrington',
-    petName: 'Mochi',
-    petType: 'Shih Tzu',
-    location: 'Los Angeles, CA',
-    rating: 5,
-    service: 'Emergency Care',
-    review: 'Mochi ate something bad at 1 am. One tap to emergency line, clinic on the phone in under three minutes.',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face',
-  },
-  {
-    id: 'r-3',
-    name: 'Priya Nair',
-    petName: 'Rocky',
-    petType: 'Labrador',
-    location: 'Austin, TX',
-    rating: 5,
-    service: 'Training Services',
-    review: 'Four sessions in, Rocky waits at the door instead of jumping on delivery drivers. Worth every minute.',
-    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b977?w=80&h=80&fit=crop&crop=face',
-  },
-  {
-    id: 'r-6',
-    name: 'Daniel Fernandez',
-    petName: 'Coco',
-    petType: 'French Bulldog',
-    location: 'Miami, FL',
-    rating: 5,
-    service: 'Vet Appointment',
-    review: 'Vaccination reminders and past visit notes in one screen. I stopped keeping a spreadsheet for Coco.',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face',
-  },
-  {
-    id: 'r-5',
-    name: 'Anika Patel',
-    petName: 'Oreo',
-    petType: 'Beagle',
-    location: 'Seattle, WA',
-    rating: 4,
-    service: 'Pet Marketplace',
-    review: 'Ordered harness and food through the marketplace after booking grooming. Arrived fast, fit was spot on.',
-    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=80&h=80&fit=crop&crop=face',
-  },
+// Static review content (text stays curated; only author info comes from API)
+const reviewContent: Omit<Review, 'name' | 'location' | 'avatar'>[] = [
+  { id: 'r-1', petName: 'Biscuit', petType: 'Golden Retriever', rating: 5, service: 'Vet Appointment',   review: 'Booked a same-day check-up for Biscuit. The vet already had his notes — first visit where he didn\'t hide under the chair.' },
+  { id: 'r-2', petName: 'Luna',    petType: 'Persian Cat',      rating: 5, service: 'Grooming Booking',  review: 'Luna\'s coat mats easily. The groomer Pawmie matched us with actually read her file and went slow — huge difference.' },
+  { id: 'r-3', petName: 'Mochi',   petType: 'Shih Tzu',         rating: 5, service: 'Emergency Care',    review: 'Mochi ate something bad at 1 am. One tap to emergency line, clinic on the phone in under three minutes.' },
+  { id: 'r-4', petName: 'Rocky',   petType: 'Labrador',         rating: 5, service: 'Training Services', review: 'Four sessions in, Rocky waits at the door instead of jumping on delivery drivers. Worth every minute.' },
+  { id: 'r-5', petName: 'Coco',    petType: 'French Bulldog',   rating: 5, service: 'Vet Appointment',   review: 'Vaccination reminders and past visit notes in one screen. I stopped keeping a spreadsheet for Coco.' },
+  { id: 'r-6', petName: 'Oreo',    petType: 'Beagle',           rating: 4, service: 'Pet Marketplace',   review: 'Ordered harness and food through the marketplace after booking grooming. Arrived fast, fit was spot on.' },
 ]
+
+const reviews = ref<Review[]>([])
+const loading = ref(true)
+
+onMounted(async () => {
+  try {
+    const res = await fetch('https://dummyjson.com/users?limit=6&select=id,firstName,lastName,image,address')
+    if (!res.ok) throw new Error(`${res.status}`)
+    const data: DummyUsersResponse = await res.json()
+    reviews.value = data.users.map((user, i) => ({
+      ...reviewContent[i]!,
+      name:     `${user.firstName} ${user.lastName}`,
+      location: `${user.address.city}, ${user.address.state}`,
+      avatar:   user.image,
+    }))
+  } catch {
+    // fallback: use static names if API fails
+    reviews.value = reviewContent.map((r, i) => ({
+      ...r,
+      name:     ['Sarah Mitchell','James Okonkwo','Tom Harrington','Priya Nair','Daniel Fernandez','Anika Patel'][i] ?? 'Pet Parent',
+      location: ['New York, NY','Chicago, IL','Los Angeles, CA','Austin, TX','Miami, FL','Seattle, WA'][i] ?? '',
+      avatar:   `https://i.pravatar.cc/80?img=${i + 10}`,
+    }))
+  } finally {
+    loading.value = false
+  }
+})
 
 const serviceColours: Record<string, string> = {
   'Vet Appointment':   'text-indigo-500',
@@ -106,26 +93,36 @@ const serviceColours: Record<string, string> = {
       </div>
     </div>
 
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <!-- Skeleton while loading -->
+    <div v-if="loading" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div v-for="n in 6" :key="n" class="rounded-2xl border border-white/60 bg-white/80 p-5 shadow-sm dark:border-white/[0.07] dark:bg-slate-900/70">
+        <div class="skeleton mb-3 h-3 w-1/3 rounded-lg" />
+        <div class="skeleton mb-1 h-3 w-full rounded-lg" />
+        <div class="skeleton mb-1 h-3 w-5/6 rounded-lg" />
+        <div class="skeleton h-3 w-2/3 rounded-lg" />
+        <div class="mt-4 flex items-center gap-3 border-t border-slate-100 pt-4 dark:border-white/[0.06]">
+          <div class="skeleton h-9 w-9 rounded-full" />
+          <div class="flex-1">
+            <div class="skeleton mb-1 h-3 w-1/2 rounded-lg" />
+            <div class="skeleton h-2.5 w-1/3 rounded-lg" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reviews grid -->
+    <div v-else class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       <article
-        v-for="(review, i) in reviews"
+        v-for="review in reviews"
         :key="review.id"
         class="flex flex-col rounded-2xl border border-white/60 bg-white/80 p-5 shadow-sm backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-white/[0.07] dark:bg-slate-900/70"
       >
         <div class="mb-3 flex items-center justify-between">
-          <p
-            class="text-[10px] font-black uppercase tracking-[0.2em]"
-            :class="serviceColours[review.service] ?? 'text-slate-400'"
-          >
+          <p class="text-[10px] font-black uppercase tracking-[0.2em]" :class="serviceColours[review.service] ?? 'text-slate-400'">
             {{ review.service }}
           </p>
           <div class="flex gap-0.5">
-            <span
-              v-for="n in 5"
-              :key="n"
-              class="text-sm"
-              :class="n <= review.rating ? 'text-amber-400' : 'text-slate-200 dark:text-slate-700'"
-            >★</span>
+            <span v-for="n in 5" :key="n" class="text-sm" :class="n <= review.rating ? 'text-amber-400' : 'text-slate-200 dark:text-slate-700'">★</span>
           </div>
         </div>
 
@@ -155,4 +152,20 @@ const serviceColours: Record<string, string> = {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap');
 .hero-heading { font-family: 'Playfair Display', Georgia, serif; }
+
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position:  600px 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 1200px 100%;
+  animation: shimmer 1.6s linear infinite;
+  display: block;
+}
+:global(.dark) .skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.10) 50%, rgba(255,255,255,0.05) 75%);
+  background-size: 1200px 100%;
+  animation: shimmer 1.6s linear infinite;
+}
 </style>
