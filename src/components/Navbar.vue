@@ -2,9 +2,12 @@
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import logo from '@/assets/pawmie-logo.png'
 import { useRouter } from 'vue-router'
+import { useAuth } from '@/composables/useAuth'
 
 const router = useRouter()
 const isAuthenticated = ref(false)
+const { getUser } = useAuth()
+const userName = ref('')
 const showDropdown = ref(false)
 const isDarkMode = ref(false)
 const isScrolled = ref(false)
@@ -12,6 +15,8 @@ const mobileMenuOpen = ref(false)
 
 const updateAuthState = () => {
   isAuthenticated.value = localStorage.getItem('isAuthenticated') === 'true'
+  const user = getUser()
+  userName.value = user?.firstName ?? ''
 }
 
 const SCROLL_SOLID_THRESHOLD = 48
@@ -209,9 +214,10 @@ onUnmounted(() => {
           <div v-else class="relative shrink-0 profile-menu">
             <button
               @click.stop="showDropdown = !showDropdown"
-              class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center"
+              class="flex h-10 items-center gap-2 rounded-full bg-gray-100 px-3 dark:bg-gray-700"
             >
-              👤
+              <span class="text-base">👤</span>
+              <span v-if="userName" class="hidden sm:block text-sm font-semibold text-slate-700 dark:text-slate-200">{{ userName }}</span>
             </button>
 
             <div
