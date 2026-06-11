@@ -104,10 +104,10 @@ function formatTime(timeStr: string): string {
         </p>
         <div class="mt-6 flex flex-wrap justify-center gap-2">
           <a v-for="link in [
-              { label: '🩺 Vet Appointment', href: '/vet' },
-              { label: '✂️ Grooming', href: '/grooming' },
-              { label: '🎓 Training', href: '/training' },
-              { label: '🚑 Emergency', href: '/emergency' },
+              { label: '🩺 Vet Appointment', href: '/services/vet-appointment' },
+              { label: '✂️ Grooming', href: '/services/grooming-booking' },
+              { label: '🎓 Training', href: '/services/training-services' },
+              { label: '🚑 Emergency', href: '/services/emergency-care' },
             ]"
             :key="link.href"
             :href="link.href"
