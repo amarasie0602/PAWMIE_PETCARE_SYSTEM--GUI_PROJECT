@@ -63,9 +63,10 @@ export function useAuth() {
       const user = data as AuthUser
 
       // Store JWT + user info
-      localStorage.setItem(AUTH_KEY,  'true')
-      localStorage.setItem(TOKEN_KEY, user.accessToken)
-      localStorage.setItem(USER_KEY,  JSON.stringify(user))
+      localStorage.setItem(AUTH_KEY,      'true')
+      localStorage.setItem(TOKEN_KEY,     user.accessToken)
+      localStorage.setItem(USER_KEY,      JSON.stringify(user))
+      localStorage.setItem('userEmail',   user.email)
 
       router.push('/')
 
@@ -80,6 +81,7 @@ export function useAuth() {
     localStorage.removeItem(AUTH_KEY)
     localStorage.removeItem(TOKEN_KEY)
     localStorage.removeItem(USER_KEY)
+    localStorage.removeItem('userEmail')
     router.push('/login')
   }
 
