@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useBookingStore } from '@/stores/bookingStore'
 
-const { myGroupedByCategory } = useBookingStore()
+const { myGroupedByCategory, removeBooking } = useBookingStore()
 
 const categories = computed(() => Object.entries(myGroupedByCategory.value))
 
@@ -170,12 +170,20 @@ function formatTime(timeStr: string): string {
                 </div>
               </div>
 
-              <!-- Right: date + time -->
+              <!-- Right: date + time + cancel -->
               <div class="ml-5 flex shrink-0 items-center gap-2 sm:ml-0">
                 <div class="rounded-xl border border-slate-200/70 bg-slate-50 px-3.5 py-2 text-right dark:border-white/[0.07] dark:bg-slate-800/60">
                   <p class="text-[13px] font-bold tabular-nums text-slate-800 dark:text-white">{{ formatDate(booking.date) }}</p>
                   <p class="text-[11px] font-semibold tabular-nums text-slate-400 dark:text-slate-500">{{ formatTime(booking.time) }}</p>
                 </div>
+                <button
+                  type="button"
+                  title="Cancel booking"
+                  class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-rose-200 bg-rose-50 text-rose-500 transition hover:bg-rose-100 dark:border-rose-500/20 dark:bg-rose-900/10 dark:text-rose-400 dark:hover:bg-rose-900/20"
+                  @click="removeBooking(booking.id)"
+                >
+                  ✕
+                </button>
               </div>
             </li>
           </ul>
