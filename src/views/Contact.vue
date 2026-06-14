@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useScrollReveal } from '@/composables/useScrollReveal'
+import { useScrollReveal } from '@/composables/useScrollReveal'
 import contactContent from '@/stores/contactContent.json'
 import heroImage from '@/assets/contact-hero-dog-phone.png'
 
@@ -77,6 +78,10 @@ const revealFaqs     = useScrollReveal({ type: 'fade-up', delay: 70 })
 
 const submitted = ref(false)
 const submitting = ref(false)
+
+const revealChannels = useScrollReveal({ type: 'fade-up', delay: 90 })
+const revealForm     = useScrollReveal({ type: 'fade-in' })
+const revealFaq      = useScrollReveal({ type: 'fade-up', delay: 70 })
 
 function handleSubmit() {
   submitting.value = true
@@ -163,6 +168,7 @@ function handleSubmit() {
       <div class="grid gap-4 sm:grid-cols-3">
         <article
           :ref="revealChannels.add"
+          :ref="revealChannels.add"
           v-for="channel in data.channels"
           :key="channel.id"
           class="group relative overflow-hidden rounded-2xl border border-purple-100/80 bg-white p-6 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-purple-300 hover:shadow-md dark:border-white/[0.08] dark:bg-[#18132e] dark:hover:border-purple-500/40"
@@ -190,7 +196,7 @@ function handleSubmit() {
 
 
     <!-- ─── CONTACT FORM ──────────────────────────────────────────────── -->
-    <section id="contact-form" :ref="revealForm.add" class="mx-auto max-w-6xl px-4 pb-24 sm:px-6 lg:px-8">
+    <section id="contact-form" :ref="revealForm.ref" class="mx-auto max-w-6xl px-4 pb-24 sm:px-6 lg:px-8">
 
       <div class="mb-12 text-center">
         <p class="mb-2.5 text-[11px] font-bold uppercase tracking-[0.25em] text-purple-500 dark:text-purple-400">
@@ -412,6 +418,7 @@ function handleSubmit() {
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <article
             :ref="revealFaqs.add"
+            :ref="revealFaq.add"
             v-for="item in data.faq"
             :key="item.id"
             class="rounded-2xl border border-l-4 border-purple-100/80 border-l-purple-400
