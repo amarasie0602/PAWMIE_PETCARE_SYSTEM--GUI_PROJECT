@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { useScrollReveal } from '@/composables/useScrollReveal'
 
 const router = useRouter()
+
+const revealHeader   = useScrollReveal({ type: 'fade-in' })
+const revealServices = useScrollReveal({ type: 'fade-up', delay: 90 })
 
 type ServiceColour = 'indigo' | 'pink' | 'emerald' | 'rose' | 'amber'
 
@@ -87,7 +91,7 @@ function openMore(path: string) {
 <template>
   <section id="services" class="mx-auto max-w-6xl px-4 pb-14 sm:px-6 lg:px-8">
 
-    <div class="mb-8 text-center">
+    <div :ref="revealHeader.add" class="mb-8 text-center">
       <p class="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500">Services</p>
       <h2 class="hero-heading mt-2 text-[2rem] font-black tracking-tight text-slate-900 dark:text-white">
         What you can book today
@@ -99,7 +103,8 @@ function openMore(path: string) {
 
     <div class="grid gap-4 sm:grid-cols-2">
       <article
-        v-for="service in services"
+        :ref="revealServices.add"
+          v-for="service in services"
         :key="service.title"
         class="group flex flex-col gap-4 rounded-2xl border border-white/60 bg-white/80 p-6 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-white/[0.07] dark:bg-slate-900/70"
       >

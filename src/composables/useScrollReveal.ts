@@ -1,4 +1,5 @@
 import { onMounted, onUnmounted } from 'vue'
+import type { ComponentPublicInstance } from 'vue'
 
 type RevealType = 'fade-up' | 'fade-in' | 'fade-left' | 'fade-right'
 
@@ -21,8 +22,10 @@ export function useScrollReveal(options: UseScrollRevealOptions = {}) {
   let observer: IntersectionObserver | null = null
 
   // Called via :ref="revealX.add" on any element or component root
-  function add(el: Element | null) {
-    if (!el) return
+  function add(ref: Element | ComponentPublicInstance | null) {
+    const el = ref instanceof Element ? ref : ref?.$el
+    if (!(el instanceof Element)) return
+
     el.classList.add(`reveal-${type}`)
     elements.push(el)
     observer?.observe(el)

@@ -69,7 +69,6 @@ const steps = [
         <div class="grid gap-4 md:grid-cols-3">
           <div
             :ref="revealSteps.add"
-          :ref="revealSteps.add"
             v-for="step in steps"
             :key="step.num"
             class="relative overflow-hidden rounded-2xl border border-white/60 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70"
