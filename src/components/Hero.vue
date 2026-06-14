@@ -79,12 +79,12 @@ function goToBookings() {
 .hero-heading { font-family: 'Playfair Display', Georgia, serif; }
 
 @keyframes heroReveal {
-  from { opacity: 0; transform: translateY(24px); }
+  from { opacity: 0; transform: translateY(36px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .hero-content-reveal {
-  animation: heroReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: 0.2s;
+  animation: heroReveal 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 0.15s;
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-content-reveal { animation: none; }

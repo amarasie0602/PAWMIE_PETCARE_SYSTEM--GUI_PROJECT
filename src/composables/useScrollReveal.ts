@@ -1,31 +1,27 @@
 import { onMounted, onUnmounted } from 'vue'
-import type { ComponentPublicInstance } from 'vue'
 
 type RevealType = 'fade-up' | 'fade-in' | 'fade-left' | 'fade-right'
 
 interface UseScrollRevealOptions {
-  type?: RevealType
-  delay?: number          // stagger delay between siblings in ms (default 0)
-  threshold?: number      // 0–1, how much of element must be visible (default 0.12)
-  rootMargin?: string     // IntersectionObserver rootMargin (default '0px 0px -48px 0px')
+  type?       : RevealType
+  delay?      : number   // stagger delay between siblings in ms
+  threshold?  : number   // how much of element must be visible before triggering
+  rootMargin? : string   // fires earlier (negative bottom = trigger before fully in view)
 }
 
 export function useScrollReveal(options: UseScrollRevealOptions = {}) {
   const {
-    type      = 'fade-up',
-    delay     = 0,
-    threshold = 0.12,
-    rootMargin = '0px 0px -48px 0px',
+    type       = 'fade-up',
+    delay      = 0,
+    threshold  = 0.08,                    // trigger when just 8% is visible
+    rootMargin = '0px 0px -24px 0px',    // fire slightly before bottom of viewport
   } = options
 
   const elements: Element[] = []
   let observer: IntersectionObserver | null = null
 
-  // Called via :ref="revealX.add" on any element or component root
-  function add(ref: Element | ComponentPublicInstance | null) {
-    const el = ref instanceof Element ? ref : ref?.$el
-    if (!(el instanceof Element)) return
-
+  function add(el: Element | null) {
+    if (!el) return
     el.classList.add(`reveal-${type}`)
     elements.push(el)
     observer?.observe(el)
@@ -38,7 +34,7 @@ export function useScrollReveal(options: UseScrollRevealOptions = {}) {
           if (!entry.isIntersecting) return
           const el = entry.target as HTMLElement
 
-          // Stagger siblings: find index among observed siblings in same parent
+          // Stagger: each sibling gets progressively longer delay
           if (delay > 0 && el.parentElement) {
             const siblings = Array.from(el.parentElement.children)
             const idx = siblings.indexOf(el)
@@ -52,7 +48,6 @@ export function useScrollReveal(options: UseScrollRevealOptions = {}) {
       { threshold, rootMargin },
     )
 
-    // Observe any elements already registered via :ref before mount
     elements.forEach((el) => observer?.observe(el))
   })
 

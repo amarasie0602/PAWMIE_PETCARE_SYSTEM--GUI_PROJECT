@@ -13,21 +13,33 @@ body {
 
 /* ── Scroll Reveal Animations ─────────────────────────────────────── */
 
-/* Base hidden state — all reveal types start invisible */
+/*
+  Easing: cubic-bezier(0.22, 1, 0.36, 1)
+  This is an "expo out" curve — starts fast, glides to rest.
+  Much smoother than the default "ease" which feels mechanical.
+
+  Duration: 0.85s — long enough to feel luxurious, short enough
+  to not feel sluggish.
+
+  translateY(40px) — bigger travel distance = more satisfying reveal.
+*/
+
 .reveal-fade-up,
 .reveal-fade-in,
 .reveal-fade-left,
 .reveal-fade-right {
   opacity: 0;
-  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    opacity   0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
 
-/* Starting transforms */
-.reveal-fade-up    { transform: translateY(32px); }
-.reveal-fade-in    { transform: none; }
-.reveal-fade-left  { transform: translateX(-28px); }
-.reveal-fade-right { transform: translateX(28px); }
+/* Starting transforms — bigger offsets = more dramatic reveal */
+.reveal-fade-up    { transform: translateY(44px); }
+.reveal-fade-in    { transform: scale(0.97);      }
+.reveal-fade-left  { transform: translateX(-36px); }
+.reveal-fade-right { transform: translateX(36px);  }
 
 /* Visible state — triggered by JS adding .reveal-visible */
 .reveal-visible {
