@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { onMounted } from 'vue'
 import heroImage from '@/assets/heropet.png'
 
 const router = useRouter()
@@ -27,7 +28,7 @@ function goToBookings() {
     <div class="absolute inset-0 bg-gradient-to-r from-black/88 via-black/55 to-black/20" />
     <div class="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-50 to-transparent dark:from-slate-950" />
 
-    <div class="absolute left-6 top-[50%] z-10 max-w-lg -translate-y-1/2 sm:max-w-xl lg:left-14 lg:max-w-2xl xl:left-20">
+    <div class="absolute left-6 top-[50%] z-10 max-w-lg -translate-y-1/2 sm:max-w-xl lg:left-14 lg:max-w-2xl xl:left-20 hero-content-reveal">
       <span class="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-white ring-1 ring-white/20 backdrop-blur-sm">
         <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-300" />
         Pet care, simplified
@@ -76,4 +77,16 @@ function goToBookings() {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap');
 .hero-heading { font-family: 'Playfair Display', Georgia, serif; }
+
+@keyframes heroReveal {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-content-reveal {
+  animation: heroReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.2s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-content-reveal { animation: none; }
+}
 </style>
