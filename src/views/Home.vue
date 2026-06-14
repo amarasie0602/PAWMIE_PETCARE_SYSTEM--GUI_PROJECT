@@ -1,26 +1,21 @@
 <script setup lang="ts">
 import Hero from '@/components/Hero.vue'
 import { useScrollReveal } from '@/composables/useScrollReveal'
+import { useScrollReveal } from '@/composables/useScrollReveal'
 import FeaturesSection from '@/components/FeatureSection.vue'
 import CustomerPetsSection from '@/components/CustomerPetsSection.vue'
 import ReviewsSection from '@/components/ReviewsSection.vue'
 import { useRouter } from 'vue-router'
-import type { ComponentPublicInstance } from 'vue'
 
 const router = useRouter()
 
 const revealStats   = useScrollReveal({ type: 'fade-up',  delay: 80 })
 const revealSteps   = useScrollReveal({ type: 'fade-up',  delay: 100 })
+const revealCta     = useScrollReveal({ type: 'fade-in' })
 
-const createScrollRevealRef = (addFn: (el: Element | null) => void) => {
-  return (el: Element | ComponentPublicInstance | null) => {
-    if (el instanceof Element) addFn(el)
-  }
-}
-
-// revealCta provides an add() method, not a .ref property; expose a ref-compatible object
-const revealCtaObj  = useScrollReveal({ type: 'fade-in' })
-const revealCta     = { ref: createScrollRevealRef(revealCtaObj.add) }
+const revealStats   = useScrollReveal({ type: 'fade-up',  delay: 80 })
+const revealSteps   = useScrollReveal({ type: 'fade-up',  delay: 100 })
+const revealCta     = useScrollReveal({ type: 'fade-in' })
 
 const stats = [
   { val: '12,400+', label: 'Pets cared for', icon: '🐾' },
@@ -69,6 +64,7 @@ const steps = [
         <div class="grid gap-4 md:grid-cols-3">
           <div
             :ref="revealSteps.add"
+          :ref="revealSteps.add"
             v-for="step in steps"
             :key="step.num"
             class="relative overflow-hidden rounded-2xl border border-white/60 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70"
