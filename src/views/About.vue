@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useScrollReveal } from '@/composables/useScrollReveal'
+import { useScrollReveal } from '@/composables/useScrollReveal'
 import heroImage  from '@/assets/about-hero.jpeg'
 import storyImage from '@/assets/about-story.jpg'
 
@@ -67,6 +68,12 @@ const revealFaqs       = useScrollReveal({ type: 'fade-up', delay: 70 })
 
 const team = ref<TeamMember[]>([])
 const teamLoading = ref(true)
+
+const revealStats      = useScrollReveal({ type: 'fade-up',  delay: 80 })
+const revealStory      = useScrollReveal({ type: 'fade-in' })
+const revealPrinciples = useScrollReveal({ type: 'fade-up',  delay: 90 })
+const revealTeam       = useScrollReveal({ type: 'fade-up',  delay: 90 })
+const revealFaq        = useScrollReveal({ type: 'fade-up',  delay: 70 })
 const teamError   = ref<string | null>(null)
 
 const roles = ['Co-founder & CEO', 'Head of Vet Partnerships', 'Lead Product Designer', 'Head of Sitter Operations']
@@ -131,6 +138,7 @@ onMounted(async () => {
       <div class="relative -mt-6 mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
         <div
           :ref="revealStats.add"
+          :ref="revealStats.add"
           v-for="stat in stats" :key="stat.label"
           class="rounded-2xl border border-white/60 bg-white/80 p-5 text-center shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70"
         >
@@ -141,7 +149,7 @@ onMounted(async () => {
       </div>
 
       <!-- ── OUR STORY ───────────────────────────────────────────── -->
-      <section :ref="revealStory.add" class="mb-10">
+      <section :ref="revealStory.ref" class="mb-10">
         <div class="mb-6 text-center">
           <p class="text-[10px] font-black uppercase tracking-[0.28em] text-amber-500">The Origin</p>
           <h2 class="mt-2 text-[2rem] font-black tracking-tight text-slate-900 dark:text-white hero-heading">How Pawmie came to life</h2>
@@ -202,6 +210,7 @@ onMounted(async () => {
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div
             :ref="revealPrinciples.add"
+          :ref="revealPrinciples.add"
             v-for="p in principles" :key="p.title"
             class="group flex flex-col gap-4 rounded-2xl border border-white/60 bg-white/80 p-6 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-white/[0.07] dark:bg-slate-900/70"
           >
@@ -248,6 +257,7 @@ onMounted(async () => {
         <div v-else class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div
             :ref="revealTeam.add"
+          :ref="revealTeam.add"
             v-for="(member, i) in team" :key="member.name"
             class="group overflow-hidden rounded-2xl border border-white/60 bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/[0.07] dark:bg-slate-900/70"
           >
@@ -289,6 +299,7 @@ onMounted(async () => {
         <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <div
             :ref="revealFaqs.add"
+          :ref="revealFaq.add"
             v-for="(faq, i) in faqs" :key="faq.q"
             class="group rounded-2xl border border-white/60 bg-white/80 p-5 shadow-sm backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-white/[0.07] dark:bg-slate-900/70"
           >
