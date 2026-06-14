@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import BookingForm from '@/components/bookings/BookingForm.vue'
 import { useScrollReveal } from '@/composables/useScrollReveal'
-import { useScrollReveal } from '@/composables/useScrollReveal'
 import trainingImage from '@/assets/training-hero.png'
 
 const revealStats = useScrollReveal({ type: 'fade-up', delay: 80 })
@@ -106,9 +105,6 @@ function thumbUrl(youtubeId: string) {
 function embedUrl(youtubeId: string) {
   return `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`
 }
-const revealStats  = useScrollReveal({ type: 'fade-up', delay: 80 })
-const revealInfo   = useScrollReveal({ type: 'fade-up', delay: 60 })
-const revealForm   = useScrollReveal({ type: 'fade-in' })
 
 </script>
 
@@ -177,7 +173,6 @@ const revealForm   = useScrollReveal({ type: 'fade-in' })
       <!-- Trust stats -->
       <div class="mb-10 grid grid-cols-3 gap-3 sm:gap-4">
         <div
-          :ref="revealStats.add"
           :ref="revealStats.add"
           v-for="signal in trustSignals"
           :key="signal.label"
@@ -263,7 +258,7 @@ const revealForm   = useScrollReveal({ type: 'fade-in' })
       >
 
         <!-- ── LEFT: Info ──────────────────────────────────────── -->
-        <section :ref="revealInfo.ref" class="space-y-5">
+        <section :ref="revealInfo.add" class="space-y-5">
 
           <!-- What happens next -->
           <div class="rounded-2xl border border-white/60 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70">
@@ -344,7 +339,7 @@ const revealForm   = useScrollReveal({ type: 'fade-in' })
         </section>
 
         <!-- ── RIGHT: Form ─────────────────────────────────────── -->
-        <section :ref="revealForm.ref" class="self-start lg:sticky lg:top-24">
+        <section :ref="revealForm.add" class="self-start lg:sticky lg:top-24">
           <BookingForm
             service="Training Services"
             category="Grooming & Training"

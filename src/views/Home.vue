@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Hero from '@/components/Hero.vue'
 import { useScrollReveal } from '@/composables/useScrollReveal'
-import { useScrollReveal } from '@/composables/useScrollReveal'
 import FeaturesSection from '@/components/FeatureSection.vue'
 import CustomerPetsSection from '@/components/CustomerPetsSection.vue'
 import ReviewsSection from '@/components/ReviewsSection.vue'
@@ -13,9 +12,6 @@ const revealStats   = useScrollReveal({ type: 'fade-up',  delay: 80 })
 const revealSteps   = useScrollReveal({ type: 'fade-up',  delay: 100 })
 const revealCta     = useScrollReveal({ type: 'fade-in' })
 
-const revealStats   = useScrollReveal({ type: 'fade-up',  delay: 80 })
-const revealSteps   = useScrollReveal({ type: 'fade-up',  delay: 100 })
-const revealCta     = useScrollReveal({ type: 'fade-in' })
 
 const stats = [
   { val: '12,400+', label: 'Pets cared for', icon: '🐾' },
@@ -64,7 +60,6 @@ const steps = [
         <div class="grid gap-4 md:grid-cols-3">
           <div
             :ref="revealSteps.add"
-          :ref="revealSteps.add"
             v-for="step in steps"
             :key="step.num"
             class="relative overflow-hidden rounded-2xl border border-white/60 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70"
@@ -89,7 +84,7 @@ const steps = [
       <ReviewsSection />
 
       <!-- Closing CTA -->
-      <section :ref="revealCta.ref" class="mb-4 overflow-hidden rounded-2xl border border-white/60 bg-white/80 shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70">
+      <section :ref="revealCta.add" class="mb-4 overflow-hidden rounded-2xl border border-white/60 bg-white/80 shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70">
         <div class="grid items-center gap-6 p-6 sm:grid-cols-[1fr_auto] sm:p-8">
           <div>
             <p class="text-[10px] font-black uppercase tracking-[0.28em] text-amber-500">Still deciding?</p>

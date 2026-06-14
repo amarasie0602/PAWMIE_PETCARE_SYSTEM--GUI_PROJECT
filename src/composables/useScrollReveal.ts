@@ -1,27 +1,30 @@
 import { onMounted, onUnmounted } from 'vue'
+import type { ComponentPublicInstance } from 'vue'
 
 type RevealType = 'fade-up' | 'fade-in' | 'fade-left' | 'fade-right'
 
 interface UseScrollRevealOptions {
   type?       : RevealType
-  delay?      : number   // stagger delay between siblings in ms
-  threshold?  : number   // how much of element must be visible before triggering
-  rootMargin? : string   // fires earlier (negative bottom = trigger before fully in view)
+  delay?      : number
+  threshold?  : number
+  rootMargin? : string
 }
 
 export function useScrollReveal(options: UseScrollRevealOptions = {}) {
   const {
     type       = 'fade-up',
     delay      = 0,
-    threshold  = 0.08,                    // trigger when just 8% is visible
-    rootMargin = '0px 0px -24px 0px',    // fire slightly before bottom of viewport
+    threshold  = 0.08,
+    rootMargin = '0px 0px -24px 0px',
   } = options
 
   const elements: Element[] = []
   let observer: IntersectionObserver | null = null
 
-  function add(el: Element | null) {
-    if (!el) return
+  function add(ref: Element | ComponentPublicInstance | null) {
+    const el = ref instanceof Element ? ref : ref?.$el
+    if (!(el instanceof Element)) return
+
     el.classList.add(`reveal-${type}`)
     elements.push(el)
     observer?.observe(el)
@@ -34,7 +37,6 @@ export function useScrollReveal(options: UseScrollRevealOptions = {}) {
           if (!entry.isIntersecting) return
           const el = entry.target as HTMLElement
 
-          // Stagger: each sibling gets progressively longer delay
           if (delay > 0 && el.parentElement) {
             const siblings = Array.from(el.parentElement.children)
             const idx = siblings.indexOf(el)
