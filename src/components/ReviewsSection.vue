@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useScrollReveal } from '@/composables/useScrollReveal'
-import { useScrollReveal } from '@/composables/useScrollReveal'
 
 // ── DummyJSON user interface ──────────────────────────────────────────
 interface DummyUser {
@@ -44,7 +43,6 @@ const reviewContent: Omit<Review, 'name' | 'location' | 'avatar'>[] = [
 
 const reviews = ref<Review[]>([])
 const loading = ref(true)
-const revealCards = useScrollReveal({ type: 'fade-up', delay: 80 })
 
 onMounted(async () => {
   try {
@@ -85,7 +83,7 @@ const serviceColours: Record<string, string> = {
 <template>
   <section class="pb-14 pt-4">
 
-    <div :ref="revealHeader.ref" class="mb-8 text-center">
+    <div :ref="revealHeader.add" class="mb-8 text-center">
       <p class="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500">Reviews</p>
       <h2 class="hero-heading mt-2 text-[2rem] font-black tracking-tight text-slate-900 dark:text-white">
         What pet parents say
@@ -119,7 +117,6 @@ const serviceColours: Record<string, string> = {
     <!-- Reviews grid -->
     <div v-else class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       <article
-        :ref="revealCards.add"
         :ref="revealCards.add"
         v-for="review in reviews"
         :key="review.id"
