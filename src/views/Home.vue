@@ -1,11 +1,26 @@
 <script setup lang="ts">
 import Hero from '@/components/Hero.vue'
+import { useScrollReveal } from '@/composables/useScrollReveal'
 import FeaturesSection from '@/components/FeatureSection.vue'
 import CustomerPetsSection from '@/components/CustomerPetsSection.vue'
 import ReviewsSection from '@/components/ReviewsSection.vue'
 import { useRouter } from 'vue-router'
+import type { ComponentPublicInstance } from 'vue'
 
 const router = useRouter()
+
+const revealStats   = useScrollReveal({ type: 'fade-up',  delay: 80 })
+const revealSteps   = useScrollReveal({ type: 'fade-up',  delay: 100 })
+
+const createScrollRevealRef = (addFn: (el: Element | null) => void) => {
+  return (el: Element | ComponentPublicInstance | null) => {
+    if (el instanceof Element) addFn(el)
+  }
+}
+
+// revealCta provides an add() method, not a .ref property; expose a ref-compatible object
+const revealCtaObj  = useScrollReveal({ type: 'fade-in' })
+const revealCta     = { ref: createScrollRevealRef(revealCtaObj.add) }
 
 const stats = [
   { val: '12,400+', label: 'Pets cared for', icon: '🐾' },
@@ -31,6 +46,7 @@ const steps = [
       <!-- Stats -->
       <div class="relative -mt-6 mb-12 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
         <div
+          :ref="revealStats.add"
           v-for="stat in stats"
           :key="stat.label"
           class="rounded-2xl border border-white/60 bg-white/80 p-5 text-center shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70"
@@ -52,6 +68,8 @@ const steps = [
 
         <div class="grid gap-4 md:grid-cols-3">
           <div
+            :ref="revealSteps.add"
+          :ref="revealSteps.add"
             v-for="step in steps"
             :key="step.num"
             class="relative overflow-hidden rounded-2xl border border-white/60 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70"
@@ -76,7 +94,7 @@ const steps = [
       <ReviewsSection />
 
       <!-- Closing CTA -->
-      <section class="mb-4 overflow-hidden rounded-2xl border border-white/60 bg-white/80 shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70">
+      <section :ref="revealCta.ref" class="mb-4 overflow-hidden rounded-2xl border border-white/60 bg-white/80 shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70">
         <div class="grid items-center gap-6 p-6 sm:grid-cols-[1fr_auto] sm:p-8">
           <div>
             <p class="text-[10px] font-black uppercase tracking-[0.28em] text-amber-500">Still deciding?</p>
