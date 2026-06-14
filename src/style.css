@@ -6,9 +6,11 @@
 
 /* Base backgrounds for theme switching */
 html {
+  /* stylelint-disable-next-line at-rule-no-unknown */
   @apply bg-white dark:bg-gray-900 transition-colors duration-300;
 }
 body {
+  /* stylelint-disable-next-line at-rule-no-unknown */
   @apply bg-inherit text-gray-900 dark:text-gray-100;
 }
 
