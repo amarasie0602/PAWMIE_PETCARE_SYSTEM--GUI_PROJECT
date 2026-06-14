@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import BookingForm from '@/components/bookings/BookingForm.vue'
 import { useScrollReveal } from '@/composables/useScrollReveal'
-import { useScrollReveal } from '@/composables/useScrollReveal'
 import emergencyImage from '@/assets/emergency-care-hero.png'
 
 // Demo data for trust signals and process steps. In a real app, these might come from props or an API.
@@ -21,10 +20,6 @@ const steps = [
   { icon: '📡', title: 'Clinics are alerted', text: 'Nearby vets receive your request and prepare.'      },
   { icon: '🚗', title: 'Head over',           text: 'Arrive knowing the team is already ready for you.' },
 ]
-const revealStats  = useScrollReveal({ type: 'fade-up', delay: 80 })
-const revealInfo   = useScrollReveal({ type: 'fade-up', delay: 60 })
-const revealForm   = useScrollReveal({ type: 'fade-in' })
-
 </script>
 
 <template>
@@ -93,7 +88,6 @@ const revealForm   = useScrollReveal({ type: 'fade-in' })
       <!-- Trust stats -->
       <div class="mb-10 grid grid-cols-3 gap-3 sm:gap-4">
         <div
-          :ref="revealStats.add"
           :ref="revealStats.add"
           v-for="signal in trustSignals"
           :key="signal.label"
