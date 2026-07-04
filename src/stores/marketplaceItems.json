@@ -1,53 +1,13 @@
 [
   {
-    "id": "mp-1",
-    "name": "Premium Chicken Kibble",
-    "category": "Food",
-    "price": "$12.99",
-    "badge": "⭐ Top Rated",
-    "description": "High-protein dry food with essential vitamins for active dogs. Made with real chicken.",
-    "tag": "Best Seller",
-    "imageUrl": "/marketplace/premium-chicken-kibble.jpg"
-  },
-  {
-    "id": "mp-2",
-    "name": "CloudSoft Orthopedic Pet Bed",
-    "category": "Comfort",
-    "price": "$34.99",
-    "badge": "✦ In Stock",
-    "description": "Memory-foam bed that keeps joints comfortable for older pets. Water-resistant cover.",
-    "tag": "Most Loved",
-    "imageUrl": "/marketplace/orthopedic-pet-bed.jpg"
-  },
-  {
-    "id": "mp-3",
-    "name": "Interactive Treat Puzzle Toy",
-    "category": "Toys",
-    "price": "$9.99",
-    "badge": "🔥 20% Off",
-    "description": "Keeps your pet mentally engaged while rewarding them with treats. Dishwasher safe.",
-    "tag": "New Arrival",
-    "imageUrl": "/marketplace/Cat%20puzzle%20toy%20-%20Cat%20puzzle%20toy.jpg"
-  },
-  {
-    "id": "mp-4",
-    "name": "No-Pull Dog Harness",
+    "id": "mp-14",
+    "name": "Reflective Dog Bandana",
     "category": "Accessories",
-    "price": "$18.99",
-    "badge": "⭐ Top Rated",
-    "description": "Comfort-fit harness to make walks safer and easier. Adjustable straps for all breeds.",
-    "tag": "Editor's Pick",
-    "imageUrl": "/marketplace/No%20Pull%20Harness%20Brown%20L.jpg"
-  },
-  {
-    "id": "mp-5",
-    "name": "Grain-Free Salmon Cat Food",
-    "category": "Food",
-    "price": "$14.49",
+    "price": "$5.99",
     "badge": "✦ In Stock",
-    "description": "Rich in Omega-3 fatty acids for a shiny coat. Grain-free formula for sensitive stomachs.",
-    "tag": "Vet Approved",
-    "imageUrl": "/marketplace/Purevita%20Grain%20Free%20Salmon%20Food%202%202%20Pound.jpg"
+    "description": "Stylish bandana with reflective strips for safe evening walks. One size fits most dogs.",
+    "tag": "Trending",
+    "imageUrl": "/marketplace/2 Pack Reflective Dog Bandana for Night Safety - High Visibility Adjustable Dog Scarf in Orange_Yellow, Fits Small Medium Large Dogs(Small).jpg"
   },
   {
     "id": "mp-6",
@@ -70,36 +30,6 @@
     "imageUrl": "/marketplace/Butterfly Cat Collar_ Breakaway Kitten Collar with Bell & Charm.jpg"
   },
   {
-    "id": "mp-8",
-    "name": "Cozy Fleece Pet Blanket",
-    "category": "Comfort",
-    "price": "$16.99",
-    "badge": "✦ In Stock",
-    "description": "Ultra-soft fleece blanket perfect for snuggling. Machine washable and hypoallergenic.",
-    "tag": "Winter Fave",
-    "imageUrl": "/marketplace/Luciphia Fluffy Fleece Pet Blankets _ Soft Paw-Print Throws for Dogs & Cats (3-Pack).jpg"
-  },
-  {
-    "id": "mp-9",
-    "name": "Natural Dental Chews",
-    "category": "Food",
-    "price": "$10.99",
-    "badge": "⭐ Top Rated",
-    "description": "Reduces plaque and tartar buildup. Made with natural ingredients, no artificial additives.",
-    "tag": "Vet Approved",
-    "imageUrl": "/marketplace/Whimzees Natural Dental Treats Brushzees.jpg"
-  },
-  {
-    "id": "mp-10",
-    "name": "Retractable Dog Leash",
-    "category": "Accessories",
-    "price": "$21.99",
-    "badge": "🔥 10% Off",
-    "description": "Extends up to 16ft with a one-button brake and lock. Ergonomic anti-slip handle.",
-    "tag": "Best Seller",
-    "imageUrl": "/marketplace/Retractable Dog Fancy Leash with Flashlight and Dispenser,  Dog  Leash is Perfect for Safe and Comfortable Walking with Your Pet.jpg"
-  },
-  {
     "id": "mp-11",
     "name": "Cat Scratching Post Tower",
     "category": "Comfort",
@@ -108,6 +38,16 @@
     "description": "Multi-level scratching tower with sisal rope and cozy perches. Keeps furniture safe.",
     "tag": "Most Loved",
     "imageUrl": "/marketplace/Cat Scratching Posts- Adult Cat and Kitten Tree, 3 Large Scratching Poles, Carpeted Base Play Are___.jpg"
+  },
+  {
+    "id": "mp-3",
+    "name": "Interactive Treat Puzzle Toy",
+    "category": "Toys",
+    "price": "$9.99",
+    "badge": "🔥 20% Off",
+    "description": "Keeps your pet mentally engaged while rewarding them with treats. Dishwasher safe.",
+    "tag": "New Arrival",
+    "imageUrl": "/marketplace/Cat%20puzzle%20toy%20-%20Cat%20puzzle%20toy.jpg"
   },
   {
     "id": "mp-12",
@@ -120,26 +60,6 @@
     "imageUrl": "/marketplace/Dog rope toy.jpg"
   },
   {
-    "id": "mp-13",
-    "name": "Puppy Starter Food Pack",
-    "category": "Food",
-    "price": "$19.99",
-    "badge": "🔥 25% Off",
-    "description": "Specially formulated for puppies under 12 months. Supports healthy growth and immunity.",
-    "tag": "Hot Deal",
-    "imageUrl": "/marketplace/Pedigree Puppy Chicken Dog Food 14-lb _ 10249530.jpg"
-  },
-  {
-    "id": "mp-14",
-    "name": "Reflective Dog Bandana",
-    "category": "Accessories",
-    "price": "$5.99",
-    "badge": "✦ In Stock",
-    "description": "Stylish bandana with reflective strips for safe evening walks. One size fits most dogs.",
-    "tag": "Trending",
-    "imageUrl": "/marketplace/2 Pack Reflective Dog Bandana for Night Safety - High Visibility Adjustable Dog Scarf in Orange_Yellow, Fits Small Medium Large Dogs(Small).jpg"
-  },
-  {
     "id": "mp-15",
     "name": "Elevated Dog Feeding Bowl",
     "category": "Comfort",
@@ -150,34 +70,64 @@
     "imageUrl": "/marketplace/Elevated Dog Bowls _ Wooden Raised Feeder Stand _ Stainless Steel Pet Feeding Station.jpg"
   },
   {
-    "id": "mp-16",
-    "name": "Laser Pointer Cat Toy",
+    "id": "mp-20",
+    "name": "Tennis Ball 3-Pack",
     "category": "Toys",
-    "price": "$4.99",
-    "badge": "🔥 10% Off",
-    "description": "USB rechargeable laser pointer with 5 interchangeable heads. Hours of fun for cats.",
-    "tag": "Fan Favourite",
-    "imageUrl": "/marketplace/laser-pointer-cat-toy.jpg"
+    "price": "$5.49",
+    "badge": "🔥 Buy 2 Get 1",
+    "description": "Extra-durable non-toxic tennis balls for fetch. Floats in water, great for outdoor play.",
+    "tag": "Top Pick",
+    "imageUrl": "/marketplace/Franklin Sports BALL TENNIS - pack of 3 53972.jpg"
   },
   {
-    "id": "mp-17",
-    "name": "Freeze-Dried Raw Cat Treats",
-    "category": "Food",
-    "price": "$11.49",
+    "id": "mp-8",
+    "name": "Cozy Fleece Pet Blanket",
+    "category": "Comfort",
+    "price": "$16.99",
     "badge": "✦ In Stock",
-    "description": "100% real meat freeze-dried treats. No preservatives, no fillers — just pure nutrition.",
-    "tag": "New Arrival",
-    "imageUrl": "/marketplace/Vital Essentials Freeze Dried Raw Chicken Hearts Cat Treats _ Single Ingredient _ Premium Quality _ Grain Free, Healthy Treats for Cats, 0_8 oz Bag.jpg"
+    "description": "Ultra-soft fleece blanket perfect for snuggling. Machine washable and hypoallergenic.",
+    "tag": "Winter Fave",
+    "imageUrl": "/marketplace/Luciphia Fluffy Fleece Pet Blankets _ Soft Paw-Print Throws for Dogs & Cats (3-Pack).jpg"
   },
   {
-    "id": "mp-18",
-    "name": "Waterproof Dog Raincoat",
+    "id": "mp-4",
+    "name": "No-Pull Dog Harness",
     "category": "Accessories",
-    "price": "$27.99",
+    "price": "$18.99",
+    "badge": "⭐ Top Rated",
+    "description": "Comfort-fit harness to make walks safer and easier. Adjustable straps for all breeds.",
+    "tag": "Editor's Pick",
+    "imageUrl": "/marketplace/No%20Pull%20Harness%20Brown%20L.jpg"
+  },
+  {
+    "id": "mp-13",
+    "name": "Puppy Starter Food Pack",
+    "category": "Food",
+    "price": "$19.99",
+    "badge": "🔥 25% Off",
+    "description": "Specially formulated for puppies under 12 months. Supports healthy growth and immunity.",
+    "tag": "Hot Deal",
+    "imageUrl": "/marketplace/Pedigree Puppy Chicken Dog Food 14-lb _ 10249530.jpg"
+  },
+  {
+    "id": "mp-5",
+    "name": "Grain-Free Salmon Cat Food",
+    "category": "Food",
+    "price": "$14.49",
     "badge": "✦ In Stock",
-    "description": "Lightweight waterproof jacket with adjustable velcro straps. Available in sizes XS–XL.",
-    "tag": "Seasonal Pick",
-    "imageUrl": "/marketplace/dog-raincoat.jpg"
+    "description": "Rich in Omega-3 fatty acids for a shiny coat. Grain-free formula for sensitive stomachs.",
+    "tag": "Vet Approved",
+    "imageUrl": "/marketplace/Purevita%20Grain%20Free%20Salmon%20Food%202%202%20Pound.jpg"
+  },
+  {
+    "id": "mp-10",
+    "name": "Retractable Dog Leash",
+    "category": "Accessories",
+    "price": "$21.99",
+    "badge": "🔥 10% Off",
+    "description": "Extends up to 16ft with a one-button brake and lock. Ergonomic anti-slip handle.",
+    "tag": "Best Seller",
+    "imageUrl": "/marketplace/Retractable Dog Fancy Leash with Flashlight and Dispenser,  Dog  Leash is Perfect for Safe and Comfortable Walking with Your Pet.jpg"
   },
   {
     "id": "mp-19",
@@ -190,13 +140,63 @@
     "imageUrl": "/marketplace/Self-Heating Pet Pads Blanket Puppy Pad Warm Cushion Mat for Cats Dogs Washable Pets with Thermal.jpg"
   },
   {
-    "id": "mp-20",
-    "name": "Tennis Ball 3-Pack",
+    "id": "mp-17",
+    "name": "Freeze-Dried Raw Cat Treats",
+    "category": "Food",
+    "price": "$11.49",
+    "badge": "✦ In Stock",
+    "description": "100% real meat freeze-dried treats. No preservatives, no fillers — just pure nutrition.",
+    "tag": "New Arrival",
+    "imageUrl": "/marketplace/Vital Essentials Freeze Dried Raw Chicken Hearts Cat Treats _ Single Ingredient _ Premium Quality _ Grain Free, Healthy Treats for Cats, 0_8 oz Bag.jpg"
+  },
+  {
+    "id": "mp-9",
+    "name": "Natural Dental Chews",
+    "category": "Food",
+    "price": "$10.99",
+    "badge": "⭐ Top Rated",
+    "description": "Reduces plaque and tartar buildup. Made with natural ingredients, no artificial additives.",
+    "tag": "Vet Approved",
+    "imageUrl": "/marketplace/Whimzees Natural Dental Treats Brushzees.jpg"
+  },
+  {
+    "id": "mp-18",
+    "name": "Waterproof Dog Raincoat",
+    "category": "Accessories",
+    "price": "$27.99",
+    "badge": "✦ In Stock",
+    "description": "Lightweight waterproof jacket with adjustable velcro straps. Available in sizes XS–XL.",
+    "tag": "Seasonal Pick",
+    "imageUrl": "/marketplace/dog-raincoat.jpg"
+  },
+  {
+    "id": "mp-16",
+    "name": "Laser Pointer Cat Toy",
     "category": "Toys",
-    "price": "$5.49",
-    "badge": "🔥 Buy 2 Get 1",
-    "description": "Extra-durable non-toxic tennis balls for fetch. Floats in water, great for outdoor play.",
-    "tag": "Top Pick",
-    "imageUrl": "/marketplace/Franklin Sports BALL TENNIS - pack of 3 53972.jpg"
+    "price": "$4.99",
+    "badge": "🔥 10% Off",
+    "description": "USB rechargeable laser pointer with 5 interchangeable heads. Hours of fun for cats.",
+    "tag": "Fan Favourite",
+    "imageUrl": "/marketplace/laser-pointer-cat-toy.jpg"
+  },
+  {
+    "id": "mp-2",
+    "name": "CloudSoft Orthopedic Pet Bed",
+    "category": "Comfort",
+    "price": "$34.99",
+    "badge": "✦ In Stock",
+    "description": "Memory-foam bed that keeps joints comfortable for older pets. Water-resistant cover.",
+    "tag": "Most Loved",
+    "imageUrl": "/marketplace/orthopedic-pet-bed.jpg"
+  },
+  {
+    "id": "mp-1",
+    "name": "Premium Chicken Kibble",
+    "category": "Food",
+    "price": "$12.99",
+    "badge": "⭐ Top Rated",
+    "description": "High-protein dry food with essential vitamins for active dogs. Made with real chicken.",
+    "tag": "Best Seller",
+    "imageUrl": "/marketplace/premium-chicken-kibble.jpg"
   }
 ]
