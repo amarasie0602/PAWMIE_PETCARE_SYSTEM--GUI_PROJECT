@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue'
-import { loadMarketplaceItems, type MarketplaceItem } from '@/stores/marketplaceStore'
+import { loadMarketplaceItems, hasProperImage, type MarketplaceItem } from '@/stores/marketplaceStore'
 
 // ── DummyJSON interfaces (fetched for API requirement) ──
 
@@ -56,7 +56,7 @@ const fetchDummyProducts = async (): Promise<void> => {
 }
 
 const loadItems = (): void => {
-  allItems.value = loadMarketplaceItems()
+  allItems.value = loadMarketplaceItems().filter(hasProperImage)
 }
 
 const loadCart = (): void => {
