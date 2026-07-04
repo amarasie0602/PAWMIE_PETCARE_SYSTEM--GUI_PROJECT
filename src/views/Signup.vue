@@ -114,7 +114,7 @@ const handleGoogleSignup = () => {
 
           <p v-if="errorMessage" class="error-msg">{{ errorMessage }}</p>
 
-          <button type="submit" class="btn-primary" :class="{ loading }">
+          <button type="submit" class="btn-primary" :class="{ loading }" :disabled="loading">
             <span v-if="!loading">Create Account</span>
             <span v-else class="spinner" />
           </button>
