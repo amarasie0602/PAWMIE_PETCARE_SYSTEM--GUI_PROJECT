@@ -77,14 +77,29 @@ const revealFaqs     = useScrollReveal({ type: 'fade-up', delay: 70 })
 
 const submitted = ref(false)
 const submitting = ref(false)
+const submitError = ref('')
 
-const revealFaq      = useScrollReveal({ type: 'fade-up', delay: 70 })
+const fullName = ref('')
+const email = ref('')
+const petType = ref(petTypes[0])
+const helpType = ref(helpTypes[0])
+const message = ref('')
 
 function handleSubmit() {
+  if (!fullName.value.trim() || !email.value.trim() || !message.value.trim()) {
+    submitError.value = 'Please fill in your name, email, and message.'
+    return
+  }
+  submitError.value = ''
   submitting.value = true
   setTimeout(() => {
     submitting.value = false
     submitted.value = true
+    fullName.value = ''
+    email.value = ''
+    petType.value = petTypes[0]
+    helpType.value = helpTypes[0]
+    message.value = ''
   }, 1200)
 }
 </script>
@@ -310,6 +325,7 @@ function handleSubmit() {
                 <label for="contact-full-name" class="mb-1.5 block text-xs font-bold text-slate-600 dark:text-slate-300">Full Name</label>
                 <input
                   id="contact-full-name"
+                  v-model="fullName"
                   type="text"
                   placeholder="Your name"
                   class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5
@@ -324,6 +340,7 @@ function handleSubmit() {
                 <label for="contact-email" class="mb-1.5 block text-xs font-bold text-slate-600 dark:text-slate-300">Email</label>
                 <input
                   id="contact-email"
+                  v-model="email"
                   type="email"
                   placeholder="you@example.com"
                   class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5
@@ -338,6 +355,7 @@ function handleSubmit() {
                 <label for="contact-pet-type" class="mb-1.5 block text-xs font-bold text-slate-600 dark:text-slate-300">Pet Type</label>
                 <select
                   id="contact-pet-type"
+                  v-model="petType"
                   class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5
                   text-sm text-slate-900 outline-none transition
                   focus:border-purple-400 focus:ring-2 focus:ring-purple-200/50
@@ -352,6 +370,7 @@ function handleSubmit() {
                 <label for="contact-help-type" class="mb-1.5 block text-xs font-bold text-slate-600 dark:text-slate-300">Help Needed</label>
                 <select
                   id="contact-help-type"
+                  v-model="helpType"
                   class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5
                   text-sm text-slate-900 outline-none transition
                   focus:border-purple-400 focus:ring-2 focus:ring-purple-200/50
@@ -366,6 +385,7 @@ function handleSubmit() {
                 <label for="contact-message" class="mb-1.5 block text-xs font-bold text-slate-600 dark:text-slate-300">Message</label>
                 <textarea
                   id="contact-message"
+                  v-model="message"
                   placeholder="Tell us how we can help your little paw friend..."
                   class="w-full flex-1 resize-none rounded-xl border border-slate-200
                   bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition
@@ -375,6 +395,10 @@ function handleSubmit() {
                 />
               </div>
             </div>
+
+            <p v-if="submitError" class="mt-3 text-xs font-semibold text-rose-500">
+              {{ submitError }}
+            </p>
 
             <div class="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <p class="text-xs text-slate-400 dark:text-slate-500">
