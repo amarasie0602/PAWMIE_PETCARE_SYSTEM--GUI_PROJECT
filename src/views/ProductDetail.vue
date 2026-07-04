@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { loadMarketplaceItems, hasProperImage, type MarketplaceItem } from '@/stores/marketplaceStore'
+import { loadMarketplaceItems, type MarketplaceItem } from '@/stores/marketplaceStore'
 
 // ── Interfaces ──
 
@@ -23,7 +23,7 @@ const added = ref(false)
 
 // ── Find product by id from route param ──
 
-const allItems = loadMarketplaceItems().filter(hasProperImage)
+const allItems = loadMarketplaceItems()
 
 const product = computed<MarketplaceItem | null>(() => {
   const id = route.params.id as string

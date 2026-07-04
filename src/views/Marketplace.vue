@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue'
-import { loadMarketplaceItems, hasProperImage, type MarketplaceItem } from '@/stores/marketplaceStore'
+import { loadMarketplaceItems, type MarketplaceItem } from '@/stores/marketplaceStore'
 
 // ── DummyJSON interfaces (fetched for API requirement) ──
 
@@ -56,7 +56,7 @@ const fetchDummyProducts = async (): Promise<void> => {
 }
 
 const loadItems = (): void => {
-  allItems.value = loadMarketplaceItems().filter(hasProperImage)
+  allItems.value = loadMarketplaceItems()
 }
 
 const loadCart = (): void => {
@@ -152,11 +152,11 @@ const categoryEmoji: Record<string, string> = {
       <!-- FILTER BAR -->
       <nav class="filter-bar">
         <button
-          v-for="cat in (['All', 'Food', 'Toys', 'Accessories', 'Comfort'] as const)"
+          v-for="cat in ['All', 'Food', 'Toys', 'Accessories', 'Comfort']"
           :key="cat"
           class="filter-btn"
           :class="{ active: activeFilter === cat }"
-          @click="setFilter(cat)"
+          @click="setFilter(cat as any)"
         >
           <span>{{ categoryEmoji[cat] }}</span> {{ cat }}
         </button>

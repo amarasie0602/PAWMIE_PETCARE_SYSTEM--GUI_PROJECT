@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { loadMarketplaceItems, MARKETPLACE_STORAGE_KEY, DEFAULT_PLACEHOLDER_IMAGE, type MarketplaceItem } from '@/stores/marketplaceStore'
+import { loadMarketplaceItems, MARKETPLACE_STORAGE_KEY, type MarketplaceItem } from '@/stores/marketplaceStore'
 
 const ADMIN_KEY = 'isAdmin'
 
@@ -114,7 +114,7 @@ const handleSubmit = () => {
       description: description.value,
       tag: tag.value || (editingId.value ? 'Admin item (edited)' : 'Admin item'),
       color: color.value,
-      imageUrl: imageUrl.value || DEFAULT_PLACEHOLDER_IMAGE
+      imageUrl: imageUrl.value || 'https://images.pexels.com/photos/573182/pexels-photo-573182.jpeg?auto=compress&cs=tinysrgb&w=800'
     }
 
     if (editingId.value) {
