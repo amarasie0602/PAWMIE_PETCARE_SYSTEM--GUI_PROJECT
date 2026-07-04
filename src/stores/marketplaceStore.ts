@@ -21,7 +21,12 @@ export function loadMarketplaceItems(): MarketplaceItem[] {
     const raw = localStorage.getItem(MARKETPLACE_STORAGE_KEY)
     if (!raw) return seed
     const parsed = JSON.parse(raw) as MarketplaceItem[]
-    return Array.isArray(parsed) ? parsed : seed
+    if (!Array.isArray(parsed)) return seed
+
+    const stored = new Map(parsed.map((item) => [item.id, item]))
+    const merged = seed.map((item) => stored.get(item.id) ?? item)
+    const extras = parsed.filter((item) => !seed.some((s) => s.id === item.id))
+    return [...merged, ...extras]
   } catch {
     return seed
   }
