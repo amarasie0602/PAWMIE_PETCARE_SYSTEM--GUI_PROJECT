@@ -176,8 +176,34 @@ const handleCheckout = () => {
                 {{ item.name }}
               </p>
               <p class="text-[11px] text-slate-500 dark:text-slate-400">
-                {{ item.category }} • Qty: {{ item.quantity }}
+                {{ item.category }}
               </p>
+              <div class="mt-1.5 flex items-center gap-2">
+                <button
+                  type="button"
+                  class="flex h-6 w-6 items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                  aria-label="Decrease quantity"
+                  @click="decrement(item.id)"
+                >
+                  −
+                </button>
+                <span class="w-4 text-center text-[11px] font-semibold text-slate-700 dark:text-slate-200">{{ item.quantity }}</span>
+                <button
+                  type="button"
+                  class="flex h-6 w-6 items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                  aria-label="Increase quantity"
+                  @click="increment(item.id)"
+                >
+                  +
+                </button>
+                <button
+                  type="button"
+                  class="ml-1 text-[11px] font-semibold text-rose-500 hover:text-rose-600 transition"
+                  @click="removeItem(item.id)"
+                >
+                  Remove
+                </button>
+              </div>
             </div>
             <div class="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white">
               {{ item.price }}
