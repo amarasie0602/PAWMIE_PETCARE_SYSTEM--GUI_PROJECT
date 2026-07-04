@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import AuthPanel from '@/components/AuthComponents/AuthPanel.vue'
 import AuthField from '@/components/AuthComponents/AuthField.vue'
 import AuthDivider from '@/components/AuthComponents/AuthDivider.vue'
 import AuthGoogleBtn from '@/components/AuthComponents/AuthGoogleBtn.vue'
 
+const router = useRouter()
 const { login, loading, errorMessage } = useAuth()
 
 const username = ref('')
@@ -17,6 +19,24 @@ const handleLogin = async () => {
     return
   }
   await login({ username: username.value, password: password.value })
+}
+
+const handleGoogleLogin = () => {
+  const mockUser = {
+    id: 0,
+    username: 'google-user',
+    email: 'google-user@pawmie.com',
+    firstName: 'Google',
+    lastName: 'User',
+    gender: '',
+    image: '',
+    accessToken: 'local',
+    refreshToken: 'local',
+  }
+  localStorage.setItem('isAuthenticated', 'true')
+  localStorage.setItem('userEmail', mockUser.email)
+  localStorage.setItem('authUser', JSON.stringify(mockUser))
+  router.push('/')
 }
 </script>
 
@@ -66,7 +86,7 @@ const handleLogin = async () => {
           </button>
 
           <AuthDivider />
-          <AuthGoogleBtn label="Continue with Google" @click="handleLogin" />
+          <AuthGoogleBtn label="Continue with Google" @click="handleGoogleLogin" />
 
           <p class="switch-link">
             Don't have an account?
