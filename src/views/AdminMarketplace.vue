@@ -1,20 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import baseItems from '@/stores/marketplaceItems.json'
+import { loadMarketplaceItems, MARKETPLACE_STORAGE_KEY, type MarketplaceItem } from '@/stores/marketplaceStore'
 
-interface MarketplaceItem {
-  id: string
-  name: string
-  category: string
-  price: string
-  badge: string
-  description: string
-  tag: string
-  color: string
-  imageUrl: string
-}
-
-const STORAGE_KEY = 'pawmie_marketplace_items'
 const ADMIN_KEY = 'isAdmin'
 
 const isAdmin = ref(false)
@@ -51,25 +38,10 @@ const handleFileChange = (event: Event) => {
 }
 
 onMounted(() => {
-  const seed = baseItems as MarketplaceItem[]
-  if (typeof window === 'undefined') {
-    items.value = seed
-    return
+  items.value = loadMarketplaceItems()
+  if (typeof window !== 'undefined') {
+    isAdmin.value = localStorage.getItem(ADMIN_KEY) === 'true'
   }
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) {
-      items.value = seed
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(seed))
-    } else {
-      const parsed = JSON.parse(raw) as MarketplaceItem[]
-      items.value = Array.isArray(parsed) ? parsed : seed
-    }
-  } catch {
-    items.value = seed
-  }
-
-  isAdmin.value = localStorage.getItem(ADMIN_KEY) === 'true'
 })
 
 const handleAdminUnlock = () => {
@@ -104,7 +76,7 @@ const startEdit = (item: MarketplaceItem) => {
   badge.value = item.badge
   description.value = item.description
   tag.value = item.tag
-  color.value = item.color
+  color.value = item.color ?? 'from-amber-400 to-orange-500'
   imageUrl.value = item.imageUrl
   successMessage.value = ''
   adminError.value = ''
@@ -114,7 +86,7 @@ const deleteItem = (id: string) => {
   if (typeof window === 'undefined') return
   items.value = items.value.filter((item) => item.id !== id)
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items.value))
+    localStorage.setItem(MARKETPLACE_STORAGE_KEY, JSON.stringify(items.value))
     if (editingId.value === id) {
       resetForm()
     }
@@ -155,7 +127,7 @@ const handleSubmit = () => {
     }
 
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(items.value))
+      localStorage.setItem(MARKETPLACE_STORAGE_KEY, JSON.stringify(items.value))
       adminError.value = ''
       successMessage.value = editingId.value
         ? 'Item updated in marketplace dummy data.'

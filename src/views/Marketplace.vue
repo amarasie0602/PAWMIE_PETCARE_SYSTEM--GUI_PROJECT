@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue'
-import petItems from '@/stores/marketplaceItems.json'
+import { loadMarketplaceItems, type MarketplaceItem } from '@/stores/marketplaceStore'
 
 // ── DummyJSON interfaces (fetched for API requirement) ──
 
@@ -23,19 +23,6 @@ interface DummyProductsResponse {
   total: number
   skip: number
   limit: number
-}
-
-// ── Local pet product interface ──
-
-interface MarketplaceItem {
-  id: string
-  name: string
-  category: string
-  price: string
-  badge: string
-  description: string
-  tag: string
-  imageUrl: string
 }
 
 interface CartItem {
@@ -69,7 +56,7 @@ const fetchDummyProducts = async (): Promise<void> => {
 }
 
 const loadItems = (): void => {
-  allItems.value = petItems as MarketplaceItem[]
+  allItems.value = loadMarketplaceItems()
 }
 
 const loadCart = (): void => {

@@ -1,20 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import petItems from '@/stores/marketplaceItems.json'
+import { loadMarketplaceItems, type MarketplaceItem } from '@/stores/marketplaceStore'
 
 // ── Interfaces ──
-
-interface MarketplaceItem {
-  id: string
-  name: string
-  category: string
-  price: string
-  badge: string
-  description: string
-  tag: string
-  imageUrl: string
-}
 
 interface CartItem {
   id: string
@@ -34,16 +23,18 @@ const added = ref(false)
 
 // ── Find product by id from route param ──
 
+const allItems = loadMarketplaceItems()
+
 const product = computed<MarketplaceItem | null>(() => {
   const id = route.params.id as string
-  return (petItems as MarketplaceItem[]).find(p => p.id === id) ?? null
+  return allItems.find(p => p.id === id) ?? null
 })
 
 // ── Related products (same category, excluding current) ──
 
 const related = computed<MarketplaceItem[]>(() => {
   if (!product.value) return []
-  return (petItems as MarketplaceItem[])
+  return allItems
     .filter(p => p.category === product.value!.category && p.id !== product.value!.id)
     .slice(0, 3)
 })
