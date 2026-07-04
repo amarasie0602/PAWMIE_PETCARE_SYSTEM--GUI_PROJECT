@@ -152,11 +152,11 @@ const categoryEmoji: Record<string, string> = {
       <!-- FILTER BAR -->
       <nav class="filter-bar">
         <button
-          v-for="cat in ['All', 'Food', 'Toys', 'Accessories', 'Comfort']"
+          v-for="cat in (['All', 'Food', 'Toys', 'Accessories', 'Comfort'] as const)"
           :key="cat"
           class="filter-btn"
           :class="{ active: activeFilter === cat }"
-          @click="setFilter(cat as any)"
+          @click="setFilter(cat)"
         >
           <span>{{ categoryEmoji[cat] }}</span> {{ cat }}
         </button>
