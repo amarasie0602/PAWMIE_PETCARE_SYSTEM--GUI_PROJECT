@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { loadMarketplaceItems, MARKETPLACE_STORAGE_KEY, type MarketplaceItem } from '@/stores/marketplaceStore'
+import { loadMarketplaceItems, isOriginalItem, MARKETPLACE_STORAGE_KEY, type MarketplaceItem } from '@/stores/marketplaceStore'
 
 const ADMIN_KEY = 'isAdmin'
 
@@ -155,7 +155,8 @@ const handleSubmit = () => {
         </h1>
         <p class="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
           This panel is for <strong>demo admin use only</strong>. New items are saved to your browser
-          (localStorage) and merged with the dummy JSON products on the marketplace page.
+          (localStorage) and merged with the built-in catalogue on the marketplace page. Built-in items
+          can't be edited or deleted here — they always show their original details.
         </p>
       </header>
 
@@ -348,7 +349,10 @@ const handleSubmit = () => {
                   {{ item.description }}
                 </p>
               </div>
-              <div class="flex flex-col items-end gap-1">
+              <div v-if="isOriginalItem(item.id)" class="text-[11px] text-slate-400 dark:text-slate-500 italic self-center">
+                Built-in item
+              </div>
+              <div v-else class="flex flex-col items-end gap-1">
                 <button
                   type="button"
                   class="px-2 py-1 rounded-full border border-amber-400/70 text-[11px] font-semibold text-amber-700 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-slate-800 transition"

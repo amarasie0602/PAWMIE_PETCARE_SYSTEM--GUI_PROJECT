@@ -14,6 +14,11 @@ export interface MarketplaceItem {
 
 export const MARKETPLACE_STORAGE_KEY = 'pawmie_marketplace_items'
 
+const seedIds = new Set((baseItems as MarketplaceItem[]).map((item) => item.id))
+export function isOriginalItem(id: string): boolean {
+  return seedIds.has(id)
+}
+
 export function loadMarketplaceItems(): MarketplaceItem[] {
   const seed = baseItems as MarketplaceItem[]
   if (typeof window === 'undefined') return seed
@@ -23,10 +28,10 @@ export function loadMarketplaceItems(): MarketplaceItem[] {
     const parsed = JSON.parse(raw) as MarketplaceItem[]
     if (!Array.isArray(parsed)) return seed
 
-    const stored = new Map(parsed.map((item) => [item.id, item]))
-    const merged = seed.map((item) => stored.get(item.id) ?? item)
+    // The original catalogue is always authoritative; only genuinely new
+    // admin-added items (ids outside the seed) are merged in on top of it.
     const extras = parsed.filter((item) => !seed.some((s) => s.id === item.id))
-    return [...merged, ...extras]
+    return [...seed, ...extras]
   } catch {
     return seed
   }
