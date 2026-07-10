@@ -53,13 +53,15 @@ This project is focused on frontend UI/UX and local demo data (no real backend d
   - grooming booking
   - training services
 - `/booking` - Generic booking page (supports query params)
-- `/my-bookings` - Shows current user's bookings
+- `/my-bookings` - Shows current user's bookings, with search/filter
+- `/profile` - Signed-in user's account details and booking stats
 - `/marketplace` - Product listing, filter, and search
 - `/marketplace/:id` - Product detail page
 - `/marketplace/cart` - Cart and checkout
 - `/marketplace/orders` - Order history
 - `/admin/marketplace` - Demo admin product manager
 - `/about`, `/contact` - Content-driven informational pages
+- `*` (any unmatched route) - Custom 404 page
 
 ## Project Structure (Key Files)
 
