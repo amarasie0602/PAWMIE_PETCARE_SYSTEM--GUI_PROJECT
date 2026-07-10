@@ -15,6 +15,8 @@ import TrainingServices from '@/views/services/TrainingServices.vue'
 import About from '@/views/About.vue'
 import Contact from '@/views/Contact.vue'
 import AdminMarketplace from '@/views/AdminMarketplace.vue'
+import Profile from '@/views/Profile.vue'
+import NotFound from '@/views/NotFound.vue'
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
@@ -33,6 +35,8 @@ const routes = [
   { path: '/services/emergency-care', name: 'EmergencyCare', component: EmergencyCare, meta: { requiresAuth: true } },
   { path: '/services/grooming-booking', name: 'GroomingBooking', component: GroomingBooking, meta: { requiresAuth: true } },
   { path: '/services/training-services', name: 'TrainingServices', component: TrainingServices, meta: { requiresAuth: true } },
+  { path: '/profile', name: 'Profile', component: Profile, meta: { requiresAuth: true } },
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
 ]
 
 const router = createRouter({
