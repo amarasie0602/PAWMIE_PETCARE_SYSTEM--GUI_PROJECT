@@ -297,8 +297,12 @@ onUnmounted(() => {
             Marketplace
           </router-link>
 
-          <router-link to="/my-bookings" class="py-3 px-1 text-gray-700 dark:text-white font-medium hover:text-indigo-500 transition-colors">
+          <router-link to="/my-bookings" class="py-3 px-1 text-gray-700 dark:text-white font-medium border-b border-gray-100 dark:border-gray-800 hover:text-indigo-500 transition-colors">
             My Bookings
+          </router-link>
+
+          <router-link to="/profile" class="py-3 px-1 text-gray-700 dark:text-white font-medium hover:text-indigo-500 transition-colors">
+            Profile
           </router-link>
         </template>
       </div>

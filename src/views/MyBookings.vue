@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useBookingStore, type Booking } from '@/stores/bookingStore'
 import { useToast } from '@/composables/useToast'
@@ -14,11 +14,31 @@ function handleRemove(booking: Booking) {
   toast.success(`Cancelled the ${booking.service} booking for ${booking.petName}.`)
 }
 
-const categories = computed(() => Object.entries(myGroupedByCategory.value))
+const searchQuery = ref('')
+
+const allCategories = computed(() => Object.entries(myGroupedByCategory.value))
+
+const categories = computed(() => {
+  const query = searchQuery.value.trim().toLowerCase()
+  if (!query) return allCategories.value
+
+  return allCategories.value
+    .map(([categoryName, bookings]): [string, Booking[]] => [
+      categoryName,
+      bookings.filter(b =>
+        b.petName.toLowerCase().includes(query) ||
+        b.ownerName.toLowerCase().includes(query) ||
+        b.service.toLowerCase().includes(query)
+      ),
+    ])
+    .filter(([, bookings]) => bookings.length > 0)
+})
 
 const totalBookings = computed(() =>
-  categories.value.reduce((sum, [, bookings]) => sum + bookings.length, 0)
+  allCategories.value.reduce((sum, [, bookings]) => sum + bookings.length, 0)
 )
+
+const hasAnyBookings = computed(() => allCategories.value.length > 0)
 
 // Per-category colour + icon config — matches the service page themes
 const categoryConfig: Record<string, { icon: string; accent: string; badge: string; dot: string }> = {
@@ -100,9 +120,20 @@ function formatTime(timeStr: string): string {
     <!-- ─── CONTENT ────────────────────────────────────────────── -->
     <div class="mx-auto max-w-5xl px-4 py-10 sm:px-6">
 
-      <!-- ── EMPTY STATE ──────────────────────────────────────── -->
+      <!-- ── SEARCH ────────────────────────────────────────────── -->
+      <div v-if="hasAnyBookings" class="relative mb-6">
+        <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
+        <input
+          v-model="searchQuery"
+          type="text"
+          placeholder="Search by pet, owner, or service…"
+          class="w-full rounded-2xl border border-slate-200/70 bg-white/80 py-3 pl-11 pr-4 text-sm text-slate-800 shadow-sm backdrop-blur-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200/50 dark:border-white/[0.07] dark:bg-slate-900/70 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-indigo-500 dark:focus:ring-indigo-500/20"
+        />
+      </div>
+
+      <!-- ── EMPTY STATE: no bookings at all ──────────────────── -->
       <div
-        v-if="categories.length === 0"
+        v-if="!hasAnyBookings"
         class="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white/60 px-8 py-20 text-center backdrop-blur-sm dark:border-slate-700 dark:bg-slate-900/40"
       >
         <div class="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-100 text-3xl dark:bg-slate-800">
@@ -126,6 +157,20 @@ function formatTime(timeStr: string): string {
             {{ link.label }}
           </a>
         </div>
+      </div>
+
+      <!-- ── EMPTY STATE: search matched nothing ──────────────── -->
+      <div
+        v-else-if="categories.length === 0"
+        class="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white/60 px-8 py-16 text-center backdrop-blur-sm dark:border-slate-700 dark:bg-slate-900/40"
+      >
+        <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 text-2xl dark:bg-slate-800">
+          🔍
+        </div>
+        <h2 class="text-[16px] font-black text-slate-800 dark:text-white">No matching bookings</h2>
+        <p class="mt-2 max-w-xs text-[13px] leading-6 text-slate-500 dark:text-slate-400">
+          Try a different pet name, owner, or service.
+        </p>
       </div>
 
       <!-- ── BOOKING GROUPS ───────────────────────────────────── -->
