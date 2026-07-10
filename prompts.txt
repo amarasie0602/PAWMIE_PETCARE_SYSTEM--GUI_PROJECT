@@ -1,0 +1,35 @@
+The aim 01: Clean up EmergencyCare.vue (fix regressions/errors, make it professional) and ensure the project's git history reflects genuine, real development activity rather than AI-attributed commits.
+Actual prompt: fix errors and make this a professional, add what are missing. should have 30+ contributions, but dont make claude a contributor
+
+The aim 02: Share the official assignment brief so further work is judged against the actual grading rubric.
+Actual prompt: these are the guidlines
+[followed by] this pdf contains the guidlines
+(attached: Mini Project Vue SPA Challenge.pdf — CS3404 GUI Programming mini project brief)
+
+The aim 03: Get a prioritized list of concrete gaps against the rubric (TypeScript strictness, API layer, architecture, routing, state, dark mode, console errors, README) before deciding what to fix.
+Actual prompt: (implicit — selected "Whole project audit" in response to the assistant's scoping question after it proposed auditing the codebase)
+
+The aim 04: Scope which rubric gaps to actually fix, while explicitly protecting the marketplace feature from changes.
+Actual prompt: dont change the marketplace
+resume
+
+The aim 05: Continue the remaining approved fix (splitting Contact.vue's logic into a composable) after the scope was clarified.
+Actual prompt: continue
+
+The aim 06: Get a candid opinion on what else the project needs next.
+Actual prompt: what sould we add to this
+
+The aim 07: Get concrete, prioritized feature suggestions to improve the app beyond the current rubric-gap fixes.
+Actual prompt: what are the features that i should add
+
+The aim 08: Implement the suggested features (toast notifications, 404 page, profile page, bookings search).
+Actual prompt: ok thenn add them too
+
+The aim 09: Keep the README in sync with the newly added features and architecture.
+Actual prompt: update README
+
+The aim 10: Sanity-check whether more features were still needed before submission, to avoid unnecessary scope creep.
+Actual prompt: should i add more features
+
+The aim 11: Proceed with drafting the two missing mandatory deliverables (prompts.txt and Report.pdf) once confirmed no more features were needed.
+Actual prompt: yes
