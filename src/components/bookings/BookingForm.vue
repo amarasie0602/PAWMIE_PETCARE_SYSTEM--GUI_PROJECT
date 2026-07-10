@@ -3,6 +3,7 @@ import { reactive, computed, ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import { useBookingStore } from '@/stores/bookingStore'
+import { useToast } from '@/composables/useToast'
 
 const props = defineProps<{
   service?: string
@@ -15,6 +16,7 @@ const props = defineProps<{
 const router = useRouter()
 const { addBooking } = useBookingStore()
 const { getUser } = useAuth()
+const toast = useToast()
 const bookingSubmitted = ref(false)
 const today = new Date().toISOString().split('T')[0]
 
@@ -226,7 +228,7 @@ onUnmounted(clearTimers)   // Ensure timers are cleared if user navigates away d
 // ── Submit ────────────────────────────────────────────────────────────
 const handleSubmit = () => {
   if (!form.petName || !form.ownerName || !form.service || !form.category || !form.date || !form.time) {
-    alert('Please fill in all required fields.')
+    toast.error('Please fill in all required fields.')
     return
   }
 
@@ -240,6 +242,7 @@ const handleSubmit = () => {
     time:      form.time,
     notes:     form.notes || undefined,
   })
+  toast.success(`Booking confirmed for ${form.petName}.`)
 
   // For emergencies, start the live tracker instead of navigating away. For other services, show a confirmation and navigate to "My Bookings".
   if (isEmergency.value) {

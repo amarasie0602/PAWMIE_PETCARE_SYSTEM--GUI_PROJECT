@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useBookingStore } from '@/stores/bookingStore'
+import { useBookingStore, type Booking } from '@/stores/bookingStore'
+import { useToast } from '@/composables/useToast'
 
 const bookingStore = useBookingStore()
 const { myGroupedByCategory } = storeToRefs(bookingStore)
 const { removeBooking } = bookingStore
+const toast = useToast()
+
+function handleRemove(booking: Booking) {
+  removeBooking(booking.id)
+  toast.success(`Cancelled the ${booking.service} booking for ${booking.petName}.`)
+}
 
 const categories = computed(() => Object.entries(myGroupedByCategory.value))
 
