@@ -226,9 +226,16 @@ onUnmounted(() => {
                      shadow-xl rounded-xl overflow-hidden
                      border border-gray-200 dark:border-gray-700"
             >
+              <router-link
+                to="/profile"
+                class="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+                @click="showDropdown = false"
+              >
+                Profile
+              </router-link>
               <button
                 @click="handleLogout"
-                class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+                class="block w-full text-left px-4 py-2 border-t border-gray-100 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 Logout
               </button>
