@@ -67,9 +67,15 @@ This project is focused on frontend UI/UX and local demo data (no real backend d
 
 - `src/router/index.ts` - routes + auth guard
 - `src/composables/useAuth.ts` - login/logout/auth helpers
-- `src/stores/bookingStore.ts` - booking data store and grouping logic
+- `src/composables/useToast.ts` - global toast notification state
+- `src/composables/useContactForm.ts` - contact form state, validation, and submit handling
+- `src/stores/bookingStore.ts` - Pinia store for bookings (state, getters, actions)
 - `src/components/bookings/BookingForm.vue` - reusable booking form UI
+- `src/components/ToastContainer.vue` - renders active toast notifications
 - `src/views/services/` - service booking pages
+- `src/views/MyBookings.vue` - bookings list with search/filter
+- `src/views/Profile.vue` - user account details and booking stats
+- `src/views/NotFound.vue` - 404 page
 - `src/views/Marketplace.vue` - marketplace listing + filter/search/cart add
 - `src/views/ProductDetail.vue` - product detail + related items
 - `src/views/Cart.vue` - checkout simulation
