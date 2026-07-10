@@ -10,7 +10,10 @@ This project is focused on frontend UI/UX and local demo data (no real backend d
 - Authentication flow with login/signup UI
 - Route protection for private pages using router guards
 - Service booking flow with reusable booking form
-- "My Bookings" page grouped by category
+- "My Bookings" page grouped by category, with live search/filter by pet, owner, or service
+- Profile page showing the signed-in user's account details and booking stats
+- Toast notification system for booking, contact form, and error feedback
+- Custom 404 page for unmatched routes
 - Pet marketplace with:
   - category filters
   - search
@@ -36,6 +39,7 @@ This project is focused on frontend UI/UX and local demo data (no real backend d
 - Vue 3 (beta)
 - TypeScript
 - Vue Router
+- Pinia
 - Vite
 - Tailwind CSS 4
 
