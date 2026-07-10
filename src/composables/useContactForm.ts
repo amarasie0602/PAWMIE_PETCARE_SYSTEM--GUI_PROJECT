@@ -1,6 +1,7 @@
 // src/composables/useContactForm.ts
 
 import { ref } from 'vue'
+import { useToast } from '@/composables/useToast'
 
 export interface ContactFormOptions {
   petTypes: string[]
@@ -8,6 +9,7 @@ export interface ContactFormOptions {
 }
 
 export function useContactForm({ petTypes, helpTypes }: ContactFormOptions) {
+  const toast = useToast()
   const submitted = ref(false)
   const submitting = ref(false)
   const submitError = ref('')

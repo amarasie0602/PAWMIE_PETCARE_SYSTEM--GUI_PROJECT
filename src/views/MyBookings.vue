@@ -190,7 +190,7 @@ function formatTime(timeStr: string): string {
                   type="button"
                   title="Cancel booking"
                   class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-rose-200 bg-rose-50 text-rose-500 transition hover:bg-rose-100 dark:border-rose-500/20 dark:bg-rose-900/10 dark:text-rose-400 dark:hover:bg-rose-900/20"
-                  @click="removeBooking(booking.id)"
+                  @click="handleRemove(booking)"
                 >
                   ✕
                 </button>
