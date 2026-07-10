@@ -23,6 +23,7 @@ export function useContactForm({ petTypes, helpTypes }: ContactFormOptions) {
   function handleSubmit() {
     if (!fullName.value.trim() || !email.value.trim() || !message.value.trim()) {
       submitError.value = 'Please fill in your name, email, and message.'
+      toast.error(submitError.value)
       return
     }
     submitError.value = ''
@@ -30,6 +31,7 @@ export function useContactForm({ petTypes, helpTypes }: ContactFormOptions) {
     setTimeout(() => {
       submitting.value = false
       submitted.value = true
+      toast.success('Your paw note has been sent!')
       fullName.value = ''
       email.value = ''
       petType.value = petTypes[0]
