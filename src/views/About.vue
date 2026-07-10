@@ -20,6 +20,16 @@ interface TeamMember {
   photo: string
 }
 
+interface RandomUserApiUser {
+  name: { first: string; last: string }
+  location: { city: string; country: string }
+  picture: { large: string }
+}
+
+interface RandomUserApiResponse {
+  results: RandomUserApiUser[]
+}
+
 const stats = [
   { val: '12,400+', label: 'Happy pets served', icon: '\uD83D\uDC3E' },
   { val: '340+', label: 'Trusted sitters', icon: '\uD83C\uDFC5' },
@@ -95,8 +105,8 @@ onMounted(async () => {
     const res = await fetch('https://randomuser.me/api/?results=4&inc=name,picture,location,login&nat=us,gb,au,ca')
     if (!res.ok) throw new Error(`${res.status}`)
 
-    const data = await res.json()
-    team.value = data.results.map((user: any, i: number) => ({
+    const data: RandomUserApiResponse = await res.json()
+    team.value = data.results.map((user, i) => ({
       name: `${user.name.first} ${user.name.last}`,
       role: roles[i] ?? 'Team Member',
       location: `${user.location.city}, ${user.location.country}`,

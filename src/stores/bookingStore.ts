@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { defineStore } from 'pinia'
 import dummyBookings from './dummyBookings.json'
 
 export interface Booking {
@@ -34,60 +34,53 @@ function loadInitialBookings(): Booking[] {
   }
 }
 
-const bookings = ref<Booking[]>(loadInitialBookings())
-
-function persist() {
-  if (typeof window === 'undefined') return
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings.value))
-  } catch {}
+function groupByCategory(bookings: Booking[]): Record<string, Booking[]> {
+  const groups: Record<string, Booking[]> = {}
+  for (const booking of bookings) {
+    let list = groups[booking.category]
+    if (!list) { list = []; groups[booking.category] = list }
+    list.push(booking)
+  }
+  return groups
 }
 
-export function useBookingStore() {
-  const addBooking = (booking: Omit<Booking, 'id' | 'userEmail'>) => {
-    const email = getCurrentUserEmail() ?? 'unknown'
-    const newBooking: Booking = {
-      ...booking,
-      userEmail: email,
-      id: `bk-${Date.now()}-${Math.random().toString(16).slice(2)}`,
-    }
-    bookings.value.push(newBooking)
-    persist()
-  }
+export const useBookingStore = defineStore('booking', {
+  state: () => ({
+    bookings: loadInitialBookings(),
+  }),
 
-  const removeBooking = (id: string): void => {
-    bookings.value = bookings.value.filter(b => b.id !== id)
-    persist()
-  }
+  getters: {
+    groupedByCategory: (state): Record<string, Booking[]> => groupByCategory(state.bookings),
 
-  const groupedByCategory = computed(() => {
-    const groups: Record<string, Booking[]> = {}
-    for (const booking of bookings.value) {
-      let list = groups[booking.category]
-      if (!list) { list = []; groups[booking.category] = list }
-      list.push(booking)
-    }
-    return groups
-  })
+    myGroupedByCategory: (state): Record<string, Booking[]> => {
+      const email = getCurrentUserEmail()
+      if (!email) return {}
+      return groupByCategory(state.bookings.filter(b => b.userEmail === email))
+    },
+  },
 
-  const myGroupedByCategory = computed(() => {
-    const email = getCurrentUserEmail()
-    if (!email) return {}
-    const groups: Record<string, Booking[]> = {}
-    for (const booking of bookings.value) {
-      if (booking.userEmail !== email) continue
-      let list = groups[booking.category]
-      if (!list) { list = []; groups[booking.category] = list }
-      list.push(booking)
-    }
-    return groups
-  })
+  actions: {
+    persist() {
+      if (typeof window === 'undefined') return
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.bookings))
+      } catch {}
+    },
 
-  return {
-    bookings,
-    addBooking,
-    removeBooking,
-    groupedByCategory,
-    myGroupedByCategory,
-  }
-}
+    addBooking(booking: Omit<Booking, 'id' | 'userEmail'>) {
+      const email = getCurrentUserEmail() ?? 'unknown'
+      const newBooking: Booking = {
+        ...booking,
+        userEmail: email,
+        id: `bk-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+      }
+      this.bookings.push(newBooking)
+      this.persist()
+    },
+
+    removeBooking(id: string) {
+      this.bookings = this.bookings.filter(b => b.id !== id)
+      this.persist()
+    },
+  },
+})

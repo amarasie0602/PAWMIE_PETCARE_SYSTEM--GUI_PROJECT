@@ -1,22 +1,23 @@
 <script setup lang="ts">
 import BookingForm from '@/components/bookings/BookingForm.vue'
-import { useScrollReveal } from '@/composables/useScrollReveal'
 import emergencyImage from '@/assets/emergency-care-hero.png'
+import { useScrollReveal } from '@/composables/useScrollReveal'
 
-const revealStats = useScrollReveal({ type: 'fade-up', delay: 80 })
-const revealInfo = useScrollReveal({ type: 'fade-in' })
-const revealForm = useScrollReveal({ type: 'fade-up' })
+const HOTLINE_NUMBER = '+94 11 234 5678'
+const HOTLINE_TEL = 'tel:+94112345678'
 
+// Demo data for trust signals and process steps. In a real app, these might come from props or an API.
 const trustSignals = [
-  { icon: '\uD83C\uDFE5', label: 'Clinics notified', value: 'Instantly' },
-  { icon: '\u26A1', label: 'Avg. response', value: '< 5 min' },
-  { icon: '\uD83D\uDD50', label: 'Available', value: '24 / 7' },
+  { icon: '🏥', label: 'Clinics notified', value: 'Instantly' },
+  { icon: '⚡', label: 'Avg. response', value: '< 5 min' },
+  { icon: '🕐', label: 'Available', value: '24 / 7' },
 ]
 
+// Steps for the "What happens next" section. In a real app, these could be dynamic based on the service or user flow.
 const steps = [
-  { icon: '\uD83D\uDCCB', title: 'Log your visit', text: 'Fill in your pet\'s symptoms and location quickly.' },
-  { icon: '\uD83D\uDCE1', title: 'Clinics are alerted', text: 'Nearby vets receive your request and prepare.' },
-  { icon: '\uD83D\uDE97', title: 'Head over', text: 'Arrive knowing the team is already ready for you.' },
+  { icon: '📋', title: 'Log your visit', text: 'Fill in your pet\'s symptoms and location quickly.' },
+  { icon: '📡', title: 'Clinics are alerted', text: 'Nearby vets receive your request and prepare.' },
+  { icon: '🚗', title: 'Head over', text: 'Arrive knowing the team is already ready for you.' },
 ]
 
 const reasons = [
@@ -24,10 +25,16 @@ const reasons = [
   'Keep a record of every emergency visit in one place.',
   'Designed for quick entry on mobile and desktop.',
 ]
+
+const revealStats = useScrollReveal({ type: 'fade-up', delay: 80 })
+const revealInfo = useScrollReveal({ type: 'fade-up', delay: 60 })
+const revealForm = useScrollReveal({ type: 'fade-in' })
 </script>
 
 <template>
   <div class="min-h-screen bg-gradient-to-br from-rose-50 via-slate-50 to-red-100 dark:from-slate-950 dark:via-slate-900 dark:to-rose-950">
+
+    <!-- ─── HERO ───────────────────────────────────────────────────── -->
     <section class="relative -mt-20 h-[750px] overflow-hidden">
       <img
         :src="emergencyImage"
@@ -40,7 +47,7 @@ const reasons = [
       <div class="absolute left-6 top-[52%] z-10 max-w-lg -translate-y-1/2 sm:max-w-xl lg:left-14 lg:max-w-2xl xl:left-20">
         <span class="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-white ring-1 ring-white/20 backdrop-blur-sm">
           <span class="flex h-1.5 w-1.5 animate-pulse rounded-full bg-rose-400" />
-          {{ '\uD83D\uDE91' }} Emergency Care
+          🚑 Emergency Care
         </span>
         <h1 class="hero-heading mb-3 text-[2.6rem] font-black leading-[1.08] tracking-tight text-balance text-white drop-shadow-lg sm:text-5xl lg:text-[3.2rem]">
           <span class="text-white">24/7 emergency </span>
@@ -50,48 +57,48 @@ const reasons = [
           When something feels wrong, every second matters. Log your emergency visit so nearby clinics can prepare before you arrive.
         </p>
         <div class="flex flex-wrap gap-3">
-          <a
-            href="#emergency-form"
-            class="inline-flex items-center gap-2.5 rounded-full bg-rose-600 px-7 py-2.5 text-[13px] font-bold text-white shadow-lg shadow-rose-900/40 transition-all duration-200 hover:-translate-y-0.5 hover:bg-rose-700 hover:shadow-xl active:translate-y-0"
-          >
+          <a href="#emergency-form"
+            class="inline-flex items-center gap-2.5 rounded-full bg-rose-600 px-7 py-2.5 text-[13px] font-bold text-white shadow-lg shadow-rose-900/40 transition-all duration-200 hover:-translate-y-0.5 hover:bg-rose-700 hover:shadow-xl active:translate-y-0">
             <span>Log Emergency Visit</span>
-            <span aria-hidden="true">{{ '\uD83D\uDE91' }}</span>
+            <span aria-hidden="true">🚑</span>
           </a>
-          <a
-            href="tel:+94112345678"
-            class="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-6 py-2.5 text-[13px] font-bold text-white backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/20 active:translate-y-0"
-          >
-            {{ '\uD83D\uDCDE' }} Call Hotline
+          <a :href="HOTLINE_TEL"
+            class="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-6 py-2.5 text-[13px] font-bold text-white backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/20 active:translate-y-0">
+            📞 Call Hotline
           </a>
         </div>
       </div>
     </section>
+    <!-- ─── END HERO ───────────────────────────────────────────────── -->
 
+
+    <!-- ─── CONTENT ────────────────────────────────────────────────── -->
     <div class="mx-auto max-w-6xl px-4 pb-28 sm:px-6 lg:px-8">
+
+      <!-- Hotline banner — floats up over hero bottom fade -->
       <div class="relative -mt-6 mb-10 overflow-hidden rounded-2xl bg-rose-600 shadow-xl shadow-rose-900/30">
         <div class="absolute inset-0 bg-gradient-to-r from-rose-700/50 via-transparent to-rose-700/50" />
         <div class="relative flex flex-wrap items-center justify-between gap-4 px-6 py-5 sm:px-8">
           <div class="flex items-center gap-4">
-            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/15 text-2xl">{{ '\uD83D\uDCDE' }}</span>
+            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/15 text-2xl">📞</span>
             <div>
-              <p class="text-[10px] font-black uppercase tracking-[0.25em] text-rose-200">Emergency Hotline &middot; 24 / 7</p>
-              <p class="mt-0.5 text-[1.5rem] font-black tabular-nums tracking-tight text-white">+94 11 234 5678</p>
+              <p class="text-[10px] font-black uppercase tracking-[0.25em] text-rose-200">Emergency Hotline · 24 / 7</p>
+              <p class="mt-0.5 text-[1.5rem] font-black tabular-nums tracking-tight text-white">{{ HOTLINE_NUMBER }}</p>
             </div>
           </div>
-          <a
-            href="tel:+94112345678"
-            class="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-[13px] font-black text-rose-600 shadow-sm transition hover:bg-rose-50 active:scale-95"
-          >
-            Call Now <span aria-hidden="true">&rarr;</span>
+          <a :href="HOTLINE_TEL"
+            class="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-[13px] font-black text-rose-600 shadow-sm transition hover:bg-rose-50 active:scale-95">
+            Call Now →
           </a>
         </div>
       </div>
 
+      <!-- Trust stats -->
       <div class="mb-10 grid grid-cols-3 gap-3 sm:gap-4">
         <div
+          :ref="revealStats.add"
           v-for="signal in trustSignals"
           :key="signal.label"
-          :ref="revealStats.add"
           class="rounded-2xl border border-white/60 bg-white/80 p-5 text-center shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70"
         >
           <p class="text-2xl">{{ signal.icon }}</p>
@@ -100,8 +107,16 @@ const reasons = [
         </div>
       </div>
 
-      <div id="emergency-form" class="grid gap-8 lg:grid-cols-[1fr_420px] lg:items-start">
+      <!-- Two-column grid: info left, form/tracker right -->
+      <div
+        id="emergency-form"
+        class="grid gap-8 lg:grid-cols-[1fr_420px] lg:items-start"
+      >
+
+        <!-- ── LEFT: Info ─────────────────────────────────────────── -->
         <section :ref="revealInfo.add" class="space-y-5">
+
+          <!-- What happens next -->
           <div class="rounded-2xl border border-white/60 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70">
             <p class="mb-5 text-[10px] font-black uppercase tracking-[0.25em] text-rose-500">What happens next</p>
             <ol class="divide-y divide-slate-100 dark:divide-white/[0.06]">
@@ -121,6 +136,7 @@ const reasons = [
             </ol>
           </div>
 
+          <!-- Why log -->
           <div class="rounded-2xl border border-white/60 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-white/[0.07] dark:bg-slate-900/70">
             <p class="mb-5 text-[10px] font-black uppercase tracking-[0.25em] text-rose-500">Why log your visit</p>
             <ul class="space-y-3">
@@ -129,23 +145,26 @@ const reasons = [
                 :key="item"
                 class="flex items-start gap-3"
               >
-                <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-[12px] text-emerald-600 ring-1 ring-emerald-200 dark:bg-emerald-900/20 dark:ring-emerald-500/20">&#10003;</span>
+                <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-[12px] text-emerald-600 ring-1 ring-emerald-200 dark:bg-emerald-900/20 dark:ring-emerald-500/20">✔</span>
                 <p class="text-[14px] leading-6 text-slate-700 dark:text-slate-300">{{ item }}</p>
               </li>
             </ul>
           </div>
 
+          <!-- Alert strip -->
           <div class="flex items-start gap-4 rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 dark:border-amber-500/20 dark:bg-amber-900/10">
-            <span class="text-2xl">{{ '\u26A0\uFE0F' }}</span>
+            <span class="text-2xl">⚠️</span>
             <div>
               <p class="text-[13px] font-bold text-amber-800 dark:text-amber-400">For life-threatening emergencies</p>
               <p class="mt-0.5 text-[12px] leading-5 text-amber-700 dark:text-amber-500">
-                Call the hotline immediately. Do not wait to fill the form. Our team will guide you.
+                Call the hotline immediately — don't wait to fill the form. Our team will guide you.
               </p>
             </div>
           </div>
+
         </section>
 
+        <!-- ── RIGHT: Form / Tracker ──────────────────────────────── -->
         <section :ref="revealForm.add" class="self-start lg:sticky lg:top-24">
           <BookingForm
             service="Emergency Care"
@@ -154,8 +173,10 @@ const reasons = [
             theme="emergency"
           />
         </section>
+
       </div>
     </div>
+
   </div>
 </template>
 

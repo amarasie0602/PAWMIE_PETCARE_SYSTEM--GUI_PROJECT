@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useBookingStore } from '@/stores/bookingStore'
 
-const { myGroupedByCategory, removeBooking } = useBookingStore()
+const bookingStore = useBookingStore()
+const { myGroupedByCategory } = storeToRefs(bookingStore)
+const { removeBooking } = bookingStore
 
 const categories = computed(() => Object.entries(myGroupedByCategory.value))
 
